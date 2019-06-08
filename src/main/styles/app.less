@@ -1,0 +1,30 @@
+:root {
+  --font-size: 18px;
+  --line-height: 34px;
+  --text-color: rgb(227, 230, 232);
+  --result-text-color: rgb(155, 207, 77);
+  --bg-color: rgb(33, 34, 38);
+  --current-line-bg-color: rgb(39, 41, 45);
+}
+
+@font-face {
+  font-family: 'RobotoMono';
+  src: url('Roboto_Mono/RobotoMono-Regular.ttf') format('truetype');
+}
+
+html,
+body {
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app {
+  flex: 1;
+  background: var(--bg-color);
+  font-family: 'RobotoMono';
+}
