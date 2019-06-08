@@ -11,7 +11,9 @@
     "start-dev": "ELECTRON_START_URL=http://localhost:1234 electron .",
     "test": "mocha -r ts-node/register src/test/**.spec.ts",
     "test:watch": "mocha --compilers ts:ts-node/register,tsx:ts-node/register --watch-extensions ts --watch src/test/**/*.spec.ts",
-    "build": "parcel build ./src/main/index.html -d build/ --public-url ./",
+    "build": "parcel build ./src/main/index.html -d build/ --public-url ./ && yarn run build-ts && yarn run build-worker",
+    "build-ts": "parcel build node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js -d build/ --no-source-maps",
+    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build/ --no-source-maps",
     "ship": "yarn run build && cp assets/* build/ && GH_TOKEN=`cat token` build -mwl -p always"
   },
   "build": {
@@ -19,13 +21,11 @@
     "mac": {
       "category": "Utility"
     },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "filipesabella",
-        "repo": "processingJS"
-      }
-    ],
+    "publish": [{
+      "provider": "github",
+      "owner": "filipesabella",
+      "repo": "processingJS"
+    }],
     "files": [
       "main.js",
       "build/*"
@@ -47,6 +47,8 @@
     "typescript": "^3.1.3"
   },
   "dependencies": {
+    "browserslist": "^4.6.2",
+    "caniuse-lite": "^1.0.30000974",
     "convert-units": "^2.3.4",
     "electron-updater": "^4.0.6",
     "electron-window-state": "^5.0.2",
