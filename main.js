@@ -19,6 +19,7 @@ if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(__dirname);
 }
 
+
 // To avoid being garbage collected
 let mainWindow;
 
@@ -29,6 +30,14 @@ app.on('ready', () => {
     defaultWidth: width,
     defaultHeight: monitor.size.height,
   });
+
+  window.anotherWindow = new BrowserWindow({
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+  });
+
   mainWindow = new BrowserWindow({
     width: mainWindowState.width,
     height: mainWindowState.height,
@@ -45,26 +54,26 @@ app.on('ready', () => {
 
   mainWindow.loadURL(startUrl);
 
-  autoUpdater.checkForUpdates();
-  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail: 'A new version has been downloaded. ' +
-        'Restart the application to apply the updates.'
-    };
+  // autoUpdater.checkForUpdates();
+  // autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  //   const dialogOpts = {
+  //     type: 'info',
+  //     buttons: ['Restart', 'Later'],
+  //     title: 'Application Update',
+  //     message: process.platform === 'win32' ? releaseNotes : releaseName,
+  //     detail: 'A new version has been downloaded. ' +
+  //       'Restart the application to apply the updates.'
+  //   };
 
-    dialog.showMessageBox(dialogOpts, (response) => {
-      if (response === 0) autoUpdater.quitAndInstall();
-    });
-  });
+  //   dialog.showMessageBox(dialogOpts, (response) => {
+  //     if (response === 0) autoUpdater.quitAndInstall();
+  //   });
+  // });
 
-  autoUpdater.on('error', message => {
-    console.error('There was a problem updating the application');
-    console.error(message);
-  });
+  // autoUpdater.on('error', message => {
+  //   console.error('There was a problem updating the application');
+  //   console.error(message);
+  // });
 
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
