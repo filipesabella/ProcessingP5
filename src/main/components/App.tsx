@@ -1,19 +1,13 @@
 import * as React from 'react';
-import { Editor } from './Editor';
+import { useEffect } from 'react';
+import { initEditor } from './Editor';
 
-import '../styles/app.less';
+require('../styles/app.less');
 
-interface State {
-}
+export const App = () => {
+  useEffect(() => {
+    initEditor();
+  });
 
-export class App extends React.Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-  }
-
-  public render(): React.ReactNode {
-    return <div className="app">
-      <Editor />
-    </div>;
-  }
-}
+  return <div className='app'></div>;
+};

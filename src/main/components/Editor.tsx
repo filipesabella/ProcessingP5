@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
 
 (self as any).MonacoEnvironment = {
@@ -12,39 +10,46 @@ import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
   },
 };
 
-// options
-// https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
-const editor =
-  monaco.editor.create(document.getElementById('editor-container'), {
-    fontFamily: 'RobotoMono',
-    fontSize: '15px',
-    theme: 'vs-dark',
-    folding: false,
-    formatOnType: true,
-    highlightActiveIndentGuide: false,
-    minimap: {
-      enabled: false,
-    },
-    renderIndentGuides: false,
-    value: [
-      'function x() {',
-      '  console.log("Hello world!");',
-      '}'
-    ].join('\n'),
-    language: 'javascript',
+export const initEditor = () => {
+  // options
+  // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
+  const editor =
+    monaco.editor.create(document.getElementById('editor-container'), {
+      fontFamily: 'RobotoMono',
+      fontSize: '15px',
+      theme: 'vs-dark',
+      folding: false,
+      formatOnType: true,
+      highlightActiveIndentGuide: false,
+      minimap: {
+        enabled: false,
+      },
+      renderIndentGuides: false,
+      value: `
+function setup() {
+  createCanvas(640, 480);
+}
+
+function draw() {
+  if (mouseIsPressed) {
+    fill(0);
+  } else {
+    fill(255);
+  }
+  ellipse(mouseX, mouseY, 80, 80);
+}`,
+      language: 'javascript',
+    });
+
+  editor.onDidChangeModelContent((event: any) => {
+    // this is necessary to not crap out importing electron on this render thread
+    const remote = window.require('electron').remote;
+    const fs = remote.require('fs');
+    fs.writeFileSync(
+      '//home/filipe/ProcessingJS/sketch/main.js',
+      editor.getValue());
+    (remote.BrowserWindow.getAllWindows() as any[]).forEach(w => {
+      if (w !== remote.getCurrentWindow()) w.reload();
+    });
   });
-
-editor.onDidChangeModelContent((event: any) => {
-  // this is necessary to not crap out importing electron on this render thread
-  const remote = window.require('electron').remote;
-  const fs = remote.require('fs');
-  fs.writeFileSync(
-    '//home/filipe/ProcessingJS/sketch/main.js',
-    editor.getValue());
-  (remote.BrowserWindow.getAllWindows() as any[]).forEach(w => {
-    if (w !== remote.getCurrentWindow()) w.reload();
-  });
-
-});
-
-export const Editor = () => <span></span>;
+};
