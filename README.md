@@ -1,6 +1,7 @@
 To run
 
 ```
-yarn run build
-yarn run dev
+yarn build
+yarn server
+yarn start
 ```
