@@ -34,10 +34,17 @@ const editor =
     language: 'javascript',
   });
 
-let currentVal = '';
-
 editor.onDidChangeModelContent((event: any) => {
-  currentVal = editor.getValue();
+  // this is necessary to not crap out importing electron on this render thread
+  const remote = window.require('electron').remote;
+  const fs = remote.require('fs');
+  fs.writeFileSync(
+    '//home/filipe/ProcessingJS/sketch/main.js',
+    editor.getValue());
+  (remote.BrowserWindow.getAllWindows() as any[]).forEach(w => {
+    if (w !== remote.getCurrentWindow()) w.reload();
+  });
+
 });
 
 export const Editor = () => <span></span>;
