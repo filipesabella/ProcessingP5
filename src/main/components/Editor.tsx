@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-const monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
+import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
 
 (self as any).MonacoEnvironment = {
   getWorkerUrl: (moduleId: any, label: string) => {
     if (label === 'typescript' || label === 'javascript') {
       return './ts.worker.js';
     }
+
     return './editor.worker.js';
   },
 };
@@ -39,9 +40,4 @@ editor.onDidChangeModelContent((event: any) => {
   currentVal = editor.getValue();
 });
 
-export class Editor extends React.Component {
-  public render() {
-    return <span></span>;
-  }
-}
-
+export const Editor = () => <span></span>;

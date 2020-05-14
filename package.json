@@ -55,6 +55,7 @@
     "monaco-editor": "^0.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "remote": "^0.2.6",
     "typeface-roboto-mono": "^0.0.75"
   }
 }
