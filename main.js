@@ -10,9 +10,6 @@ const {
 const path = require('path');
 const url = require('url');
 const windowStateKeeper = require('electron-window-state');
-const {
-  autoUpdater
-} = require("electron-updater");
 
 // Let electron reloads by itself when webpack watches changes in ./app/
 if (process.env.ELECTRON_START_URL) {
@@ -32,7 +29,7 @@ app.on('ready', () => {
   console.log(width);
   mainWindow = new BrowserWindow({
     webPreferences: {
-      webSecurity: false,
+      webSecurity: true,
       nodeIntegration: true,
     },
     width: mainWindowState.width,
