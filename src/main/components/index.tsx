@@ -1,8 +1,7 @@
+import { BrowserWindow } from 'electron';
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import { App } from './App';
-
-import { BrowserWindow, remote } from 'electron';
 
 ReactDOM.render(
   <App />,
@@ -11,25 +10,40 @@ ReactDOM.render(
 
 
 function openModal() {
-  let win = new BrowserWindow({});
-  //   // parent: remote.getCurrentWindow(),
-  //   modal: true,
-  //   webPreferences: {
-  //     nodeIntegration: true,
-  //   },
-  // });
+  // this is necessary to not crap out importing electron on this render thread
+  const remote = window.require('electron').remote;
+  const BW = remote.BrowserWindow;
 
-  // // var theUrl = 'file://' + __dirname + '/modal.html'
-  // // console.log('url', theUrl);
+  // for dev, close all other windows
+  (BW.getAllWindows() as any[]).forEach(w => {
+    if (w !== remote.getCurrentWindow()) w.close();
+  });
 
-  // // win.loadURL(theUrl);
-  // const pageContent = `
-  //   <html><body>asd</body></html>`;
+  let win = new BW({
+    parent: remote.getCurrentWindow(),
+    modal: false,
+    x: 1500,
+    y: 0,
+    webPreferences: {
+      webSecurity: false,
+      nodeIntegration: true,
+    },
+  }) as BrowserWindow;
 
-  // win.loadURL('data:text/html;charset=UTF-8,' +
-  //   encodeURIComponent(pageContent), {
-  //     baseURLForDataURL: `file://${__dirname}/app/`
-  //   });
+  const src = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>aaa</title>
+          <meta charset="UTF-8">
+        </head>
+        <body>
+          <div id="view">qqq</div>
+        </body>
+      </html>`;
+
+  let file = 'data:text/html;charset=UTF-8,' + encodeURIComponent(src);
+  win.loadURL(file);
 }
-console.log('???????');
-(window as any).openModal = openModal;
+
+window.setTimeout(() => openModal(), 500);
