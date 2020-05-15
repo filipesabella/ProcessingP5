@@ -26,9 +26,10 @@ export const initEditor = () => {
   // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
   const editor =
     monaco.editor.create(document.getElementById('editor-container'), {
+      value: readSketchMainFile(),
       fontFamily: 'RobotoMono',
       fontSize: '15px',
-      theme: 'vs-dark',
+      theme: 'vs-dark', // vs-light
       folding: false,
       formatOnType: true,
       formatOnPaste: true,
@@ -39,7 +40,6 @@ export const initEditor = () => {
       },
       renderIndentGuides: false,
       automaticLayout: true,
-      value: readSketchMainFile(),
       language: 'javascript',
     });
 
