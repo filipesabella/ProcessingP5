@@ -58,16 +58,7 @@ function buildBrowserWindow(): BrowserWindow {
 
   win.on('resize', () => win.reload());
 
-  win.webContents.on('console-message', (e, level, message) => {
-    if (level === 1) {
-      console.log(message);
-    } else if (level === 2) {
-      // ignore electron warn messages
-      // console.warn(message);
-    } else if (level === 3) {
-      console.error(message);
-    }
-  });
+  win.webContents.openDevTools();
 
   return win;
 }
