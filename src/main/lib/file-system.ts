@@ -32,3 +32,8 @@ export function p5Path(): string {
 
   return `file://${basePath}/assets/p5.js`;
 }
+
+export function p5TypeDefinitions(): string {
+  const basePath = remote.app.getAppPath();
+  return fs.readFileSync(`${basePath}/assets/p5.d.ts`).toString();
+}

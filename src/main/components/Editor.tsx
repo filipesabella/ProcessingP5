@@ -1,5 +1,5 @@
 import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
-import { readSketchMainFile, writeCurrentFile } from '../lib/file-system';
+import { p5TypeDefinitions, readSketchMainFile, writeCurrentFile } from '../lib/file-system';
 import { reloadPreviewWindow } from './PreviewWindow';
 
 (self as any).MonacoEnvironment = {
@@ -13,19 +13,13 @@ import { reloadPreviewWindow } from './PreviewWindow';
 };
 
 export const initEditor = () => {
-  const remote = window.require('electron').remote;
-  const fs = remote.require('fs');
-  const basePath = remote.app.getAppPath();
-  const types = fs.readFileSync(`${basePath}/assets/p5.d.ts`).toString();
-
   monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
     target: monaco.languages.typescript.ScriptTarget.ES6,
     allowNonTsExtensions: true
   });
 
-
-  monaco.languages.typescript.javascriptDefaults.addExtraLib(
-    types, 'filename/p5.d.ts');
+  monaco.languages.typescript.javascriptDefaults
+    .addExtraLib(p5TypeDefinitions(), 'filename/p5.d.ts');
 
   // options
   // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
