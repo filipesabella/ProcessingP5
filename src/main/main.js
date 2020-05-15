@@ -9,12 +9,10 @@ const path = require('path');
 const url = require('url');
 const windowStateKeeper = require('electron-window-state');
 
-// Let electron reloads by itself when webpack watches changes in ./app/
 if (process.env.ELECTRON_START_URL) {
-  require('electron-reload')(__dirname);
+  require('electron-reload')(path.join(__dirname, '../../dist'));
 }
 
-// To avoid being garbage collected
 let mainWindow;
 
 app.on('ready', () => {
@@ -37,8 +35,8 @@ app.on('ready', () => {
   mainWindowState.manage(mainWindow);
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
-    pathname: path.join(__dirname, './dist/index.html'),
-    protocol: 'file:',
+    pathname: path.join(__dirname, '../../dist/index.html'),
+    protocol: 'file',
     slashes: true,
   });
 
