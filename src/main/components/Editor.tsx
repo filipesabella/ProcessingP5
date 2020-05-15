@@ -1,16 +1,6 @@
-import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
+import * as monaco from 'monaco-editor';
 import { p5TypeDefinitions, readSketchMainFile, writeCurrentFile } from '../lib/file-system';
 import { reloadPreviewWindow } from './PreviewWindow';
-
-(self as any).MonacoEnvironment = {
-  getWorkerUrl: (moduleId: any, label: string) => {
-    if (label === 'typescript' || label === 'javascript') {
-      return './ts.worker.js';
-    }
-
-    return './editor.worker.js';
-  },
-};
 
 export const initEditor = () => {
   // this is the way to remove all the crap autocomplete suggestions,
@@ -26,17 +16,17 @@ export const initEditor = () => {
   // options
   // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
   const editor =
-    monaco.editor.create(document.getElementById('editor-container'), {
+    monaco.editor.create(document.getElementById('editor-container')!, {
       value: readSketchMainFile(),
       language: 'javascript',
       fontFamily: 'JetBrains Mono',
-      fontSize: '16px',
+      fontSize: 16,
       theme: 'vs-dark', // vs-light
       folding: false,
       formatOnType: true,
       formatOnPaste: true,
       highlightActiveIndentGuide: false,
-      lineNumbers: true,
+      lineNumbers: 'on',
       minimap: {
         enabled: false,
       },
@@ -44,7 +34,7 @@ export const initEditor = () => {
       automaticLayout: true,
     });
 
-  editor.onDidChangeModelContent((e: any) => {
+  editor.onDidChangeModelContent((_: any) => {
     writeCurrentFile(editor.getValue());
     reloadPreviewWindow();
   });
