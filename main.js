@@ -3,8 +3,6 @@ const electron = require('electron');
 const {
   app,
   BrowserWindow,
-  Menu,
-  dialog,
 } = electron;
 
 const path = require('path');
@@ -21,9 +19,11 @@ let mainWindow;
 
 app.on('ready', () => {
   const monitor = electron.screen.getPrimaryDisplay();
-  const width = monitor.size.width / (monitor.size.width > 2000 ? 3 : 2);
   const mainWindowState = windowStateKeeper({
-    defaultWidth: width,
+    file: 'mainWindow.json',
+    x: monitor.size.width,
+    y: 0,
+    defaultWidth: 0,
     defaultHeight: monitor.size.height,
   });
   mainWindow = new BrowserWindow({
@@ -31,10 +31,10 @@ app.on('ready', () => {
       webSecurity: true,
       nodeIntegration: true,
     },
-    width: mainWindowState.width,
-    height: mainWindowState.height,
     x: mainWindowState.x,
     y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
   });
   mainWindowState.manage(mainWindow);
 
@@ -47,19 +47,8 @@ app.on('ready', () => {
   mainWindow.loadURL(startUrl);
   mainWindow.openDevTools();
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  })
+  mainWindow.on('closed', () => mainWindow = null);
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', function() {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
+app.on('window-all-closed', () => app.quit());
+app.on('activate', () => mainWindow === null && createWindow());
