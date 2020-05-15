@@ -32,8 +32,6 @@ export function reloadPreviewWindow(): void {
 
 function buildBrowserWindow(): BrowserWindow {
   const windowState = windowStateKeeper({
-    x: window.screen.availWidth / 2,
-    y: 0,
     defaultWidth: window.screen.availWidth / 2,
     defaultHeight: window.screen.availHeight,
   });
@@ -45,8 +43,9 @@ function buildBrowserWindow(): BrowserWindow {
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
     closable: false, // does not work
-    x: windowState.x,
-    y: windowState.y,
+    x: windowState.x === undefined
+      ? window.screen.availWidth / 2 : windowState.x,
+    y: windowState.y === undefined ? 0 : windowState.y,
     width: windowState.width,
     height: windowState.height,
     webPreferences: {

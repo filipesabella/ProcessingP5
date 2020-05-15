@@ -21,9 +21,7 @@ app.on('ready', () => {
   const monitor = electron.screen.getPrimaryDisplay();
   const mainWindowState = windowStateKeeper({
     file: 'mainWindow.json',
-    x: monitor.size.width,
-    y: 0,
-    defaultWidth: 0,
+    defaultWidth: monitor.size.width / 2,
     defaultHeight: monitor.size.height,
   });
   mainWindow = new BrowserWindow({
@@ -31,8 +29,8 @@ app.on('ready', () => {
       webSecurity: true,
       nodeIntegration: true,
     },
-    x: mainWindowState.x,
-    y: mainWindowState.y,
+    x: mainWindowState.x === undefined ? 0 : mainWindowState.x,
+    y: mainWindowState.y === undefined ? 0 : mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
   });
