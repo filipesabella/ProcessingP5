@@ -42,7 +42,7 @@ function buildBrowserWindow(): BrowserWindow {
     modal: false,
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
-    closable: false, // does not work
+    closable: false, // does not work on linux
     x: windowState.x === undefined
       ? window.screen.availWidth / 2 : windowState.x,
     y: windowState.y === undefined ? 0 : windowState.y,
