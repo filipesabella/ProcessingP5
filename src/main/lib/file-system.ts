@@ -21,16 +21,12 @@ export function writeCurrentFile(content: string): void {
 }
 
 export function readIndexTemplate(): string {
-  const basePath = remote.app.getAppPath();
-  const path = `${basePath}/assets/index.html`;
-
+  const path = `${remote.app.getAppPath()}/assets/index.html`;
   return fs.readFileSync(path).toString();
 }
 
 export function p5Path(): string {
-  const basePath = remote.app.getAppPath();
-
-  return `file://${basePath}/assets/p5.js`;
+  return `file://${remote.app.getAppPath()}/assets/p5.js`;
 }
 
 export function p5TypeDefinitions(): string {
