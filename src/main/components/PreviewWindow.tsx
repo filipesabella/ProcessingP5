@@ -18,6 +18,7 @@ export function openPreviewWindow() {
 
   const win = buildBrowserWindow();
   win.loadURL(file);
+  win.showInactive();
 }
 
 export function reloadPreviewWindow(): void {
@@ -40,9 +41,11 @@ function buildBrowserWindow(): BrowserWindow {
     file: 'previewWindow.json',
     parent: remote.getCurrentWindow(),
     modal: false,
+    show: false,
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
     closable: false, // does not work on linux
+    excludedFromShownWindowsMenu: true,
     x: windowState.x === undefined
       ? window.screen.availWidth / 2 : windowState.x,
     y: windowState.y === undefined ? 0 : windowState.y,
