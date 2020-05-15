@@ -14,7 +14,7 @@ export function openPreviewWindow() {
     parent: remote.getCurrentWindow(),
     modal: false,
     x: 1500,
-    y: 0,
+    y: 500,
     height: 1000,
     webPreferences: {
       webSecurity: false,

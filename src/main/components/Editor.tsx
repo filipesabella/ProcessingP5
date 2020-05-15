@@ -11,43 +11,19 @@ import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
 };
 
 export const initEditor = () => {
+  const remote = window.require('electron').remote;
+  const fs = remote.require('fs');
+  const basePath = remote.app.getAppPath();
+  const types = fs.readFileSync(`${basePath}/assets/p5.d.ts`).toString();
 
-  function createDependencyProposals() {
-    // returning a static list of proposals, not even looking at the prefix (filtering is done by the Monaco editor),
-    // here you could do a server side lookup
-    return [{
-      label: 'ellipse',
-      kind: monaco.languages.CompletionItemKind.Function,
-      documentation:
-        `ellipse(x, y, w, h?)
-        ellipse(x, y, w, h, detail)
-
-        Parameters:
-            x Number: x-coordinate of the ellipse.
-            y Number: y-coordinate of the ellipse.
-            w Number: width of the ellipse.
-            h Number: height of the ellipse. (Optional)
-            detail Integer: number of radial sectors to draw (for WebGL mode)
-
-            Draws an ellipse (oval) to the screen. An ellipse with equal width and
-          height is a circle. By default, the first two parameters set the
-          location, and the third and fourth parameters set the shape's width and
-          height. If no height is specified, the value of width is used for both
-          the width and height. If a negative height or width is specified, the
-          absolute value is taken. The origin may be changed with the
-          ellipseMode() function.`,
-      insertText: 'ellipse',
-    }];
-  }
-
-  monaco.languages.registerCompletionItemProvider('javascript', {
-    provideCompletionItems: () => {
-      return {
-        suggestions: createDependencyProposals()
-      };
-    }
+  monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+    target: monaco.languages.typescript.ScriptTarget.ES6,
+    allowNonTsExtensions: true
   });
 
+
+  monaco.languages.typescript.javascriptDefaults.addExtraLib(
+    types, 'filename/p5.d.ts');
 
   // options
   // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
@@ -83,8 +59,6 @@ function draw() {
 
   editor.onDidChangeModelContent((event: any) => {
     // this is necessary to not crap out importing electron on this render thread
-    const remote = window.require('electron').remote;
-    const fs = remote.require('fs');
     fs.writeFileSync(
       '//home/filipe/ProcessingJS/sketch/main.js',
       editor.getValue());
