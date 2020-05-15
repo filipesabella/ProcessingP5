@@ -1,6 +1,7 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 
+const sketchMainFile = 'main.js';
 let currentSketchPath = '/home/filipe/ProcessingJS/sketch/';
 
 export function currentSketchFiles(): string[] {
@@ -9,9 +10,13 @@ export function currentSketchFiles(): string[] {
     .map(s => 'file://' + currentSketchPath + s);
 }
 
+export function readSketchMainFile(): string {
+  return fs.readFileSync(currentSketchPath + sketchMainFile).toString();
+}
+
 export function writeCurrentFile(content: string): void {
   fs.writeFileSync(
-    currentSketchPath + '/main.js',
+    currentSketchPath + 'main.js',
     content);
 }
 
