@@ -41,6 +41,7 @@ export const initEditor = () => {
         enabled: false,
       },
       renderIndentGuides: false,
+      automaticLayout: true,
       value: `
 function setup() {
   createCanvas(640, 480);

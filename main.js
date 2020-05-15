@@ -26,7 +26,6 @@ app.on('ready', () => {
     defaultWidth: width,
     defaultHeight: monitor.size.height,
   });
-  console.log(width);
   mainWindow = new BrowserWindow({
     webPreferences: {
       webSecurity: true,
