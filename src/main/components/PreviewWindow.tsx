@@ -1,16 +1,18 @@
 import { BrowserWindow } from 'electron';
 import { currentSketchFiles, p5Path, readIndexTemplate } from '../lib/file-system';
 
-// this is necessary to not crap out importing electron on this render thread
 const remote = window.require('electron').remote;
 
 export function openPreviewWindow() {
-  const BW = remote.BrowserWindow;
+  applyToPreviewWindow(w => {
+    try {
+      !w.isDestroyed() && w.close();
+    } catch (e) {
+      console.error('??', e);
+    }
+  });
 
-  // for dev, close all other windows
-  applyToPreviewWindow(w => w.close());
-
-  let win = new BW({
+  const win = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
     modal: false,
     x: 1500,
@@ -25,9 +27,6 @@ export function openPreviewWindow() {
     },
   }) as BrowserWindow;
 
-  win.webContents.openDevTools();
-  win.on('resize', () => win.reload());
-
   const scripts = [p5Path()].concat(currentSketchFiles())
     .map(s => `<script src="${s}"></script>`)
     .join('\n');
@@ -36,14 +35,34 @@ export function openPreviewWindow() {
   const file = 'data:text/html;charset=UTF-8,' + encodeURIComponent(src);
 
   win.loadURL(file);
+
+  win.on('resize', () => win.reload());
+  win.on('close', e => {
+    openPreviewWindow();
+  });
+
+  win.webContents.on('console-message', (e, level, message) => {
+    if (level === 1) {
+      console.log(message);
+    } else if (level === 2) {
+      // ignore electron warn messages
+      // console.warn(message);
+    } else if (level === 3) {
+      console.error(message);
+    }
+  });
 }
 
 export function reloadPreviewWindow(): void {
   applyToPreviewWindow(w => w.reload());
 }
 
-function applyToPreviewWindow(fn: (w: any) => void): void {
-  (remote.BrowserWindow.getAllWindows() as any[]).forEach(w => {
-    if (w !== remote.getCurrentWindow()) fn(w);
-  });
+function applyToPreviewWindow(fn: (w: BrowserWindow) => void): void {
+  (remote.BrowserWindow.getAllWindows() as BrowserWindow[])
+    .forEach(w => {
+      if (w.id !== 1) {
+        console.log(w.id);
+        fn(w);
+      }
+    });
 }

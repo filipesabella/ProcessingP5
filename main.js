@@ -45,6 +45,7 @@ app.on('ready', () => {
   });
 
   mainWindow.loadURL(startUrl);
+  mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
