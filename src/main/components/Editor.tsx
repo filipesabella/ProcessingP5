@@ -14,6 +14,7 @@ import { reloadPreviewWindow } from './PreviewWindow';
 
 export const initEditor = () => {
   monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+    noLib: false,
     target: monaco.languages.typescript.ScriptTarget.ES6,
     allowNonTsExtensions: true
   });
