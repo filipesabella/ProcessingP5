@@ -16,6 +16,8 @@ export function openPreviewWindow() {
     x: 1500,
     y: 500,
     height: 1000,
+    titleBarStyle: 'hiddenInset',
+    autoHideMenuBar: true,
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
@@ -23,6 +25,7 @@ export function openPreviewWindow() {
   }) as BrowserWindow;
 
   win.webContents.openDevTools();
+  win.on('resize', () => win.reload());
 
   const fs = remote.require('fs');
   const basePath = remote.app.getAppPath();

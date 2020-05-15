@@ -44,7 +44,8 @@ export const initEditor = () => {
       automaticLayout: true,
       value: `
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(windowWidth, windowHeight);
+  background(0);
 }
 
 function draw() {
