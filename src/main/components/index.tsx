@@ -2,7 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { App } from './App';
 
+require('reset-css');
 require('typeface-jetbrains-mono');
+require('typeface-barlow');
+
 
 ReactDOM.render(
   <App />,

@@ -14,7 +14,8 @@ const windowStateKeeper = require('electron-window-state');
 if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(
     path.join(__dirname, '../../dist'), {
-      electron: '../../dist'
+      // this enables hard resets, don't know if I need it
+      //electron: '../../dist'
     });
 }
 
@@ -50,7 +51,7 @@ function createWindow() {
   mainWindow.loadURL(startUrl);
   mainWindow.webContents.openDevTools();
 
-  mainWindow.once('ready-to-show', () => mainWindow.show());
+  mainWindow.once('ready-to-show', () => mainWindow.showInactive());
 }
 
 const template = [{

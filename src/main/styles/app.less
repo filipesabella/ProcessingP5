@@ -1,33 +1,59 @@
 :root {
-  --font-size: 18px;
-  --line-height: 34px;
-  --text-color: rgb(227, 230, 232);
-  --result-text-color: rgb(155, 207, 77);
-  --bg-color: rgb(33, 34, 38);
-  --current-line-bg-color: rgb(39, 41, 45);
+  --bg-color: #222831;
+  --text-color: #eeeeee;
+  --other-color: #393e46;
+  --intense-color: #b55400;
+  --bg-color-transparent: rgba(0, 0, 0, .5);
 }
 
 html,
 body {
   margin: 0;
+  font-family: 'Barlow';
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+.files {
+  position: fixed;
+  width: 200px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  font-family: 'Barlow';
+  background-color: var(--bg-color);
+  color: var(--text-color);
 
-.app {
-  flex: 1;
-  background: var(--bg-color);
+  .container {
+    padding: 1em;
 
+    h1 {
+      font-size: 1.1em;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--text-color);
+    }
+
+    ul {
+      margin-top: .5em;
+    }
+
+    li {
+      padding: .2em 0;
+      cursor: pointer;
+
+      &.active {
+        color: var(--intense-color);
+      }
+
+      &:hover {
+        color: var(--other-color);
+      }
+    }
+  }
 }
 
 #editor-container {
   position: fixed;
   top: 0;
+  right: 200px;
   left: 0;
   bottom: 0;
-  width: 100%;
 }
