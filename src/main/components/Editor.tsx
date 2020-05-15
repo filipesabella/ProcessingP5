@@ -1,4 +1,6 @@
 import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
+import { writeCurrentFile } from '../lib/file-system';
+import { reloadPreviewWindow } from './PreviewWindow';
 
 (self as any).MonacoEnvironment = {
   getWorkerUrl: (moduleId: any, label: string) => {
@@ -59,13 +61,8 @@ function draw() {
       language: 'javascript',
     });
 
-  editor.onDidChangeModelContent((event: any) => {
-    // this is necessary to not crap out importing electron on this render thread
-    fs.writeFileSync(
-      '//home/filipe/ProcessingJS/sketch/main.js',
-      editor.getValue());
-    (remote.BrowserWindow.getAllWindows() as any[]).forEach(w => {
-      if (w !== remote.getCurrentWindow()) w.reload();
-    });
+  editor.onDidChangeModelContent((e: any) => {
+    writeCurrentFile(editor.getValue());
+    reloadPreviewWindow();
   });
 };
