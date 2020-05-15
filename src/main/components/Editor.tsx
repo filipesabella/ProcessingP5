@@ -1,5 +1,5 @@
 import monaco = require('monaco-editor/esm/vs/editor/editor.main.js');
-import { writeCurrentFile } from '../lib/file-system';
+import { readSketchMainFile, writeCurrentFile } from '../lib/file-system';
 import { reloadPreviewWindow } from './PreviewWindow';
 
 (self as any).MonacoEnvironment = {
@@ -44,20 +44,7 @@ export const initEditor = () => {
       },
       renderIndentGuides: false,
       automaticLayout: true,
-      value: `
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  background(0);
-}
-
-function draw() {
-  if (mouseIsPressed) {
-    fill(0);
-  } else {
-    fill(255);
-  }
-  ellipse(mouseX, mouseY, 80, 80);
-}`,
+      value: readSketchMainFile(),
       language: 'javascript',
     });
 
