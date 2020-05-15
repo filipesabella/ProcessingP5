@@ -13,11 +13,12 @@ import { reloadPreviewWindow } from './PreviewWindow';
 };
 
 export const initEditor = () => {
-  monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
-    noLib: false,
-    target: monaco.languages.typescript.ScriptTarget.ES6,
-    allowNonTsExtensions: true
-  });
+  // this is the way to remove all the crap autocomplete suggestions,
+  // but this has a bug in current monaco resulting in runtime errors.
+  // monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+  //   noLib: true,
+  //   allowNonTsExtensions: false,
+  // });
 
   monaco.languages.typescript.javascriptDefaults
     .addExtraLib(p5TypeDefinitions(), 'filename/p5.d.ts');
@@ -27,6 +28,7 @@ export const initEditor = () => {
   const editor =
     monaco.editor.create(document.getElementById('editor-container'), {
       value: readSketchMainFile(),
+      language: 'javascript',
       fontFamily: 'RobotoMono',
       fontSize: '15px',
       theme: 'vs-dark', // vs-light
@@ -40,7 +42,6 @@ export const initEditor = () => {
       },
       renderIndentGuides: false,
       automaticLayout: true,
-      language: 'javascript',
     });
 
   editor.onDidChangeModelContent((e: any) => {
