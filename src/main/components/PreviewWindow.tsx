@@ -4,13 +4,8 @@ import { currentSketchFiles, p5Path, readIndexTemplate } from '../lib/file-syste
 const remote = window.require('electron').remote;
 
 export function openPreviewWindow() {
-  applyToPreviewWindow(w => {
-    try {
-      !w.isDestroyed() && w.close();
-    } catch (e) {
-      console.error('??', e);
-    }
-  });
+  // close any current open windows
+  applyToPreviewWindow(w => !w.isDestroyed() && w.close());
 
   const win = new remote.BrowserWindow({
     parent: remote.getCurrentWindow(),
@@ -20,7 +15,7 @@ export function openPreviewWindow() {
     height: 1000,
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
-    closable: false,
+    closable: false, // does not work
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
@@ -37,9 +32,6 @@ export function openPreviewWindow() {
   win.loadURL(file);
 
   win.on('resize', () => win.reload());
-  win.on('close', e => {
-    openPreviewWindow();
-  });
 
   win.webContents.on('console-message', (e, level, message) => {
     if (level === 1) {
@@ -54,15 +46,17 @@ export function openPreviewWindow() {
 }
 
 export function reloadPreviewWindow(): void {
-  applyToPreviewWindow(w => w.reload());
+  // not allowing the preview window to be closed just wasn't working with
+  // Electron, so we added this garbage here instead.
+  if (remote.BrowserWindow.getAllWindows().length === 1) {
+    openPreviewWindow();
+  } else {
+    applyToPreviewWindow(w => w.reload());
+  }
 }
 
 function applyToPreviewWindow(fn: (w: BrowserWindow) => void): void {
   (remote.BrowserWindow.getAllWindows() as BrowserWindow[])
-    .forEach(w => {
-      if (w.id !== 1) {
-        console.log(w.id);
-        fn(w);
-      }
-    });
+    // the main editor window always gets id = 1
+    .forEach(w => w.id !== 1 && fn(w));
 }
