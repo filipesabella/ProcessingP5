@@ -18,7 +18,7 @@ export function openPreviewWindow() {
 export function reloadPreviewWindow(): void {
   // not allowing the preview window to be closed just wasn't working with
   // Electron, so we added this garbage here instead.
-  if (remote.BrowserWindow.getAllWindows().length === 1) {
+  if (windows.all().length === 1) {
     openPreviewWindow();
   } else {
     windows.toPreview(w => w.reload());
