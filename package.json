@@ -4,14 +4,14 @@
   "author": "Filipe Sabella",
   "repository": "https://github.com/filipesabella/processingJS",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "server": "parcel ./src/main/index.html -d build/ --no-hmr",
+    "server": "parcel ./src/main/index.html --no-hmr",
     "start": "ELECTRON_START_URL=http://localhost:1234 electron .",
-    "build": "parcel build ./src/main/index.html -d build/ --public-url ./ && yarn run build-ts && yarn run build-worker",
-    "build-ts": "parcel build node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js -d build/ --no-source-maps",
-    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js -d build/ --no-source-maps"
+    "build": "parcel build ./src/main/index.html --public-url ./ && yarn run build-ts && yarn run build-worker",
+    "build-ts": "parcel build node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js --no-source-maps",
+    "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps"
   },
   "build": {
     "appId": "filipesabella.ProcessingJS",
@@ -27,7 +27,7 @@
     ],
     "files": [
       "main.js",
-      "build/*",
+      "dist/*",
       "assets/*"
     ]
   },
