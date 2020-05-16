@@ -80,7 +80,9 @@ const template = [{
 }, {
   label: 'View',
   submenu: [{
-    role: 'toggledevtools'
+    label: 'Toggle developer tools',
+    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+I' : 'Ctrl+shift+I',
+    click: () => mainWindow.webContents.send('toggle-dev-tools'),
   }, {
     type: 'separator'
   }, {

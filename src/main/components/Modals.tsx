@@ -61,7 +61,6 @@ export function editFileModal(
   </div>;
 }
 
-
 export function createFileModal(
   files: string[],
   hideModal: () => void,
@@ -104,7 +103,7 @@ export function newSketchModal(
 ): JSX.Element {
   const createNewSketch = (e: FormEvent<HTMLFormElement>) => {
     if (fs.createNewSketch(sketchName)) {
-      remote.BrowserWindow.getAllWindows().forEach((w: any) => w.reload());
+      reloadAll();
     }
     e.preventDefault();
   };
@@ -136,8 +135,9 @@ export function renameSketchModal(
 ): JSX.Element {
   const renameSketch = (e: FormEvent<HTMLFormElement>) => {
     if (fs.renameSketch(sketchName)) {
-      remote.BrowserWindow.getAllWindows().forEach((w: any) => w.reload());
+      reloadAll();
     }
+
     e.preventDefault();
   };
 
@@ -168,12 +168,9 @@ export function openSketchModal(
 ): JSX.Element {
   const openSketch = (name: string) => {
     if (fs.openSketch(name)) {
-      remote.BrowserWindow.getAllWindows().forEach((w: any) => w.reload());
+      reloadAll();
     }
   };
-
-  console.log(fs.listSketches());
-
 
   const sketchContainers = fs.listSketches()
     .filter(s => !settings.getCurrentSketchPath().endsWith(s))
@@ -192,4 +189,10 @@ export function openSketchModal(
     </div>
     <div className="overlay" onClick={_ => hideModal()}></div>
   </div>;
+}
+
+function reloadAll(): void {
+  remote.BrowserWindow
+    .getAllWindows()
+    .forEach((w: any) => w.reload());
 }

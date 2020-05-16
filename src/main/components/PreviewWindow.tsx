@@ -60,8 +60,6 @@ function buildBrowserWindow(): BrowserWindow {
 
   win.on('resize', () => win.reload());
 
-  win.webContents.openDevTools();
-
   return win;
 }
 

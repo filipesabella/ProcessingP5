@@ -1,3 +1,4 @@
+import { BrowserWindow } from 'electron';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
@@ -5,7 +6,8 @@ import { initEditor } from './Editor';
 import { Files } from './Files';
 import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
 import { openPreviewWindow } from './PreviewWindow';
-const { ipcRenderer } = (window as any).require('electron');
+
+const { remote, ipcRenderer } = window.require('electron');
 
 require('../styles/app.less');
 require('../styles/modals.less');
@@ -18,20 +20,26 @@ export const App = () => {
 
   const [showNewSketchModal, hideNewSketchModal] = useModal(() =>
     newSketchModal(hideNewSketchModal), []);
-  useEffect(() => {
-    ipcRenderer.on('new-sketch', showNewSketchModal);
-  });
 
   const [showRenameSketchModal, hideRenameSketchModal] = useModal(() =>
     renameSketchModal(hideRenameSketchModal), []);
-  useEffect(() => {
-    ipcRenderer.on('rename-sketch', showRenameSketchModal);
-  });
 
   const [showOpenSketchModal, hideOpenSketchModal] = useModal(() =>
     openSketchModal(hideOpenSketchModal), []);
+
   useEffect(() => {
+    ipcRenderer.on('new-sketch', showNewSketchModal);
+    ipcRenderer.on('rename-sketch', showRenameSketchModal);
     ipcRenderer.on('open-sketch', showOpenSketchModal);
+
+    ipcRenderer.on('toggle-dev-tools', () => {
+      (remote.BrowserWindow
+        .getAllWindows() as BrowserWindow[])
+        .forEach(w => {
+          // awful but the only way. id = 1 is the main window, always
+          w.id !== 1 && w.webContents.toggleDevTools();
+        });
+    });
   });
 
   return <div className="app">
