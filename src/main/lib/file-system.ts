@@ -110,6 +110,23 @@ export function createNewSketch(name: string): boolean {
   }
 }
 
+export function renameSketch(name: string): boolean {
+  try {
+    const newPath = path.join(
+      settings.getBaseSketchesPath(),
+      name);
+
+    fs.renameSync(settings.getCurrentSketchPath(), newPath);
+
+    settings.setCurrentSketchPath(newPath);
+
+    return true;
+  } catch (err) {
+    alert(err);
+    return false;
+  }
+}
+
 export function openSketch(name: string): boolean {
   try {
     const newPath = path.join(

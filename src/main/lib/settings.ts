@@ -73,6 +73,10 @@ export function getCurrentSketchPath(): string {
   return settings.get(keys.currentSketchPath);
 }
 
+export function getCurrentSketchName(): string {
+  return path.basename(getCurrentSketchPath());
+}
+
 export function setCurrentSketchPath(newPath: string): void {
   settings.set(keys.currentSketchPath, newPath);
 }

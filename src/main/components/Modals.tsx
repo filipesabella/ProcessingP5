@@ -131,6 +131,38 @@ export function newSketchModal(
   </div>;
 }
 
+export function saveSketchAsModal(
+  hideModal: () => void,
+): JSX.Element {
+  const renameSketch = (e: FormEvent<HTMLFormElement>) => {
+    if (fs.renameSketch(sketchName)) {
+      remote.BrowserWindow.getAllWindows().forEach((w: any) => w.reload());
+    }
+    e.preventDefault();
+  };
+
+  const [sketchName, setKetchName] = useState(settings.getCurrentSketchName());
+
+  return <div className="modal sketchModal">
+    <div className="container">
+      <h1>Rename Sketch</h1>
+      <form className="name" onSubmit={renameSketch}>
+        <label>Name</label>
+        <input type="text"
+          autoFocus
+          required={true}
+          value={sketchName}
+          onChange={e => setKetchName(e.target.value)}></input>
+        <button>Save</button>
+      </form>
+      <label
+        className="closeButton"
+        onClick={_ => hideModal()}>X</label>
+    </div>
+    <div className="overlay" onClick={_ => hideModal()}></div>
+  </div>;
+}
+
 export function openSketchModal(
   hideModal: () => void,
 ): JSX.Element {
