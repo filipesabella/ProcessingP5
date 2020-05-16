@@ -2,6 +2,7 @@ import { BrowserWindow } from 'electron';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
+import * as settings from '../lib/settings';
 import { initEditor } from './Editor';
 import { Files } from './Files';
 import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
@@ -40,6 +41,10 @@ export const App = () => {
           w.id !== 1 && w.webContents.toggleDevTools();
         });
     });
+
+    (remote.BrowserWindow
+      .getAllWindows() as BrowserWindow[])
+      .forEach(w => w.setTitle(settings.getCurrentSketchName()));
   });
 
   return <div className="app">

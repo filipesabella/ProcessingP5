@@ -53,6 +53,11 @@ function createWindow() {
   mainWindow.loadURL(startUrl);
   mainWindow.webContents.openDevTools();
 
+  mainWindow.on('page-title-updated', e => {
+    // alow the app to change the title
+    e.preventDefault();
+  });
+
   mainWindow.once('ready-to-show', () => mainWindow.showInactive());
 }
 

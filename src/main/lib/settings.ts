@@ -80,3 +80,4 @@ export function getCurrentSketchName(): string {
 export function setCurrentSketchPath(newPath: string): void {
   settings.set(keys.currentSketchPath, newPath);
 }
+
