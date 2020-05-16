@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useModal } from 'react-modal-hook';
-import { currentOpenFile, currentSketchFiles, readSketchFile, sketchMainFile } from '../lib/file-system';
+import * as fs from '../lib/file-system';
 import { updateEditorContent } from './Editor';
-import { createFileModal, editFileModal } from './Modals';
+import * as modals from './Modals';
 
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
-  const [currentFile, setCurrentFile] = useState(sketchMainFile);
+  const [currentFile, setCurrentFile] = useState(fs.sketchMainFile);
 
   useEffect(() => {
-    const files = currentSketchFiles()
+    const files = fs.currentSketchFiles()
       .map(f => f.replace(/.*\//, ''))
       .sort((a, b) => {
-        return a === sketchMainFile
+        return a === fs.sketchMainFile
           ? - 1
-          : b === sketchMainFile
+          : b === fs.sketchMainFile
             ? 1
             : a.localeCompare(b);
       });
@@ -24,13 +24,13 @@ export const Files = () => {
   }, [currentFile]);
 
   const selectFile = (f: string): void => {
-    const content = readSketchFile(f);
+    const content = fs.readSketchFile(f);
     updateEditorContent(content);
     setCurrentFile(f);
   };
 
   const [showEditFileModal, hideEditFileModal] = useModal(() =>
-    editFileModal(files, currentFile, hideEditFileModal, selectFile),
+    modals.editFileModal(files, currentFile, hideEditFileModal, selectFile),
     [files, currentFile]);
 
   const showFileMenu = (f: string): void => {
@@ -39,12 +39,12 @@ export const Files = () => {
   };
 
   const [showCreateFilModal, hideCreateFilModal] = useModal(() =>
-    createFileModal(files, hideCreateFilModal, selectFile),
+    modals.createFileModal(files, hideCreateFilModal, selectFile),
     [files, currentFile]);
 
   const containers = files.map(f => {
-    const isMainFile = f === sketchMainFile;
-    const className = currentOpenFile() === f ? 'active' : '';
+    const isMainFile = f === fs.sketchMainFile;
+    const className = fs.currentOpenFile() === f ? 'active' : '';
     return <li key={f}>
       <span
         className={'fileName ' + className}

@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import { currentSketchFiles, p5Path, readIndexTemplate } from '../lib/file-system';
+import * as fs from '../lib/file-system';
 
 const windowStateKeeper = window.require('electron-window-state');
 const electron = window.require('electron');
@@ -66,11 +66,11 @@ function buildBrowserWindow(): BrowserWindow {
 }
 
 function buildHTMLFile(): string {
-  const scripts = [p5Path()].concat(currentSketchFiles())
+  const scripts = [fs.p5Path()].concat(fs.currentSketchFiles())
     .map(s => `<script src="file://${s}"></script>`)
     .join('\n');
 
-  const src = readIndexTemplate().replace('$scripts', scripts);
+  const src = fs.readIndexTemplate().replace('$scripts', scripts);
   return 'data:text/html;charset=UTF-8,' + encodeURIComponent(src);
 }
 

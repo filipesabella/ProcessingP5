@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormEvent, useState } from 'react';
-import { createSketchFile, deleteSketchFile, renameSketchFile, sketchMainFile } from '../lib/file-system';
+import * as fs from '../lib/file-system';
 import { reloadFiles } from './PreviewWindow';
 
 export function editFileModal(
@@ -13,7 +13,7 @@ export function editFileModal(
   const validationPattern = `^(?!(${existingFiles})).*(\.js)$`;
   const [fileName, setFileName] = useState(currentFile);
   const renameFile = (e: FormEvent<HTMLFormElement>) => {
-    if (renameSketchFile(currentFile, fileName)) {
+    if (fs.renameSketchFile(currentFile, fileName)) {
       selectFile(fileName);
       reloadFiles();
       hideModal();
@@ -26,8 +26,8 @@ export function editFileModal(
     if (deleteButtonLabel === 'Delete') {
       setDeleteButtonLabel('Click to confirm deletion');
     } else {
-      if (deleteSketchFile(currentFile)) {
-        selectFile(sketchMainFile);
+      if (fs.deleteSketchFile(currentFile)) {
+        selectFile(fs.sketchMainFile);
         reloadFiles();
         hideModal();
       }
@@ -68,7 +68,7 @@ export function createFileModal(
   const validationPattern = `^(?!(${existingFiles})).*(\.js)$`;
   const [fileName, setFileName] = useState('');
   const createFile = (e: FormEvent<HTMLFormElement>) => {
-    if (createSketchFile(fileName)) {
+    if (fs.createSketchFile(fileName)) {
       selectFile(fileName);
       hideModal();
     }

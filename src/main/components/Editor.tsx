@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor';
-import { p5TypeDefinitions, readSketchMainFile, writeCurrentFile } from '../lib/file-system';
+import * as fs from '../lib/file-system';
 import { reloadPreviewWindow } from './PreviewWindow';
 
 let editor: monaco.editor.IStandaloneCodeEditor;
@@ -13,13 +13,13 @@ export const initEditor = () => {
   // });
 
   monaco.languages.typescript.javascriptDefaults
-    .addExtraLib(p5TypeDefinitions(), 'filename/p5.d.ts');
+    .addExtraLib(fs.p5TypeDefinitions(), 'filename/p5.d.ts');
 
   // options
   // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
   editor =
     monaco.editor.create(document.getElementById('editor-container')!, {
-      value: readSketchMainFile(),
+      value: fs.readSketchMainFile(),
       language: 'javascript',
       fontFamily: 'JetBrains Mono',
       fontSize: 16,
@@ -38,7 +38,7 @@ export const initEditor = () => {
     });
 
   editor.onDidChangeModelContent((_: any) => {
-    writeCurrentFile(editor.getValue());
+    fs.writeCurrentFile(editor.getValue());
     reloadPreviewWindow();
   });
 };
