@@ -26,25 +26,36 @@ export const Files = () => {
       });
 
     setFiles(files);
+  }, [currentFile]);
 
-    ipcRenderer.on('new-file', () => showCreateFileModal());
-    ipcRenderer.on('next-file', () => {
+  useEffect(() => {
+    ipcRenderer.on('new-file', showCreateFileModal);
+
+    const nextFile = () => {
       for (let i = 0; i < files.length; i++) {
         if (files[i] === currentFile) {
           selectFile(files[i + 1] ? files[i + 1] : files[0]);
           break;
         }
       }
-    });
-    ipcRenderer.on('previous-file', () => {
+    };
+    const previousFile = () => {
       for (let i = 0; i < files.length; i++) {
         if (files[i] === currentFile) {
           selectFile(files[i - 1] ? files[i - 1] : files[files.length - 1]);
           break;
         }
       }
-    });
-  }, [currentFile]);
+    };
+
+    ipcRenderer.on('next-file', nextFile);
+    ipcRenderer.on('previous-file', previousFile);
+    return () => {
+      ipcRenderer.removeListener('new-file', showCreateFileModal);
+      ipcRenderer.removeListener('next-file', nextFile);
+      ipcRenderer.removeListener('previous-file', previousFile);
+    };
+  }, [files]);
 
   const selectFile = (f: string): void => {
     const content = fs.readSketchFile(f);
