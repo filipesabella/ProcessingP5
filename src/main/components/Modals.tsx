@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FormEvent, useState } from 'react';
 import { createSketchFile, deleteSketchFile, renameSketchFile, sketchMainFile } from '../lib/file-system';
+import { reloadFiles } from './PreviewWindow';
 
 export function editFileModal(
   files: string[],
@@ -14,6 +15,7 @@ export function editFileModal(
   const renameFile = (e: FormEvent<HTMLFormElement>) => {
     if (renameSketchFile(currentFile, fileName)) {
       selectFile(fileName);
+      reloadFiles();
       hideModal();
     }
     e.preventDefault();

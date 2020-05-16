@@ -9,15 +9,8 @@ export function openPreviewWindow() {
   // close any current open windows
   applyToPreviewWindow(w => !w.isDestroyed() && w.close());
 
-  const scripts = [p5Path()].concat(currentSketchFiles())
-    .map(s => `<script src="file://${s}"></script>`)
-    .join('\n');
-
-  const src = readIndexTemplate().replace('$scripts', scripts);
-  const file = 'data:text/html;charset=UTF-8,' + encodeURIComponent(src);
-
   const win = buildBrowserWindow();
-  win.loadURL(file);
+  win.loadURL(buildHTMLFile());
   win.showInactive();
 }
 
@@ -29,6 +22,12 @@ export function reloadPreviewWindow(): void {
   } else {
     applyToPreviewWindow(w => w.reload());
   }
+}
+
+export function reloadFiles(): void {
+  applyToPreviewWindow(w => {
+    w.loadURL(buildHTMLFile());
+  });
 }
 
 function buildBrowserWindow(): BrowserWindow {
@@ -64,6 +63,15 @@ function buildBrowserWindow(): BrowserWindow {
   win.webContents.openDevTools();
 
   return win;
+}
+
+function buildHTMLFile(): string {
+  const scripts = [p5Path()].concat(currentSketchFiles())
+    .map(s => `<script src="file://${s}"></script>`)
+    .join('\n');
+
+  const src = readIndexTemplate().replace('$scripts', scripts);
+  return 'data:text/html;charset=UTF-8,' + encodeURIComponent(src);
 }
 
 function applyToPreviewWindow(fn: (w: BrowserWindow) => void): void {
