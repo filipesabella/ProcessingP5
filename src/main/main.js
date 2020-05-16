@@ -13,8 +13,6 @@ if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(path.join(__dirname, '../../dist'));
 }
 
-let mainWindow;
-
 app.on('ready', () => {
   const monitor = electron.screen.getPrimaryDisplay();
   const mainWindowState = windowStateKeeper({
@@ -22,15 +20,16 @@ app.on('ready', () => {
     defaultWidth: monitor.size.width / 2,
     defaultHeight: monitor.size.height,
   });
-  mainWindow = new BrowserWindow({
-    webPreferences: {
-      webSecurity: true,
-      nodeIntegration: true,
-    },
+  const mainWindow = new BrowserWindow({
+    show: false,
     x: mainWindowState.x === undefined ? 0 : mainWindowState.x,
     y: mainWindowState.y === undefined ? 0 : mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    webPreferences: {
+      webSecurity: true,
+      nodeIntegration: true,
+    },
   });
   mainWindowState.manage(mainWindow);
 
@@ -43,8 +42,7 @@ app.on('ready', () => {
   mainWindow.loadURL(startUrl);
   mainWindow.webContents.openDevTools();
 
-  mainWindow.on('closed', () => mainWindow = null);
+  mainWindow.once('ready-to-show', () => mainWindow.show());
 });
 
 app.on('window-all-closed', () => app.quit());
-app.on('activate', () => mainWindow === null && createWindow());
