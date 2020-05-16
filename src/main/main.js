@@ -72,6 +72,8 @@ const template = [{
     accelerator: process.platform === 'darwin' ? 'Cmd+N' : 'Ctrl+N',
     click: () => mainWindow.webContents.send('new-file'),
   }, {
+    type: 'separator'
+  }, {
     label: 'Next File',
     accelerator: 'Ctrl+Tab',
     click: () => mainWindow.webContents.send('next-file'),
