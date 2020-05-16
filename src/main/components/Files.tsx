@@ -8,6 +8,8 @@ import * as modals from './Modals';
 
 require('../styles/files.less');
 
+const { ipcRenderer } = window.require('electron');
+
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
   const [currentFile, setCurrentFile] = useState(settings.sketchMainFile);
@@ -24,6 +26,24 @@ export const Files = () => {
       });
 
     setFiles(files);
+
+    ipcRenderer.on('new-file', () => showCreateFileModal());
+    ipcRenderer.on('next-file', () => {
+      for (let i = 0; i < files.length; i++) {
+        if (files[i] === currentFile) {
+          selectFile(files[i + 1] ? files[i + 1] : files[0]);
+          break;
+        }
+      }
+    });
+    ipcRenderer.on('previous-file', () => {
+      for (let i = 0; i < files.length; i++) {
+        if (files[i] === currentFile) {
+          selectFile(files[i - 1] ? files[i - 1] : files[files.length - 1]);
+          break;
+        }
+      }
+    });
   }, [currentFile]);
 
   const selectFile = (f: string): void => {
@@ -41,8 +61,8 @@ export const Files = () => {
     showEditFileModal();
   };
 
-  const [showCreateFilModal, hideCreateFilModal] = useModal(() =>
-    modals.createFileModal(files, hideCreateFilModal, selectFile),
+  const [showCreateFileModal, hideCreateFileModal] = useModal(() =>
+    modals.createFileModal(files, hideCreateFileModal, selectFile),
     [files, currentFile]);
 
   const containers = files.map(f => {
@@ -59,7 +79,7 @@ export const Files = () => {
 
   return <div className="files">
     <div className="container">
-      <h1>Files<button onClick={_ => showCreateFilModal()}>+</button></h1>
+      <h1>Files<button onClick={_ => showCreateFileModal()}>+</button></h1>
       <ul>
         {containers}
       </ul>

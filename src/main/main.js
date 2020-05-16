@@ -68,8 +68,22 @@ const template = [{
     accelerator: process.platform === 'darwin' ? 'Cmd+R' : 'Ctrl+R',
     click: () => mainWindow.webContents.send('reload'),
   }, {
-    label: 'New Sketch',
+    label: 'New File',
     accelerator: process.platform === 'darwin' ? 'Cmd+N' : 'Ctrl+N',
+    click: () => mainWindow.webContents.send('new-file'),
+  }, {
+    label: 'Next File',
+    accelerator: 'Ctrl+Tab',
+    click: () => mainWindow.webContents.send('next-file'),
+  }, {
+    label: 'Previous File',
+    accelerator: 'Ctrl+Shift+Tab',
+    click: () => mainWindow.webContents.send('previous-file'),
+  }, {
+    type: 'separator'
+  }, {
+    label: 'New Sketch',
+    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
     click: () => mainWindow.webContents.send('new-sketch'),
   }, {
     label: 'Rename Sketch',
