@@ -28,6 +28,7 @@ export function editFileModal(
     } else {
       if (deleteSketchFile(currentFile)) {
         selectFile(sketchMainFile);
+        reloadFiles();
         hideModal();
       }
     }
