@@ -21,7 +21,8 @@ export const initEditor = () => {
       language: 'javascript',
       fontFamily: 'JetBrains Mono',
       fontSize: 16,
-      theme: 'vs-dark', // vs-light
+      theme: 'vs-dark',
+      // theme: 'vs-light',
       folding: false,
       formatOnType: true,
       formatOnPaste: true,
