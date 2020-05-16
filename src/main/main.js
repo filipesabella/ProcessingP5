@@ -63,9 +63,9 @@ const template = [{
     accelerator: process.platform === 'darwin' ? 'Cmd+N' : 'Ctrl+N',
     click: () => mainWindow.webContents.send('new-sketch'),
   }, {
-    label: 'Save Sketch as ...',
-    accelerator: process.platform === 'darwin' ? 'Cmd+S' : 'Ctrl+S',
-    click: () => mainWindow.webContents.send('save-sketch-as'),
+    label: 'Rename Sketch',
+    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
+    click: () => mainWindow.webContents.send('rename-sketch'),
   }, {
     label: 'Open Sketch',
     accelerator: process.platform === 'darwin' ? 'Cmd+O' : 'Ctrl+O',

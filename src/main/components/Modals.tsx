@@ -131,7 +131,7 @@ export function newSketchModal(
   </div>;
 }
 
-export function saveSketchAsModal(
+export function renameSketchModal(
   hideModal: () => void,
 ): JSX.Element {
   const renameSketch = (e: FormEvent<HTMLFormElement>) => {

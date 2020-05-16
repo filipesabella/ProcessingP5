@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
 import { initEditor } from './Editor';
 import { Files } from './Files';
-import { newSketchModal, openSketchModal, saveSketchAsModal } from './Modals';
+import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
 import { openPreviewWindow } from './PreviewWindow';
 const { ipcRenderer } = (window as any).require('electron');
 
@@ -22,10 +22,10 @@ export const App = () => {
     ipcRenderer.on('new-sketch', showNewSketchModal);
   });
 
-  const [showSaveSketchAsModal, hideSaveSketchAsModal] = useModal(() =>
-    saveSketchAsModal(hideSaveSketchAsModal), []);
+  const [showRenameSketchModal, hideRenameSketchModal] = useModal(() =>
+    renameSketchModal(hideRenameSketchModal), []);
   useEffect(() => {
-    ipcRenderer.on('save-sketch-as', showSaveSketchAsModal);
+    ipcRenderer.on('rename-sketch', showRenameSketchModal);
   });
 
   const [showOpenSketchModal, hideOpenSketchModal] = useModal(() =>
