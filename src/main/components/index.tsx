@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { App } from './App';
-import { openPreviewWindow } from './PreviewWindow';
 
 require('typeface-jetbrains-mono');
 
@@ -10,7 +9,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-window.setTimeout(openPreviewWindow, 500);
 
 // initialise the Monaco editor. this is actually necessary
 (self as any).MonacoEnvironment = {
