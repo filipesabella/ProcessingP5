@@ -6,6 +6,7 @@ import * as settings from '../lib/settings';
 import { initEditor } from './Editor';
 import { Files } from './Files';
 import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
+import { openPreferencesDialog } from './PreferencesDialog';
 import { openPreviewWindow } from './PreviewWindow';
 
 const { ipcRenderer } = window.require('electron');
@@ -28,6 +29,9 @@ export const App = () => {
   const [showOpenSketchModal, hideOpenSketchModal] = useModal(() =>
     openSketchModal(hideOpenSketchModal), []);
 
+  const [showPreferencesModal, hidePreferencesModal] = useModal(() =>
+    openPreferencesDialog(hidePreferencesModal), []);
+
   useEffect(() => {
     ipcRenderer.on('new-sketch', showNewSketchModal);
     ipcRenderer.on('rename-sketch', showRenameSketchModal);
@@ -38,7 +42,12 @@ export const App = () => {
       windows.toPreview(w => w.webContents.toggleDevTools());
     });
 
+    ipcRenderer.on('open-preferences', showPreferencesModal);
+
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
+
+    // remove me
+    // showPreferencesModal();
   });
 
   return <div className="app">

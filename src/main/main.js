@@ -125,6 +125,12 @@ const template = [{
 const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
+const {
+  dialog,
+  ipcMain
+} = require('electron')
+
+
 app.on('window-all-closed', app.quit);
 app.on('ready', () => {
   createWindow();

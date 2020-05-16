@@ -29,19 +29,16 @@ export function initSettings(): void {
     const basePath = path
       .join(app.getPath('documents'), defaultSketchesWorkspaceName) as string;
 
-    settings.set(keys.baseSketchesPath, basePath);
-
     try {
       fs.mkdirSync(basePath, {
         recursive: true
       });
-      fileSystem.createNewSketch(veryFirstSketchName);
+      settings.set(keys.baseSketchesPath, basePath);
     } catch (e) {
       // the configuration might have disappeared but the
       // directories still exist
       console.error(e);
     }
-
   }
 
   const currentSketch = getCurrentSketchPath();
@@ -55,7 +52,7 @@ export function initSettings(): void {
 
     const sketches = fs.readdirSync(getBaseSketchesPath());
 
-    // open  the first available sketch
+    // open the first available sketch
     if (sketches.length > 0) {
       setCurrentSketchPath(
         path.join(getBaseSketchesPath(), sketches[0]));
@@ -79,5 +76,9 @@ export function getCurrentSketchName(): string {
 
 export function setCurrentSketchPath(newPath: string): void {
   settings.set(keys.currentSketchPath, newPath);
+}
+
+export function setBaseSketchesPath(newPath: string): void {
+  settings.set(keys.baseSketchesPath, newPath);
 }
 

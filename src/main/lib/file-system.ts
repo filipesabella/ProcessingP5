@@ -8,6 +8,15 @@ const currentSketchPath = () => settings.getCurrentSketchPath();
 
 let currentFile = settings.sketchMainFile;
 
+const defaultSketchContent = `function setup() {
+  createCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+  rect(10, 10, 100, 100);
+}
+`;
+
 export function currentSketchFiles(): string[] {
   return (fs.readdirSync(currentSketchPath()) as string[])
     .filter(s => !s.startsWith('.'))
@@ -81,15 +90,6 @@ export function createSketchFile(newName: string): boolean {
   }
 }
 
-const defaultSketchContent = `function setup() {
-  createCanvas(windowWidth, windowHeight);
-}
-
-function draw() {
-  rect(10, 10, 100, 100);
-}
-`;
-
 export function createNewSketch(name: string): boolean {
   try {
     const newPath = path.join(
@@ -144,4 +144,36 @@ export function openSketch(name: string): boolean {
 
 export function listSketches(): string[] {
   return (fs.readdirSync(settings.getBaseSketchesPath()) as string[]);
+}
+
+export function changeBaseSketchesPath(newPath: string): boolean {
+  try {
+    const base = settings.getBaseSketchesPath();
+    const listFiles = (dir: string) => {
+      return fs.readdirSync(path.join(base, dir)) as string[];
+    };
+
+    // first copy everything
+    listSketches().forEach(sketch => {
+      const sketchPath = path.join(base, sketch);
+      const newSketchPath = path.join(newPath, sketch);
+
+      fs.mkdirSync(newSketchPath);
+
+      listFiles(sketch).forEach(file => {
+        fs.copyFileSync(
+          path.join(base, sketch, file),
+          path.join(newSketchPath, file),
+        );
+      });
+    });
+
+    // now start deleting
+    fs.rmdirSync(base, { recursive: true });
+
+    return true;
+  } catch (e) {
+    alert(e);
+    return false;
+  }
 }

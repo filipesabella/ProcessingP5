@@ -11,6 +11,10 @@ export function toAll(fn: (w: BrowserWindow) => void): void {
   all().forEach(fn);
 }
 
+export function main(): BrowserWindow[] {
+  return all().filter(w => w.id === 1)[0];
+}
+
 export function all(): BrowserWindow[] {
   return remote.BrowserWindow
     .getAllWindows() as BrowserWindow[];
