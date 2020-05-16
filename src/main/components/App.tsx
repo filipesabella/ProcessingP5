@@ -32,6 +32,7 @@ export const App = () => {
     ipcRenderer.on('new-sketch', showNewSketchModal);
     ipcRenderer.on('rename-sketch', showRenameSketchModal);
     ipcRenderer.on('open-sketch', showOpenSketchModal);
+    ipcRenderer.on('reload', () => windows.toPreview(w => w.reload()));
 
     ipcRenderer.on('toggle-dev-tools', () => {
       windows.toPreview(w => w.webContents.toggleDevTools());

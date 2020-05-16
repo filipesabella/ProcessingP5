@@ -64,6 +64,10 @@ function createWindow() {
 const template = [{
   label: 'File',
   submenu: [{
+    label: 'Reload',
+    accelerator: process.platform === 'darwin' ? 'Cmd+R' : 'Ctrl+R',
+    click: () => mainWindow.webContents.send('reload'),
+  }, {
     label: 'New Sketch',
     accelerator: process.platform === 'darwin' ? 'Cmd+N' : 'Ctrl+N',
     click: () => mainWindow.webContents.send('new-sketch'),
