@@ -33,8 +33,9 @@ export function editFileModal(
 
   return <div className="fileModal">
     <div className="container">
+      <h1>Rename or Delete {fileName}</h1>
       <form className="rename" onSubmit={renameFile}>
-        <label>Rename</label>
+        <label>Name</label>
         <input type="text"
           required={true}
           pattern={validationPattern}
@@ -73,6 +74,7 @@ export function createFileModal(
 
   return <div className="fileModal">
     <div className="container">
+      <h1>Create a New File</h1>
       <form className="name" onSubmit={createFile}>
         <label>Name</label>
         <input type="text"
