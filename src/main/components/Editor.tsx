@@ -29,8 +29,8 @@ export const initEditor = () => {
     monaco.editor.create(document.getElementById('editor-container'), {
       value: readSketchMainFile(),
       language: 'javascript',
-      fontFamily: 'RobotoMono',
-      fontSize: '15px',
+      fontFamily: 'JetBrains Mono',
+      fontSize: '16px',
       theme: 'vs-dark', // vs-light
       folding: false,
       formatOnType: true,

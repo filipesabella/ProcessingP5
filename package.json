@@ -55,6 +55,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "remote": "^0.2.6",
-    "typeface-roboto-mono": "^0.0.75"
+    "typeface-jetbrains-mono": "^1.0.5"
   }
 }
