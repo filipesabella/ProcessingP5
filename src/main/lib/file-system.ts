@@ -109,3 +109,22 @@ export function createNewSketch(name: string): boolean {
     return false;
   }
 }
+
+export function openSketch(name: string): boolean {
+  try {
+    const newPath = path.join(
+      settings.getBaseSketchesPath(),
+      name);
+
+    settings.setCurrentSketchPath(newPath);
+
+    return true;
+  } catch (err) {
+    alert(err);
+    return false;
+  }
+}
+
+export function listSketches(): string[] {
+  return (fs.readdirSync(settings.getBaseSketchesPath()) as string[]);
+}

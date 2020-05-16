@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FormEvent, useState } from 'react';
 import * as fs from '../lib/file-system';
+import * as settings from '../lib/settings';
 import { reloadFiles } from './PreviewWindow';
 
 const remote = window.require('electron').remote;
@@ -29,7 +30,7 @@ export function editFileModal(
       setDeleteButtonLabel('Click to confirm deletion');
     } else {
       if (fs.deleteSketchFile(currentFile)) {
-        selectFile(fs.sketchMainFile);
+        selectFile(settings.sketchMainFile);
         reloadFiles();
         hideModal();
       }
@@ -112,7 +113,7 @@ export function newSketchModal(
 
   return <div className="modal sketchModal">
     <div className="container">
-      <h1>Create a New File</h1>
+      <h1>Create a New Sketch</h1>
       <form className="name" onSubmit={createNewSketch}>
         <label>Name</label>
         <input type="text"
@@ -122,6 +123,37 @@ export function newSketchModal(
           onChange={e => setKetchName(e.target.value)}></input>
         <button>Save</button>
       </form>
+      <label
+        className="closeButton"
+        onClick={_ => hideModal()}>X</label>
+    </div>
+    <div className="overlay" onClick={_ => hideModal()}></div>
+  </div>;
+}
+
+export function openSketchModal(
+  hideModal: () => void,
+): JSX.Element {
+  const openSketch = (name: string) => {
+    if (fs.openSketch(name)) {
+      remote.BrowserWindow.getAllWindows().forEach((w: any) => w.reload());
+    }
+  };
+
+  console.log(fs.listSketches());
+
+
+  const sketchContainers = fs.listSketches()
+    .filter(s => !settings.getCurrentSketchPath().endsWith(s))
+    .map(s => {
+      return <li key={s}
+        onClick={_ => openSketch(s)}>{s}</li>;
+    });
+
+  return <div className="modal openSketchModal">
+    <div className="container">
+      <h1>Open a sketch</h1>
+      <ul>{sketchContainers}</ul>
       <label
         className="closeButton"
         onClick={_ => hideModal()}>X</label>
