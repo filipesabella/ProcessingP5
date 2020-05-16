@@ -32,7 +32,7 @@ export function readIndexTemplate(): string {
 }
 
 export function p5Path(): string {
-  return `file://${remote.app.getAppPath()}/assets/p5.js`;
+  return `${remote.app.getAppPath()}/assets/p5.js`;
 }
 
 export function p5TypeDefinitions(): string {
