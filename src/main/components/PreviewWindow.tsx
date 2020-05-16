@@ -16,8 +16,9 @@ export function openPreviewWindow() {
 }
 
 export function reloadPreviewWindow(): void {
-  // not allowing the preview window to be closed just wasn't working with
-  // Electron, so we added this garbage here instead.
+  // it's not possible to block the user from accidentaly closing the
+  // preview winndow. So on reload, we check if it still exists, and,
+  // if not, reopen it
   if (windows.all().length === 1) {
     openPreviewWindow();
   } else {
