@@ -3,6 +3,8 @@ import { FormEvent, useState } from 'react';
 import * as fs from '../lib/file-system';
 import { reloadFiles } from './PreviewWindow';
 
+const remote = window.require('electron').remote;
+
 export function editFileModal(
   files: string[],
   currentFile: string,
@@ -99,8 +101,31 @@ export function createFileModal(
 export function newSketchModal(
   hideModal: () => void,
 ): JSX.Element {
+  const createNewSketch = (e: FormEvent<HTMLFormElement>) => {
+    if (fs.createNewSketch(sketchName)) {
+      remote.BrowserWindow.getAllWindows().forEach((w: any) => w.reload());
+    }
+    e.preventDefault();
+  };
+
+  const [sketchName, setKetchName] = useState('');
+
   return <div className="modal sketchModal">
-    <div className="container">hello</div>
+    <div className="container">
+      <h1>Create a New File</h1>
+      <form className="name" onSubmit={createNewSketch}>
+        <label>Name</label>
+        <input type="text"
+          autoFocus
+          required={true}
+          value={sketchName}
+          onChange={e => setKetchName(e.target.value)}></input>
+        <button>Save</button>
+      </form>
+      <label
+        className="closeButton"
+        onClick={_ => hideModal()}>X</label>
+    </div>
     <div className="overlay" onClick={_ => hideModal()}></div>
   </div>;
 }

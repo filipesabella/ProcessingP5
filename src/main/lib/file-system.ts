@@ -2,7 +2,10 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 
 export const sketchMainFile = 'main.js';
-let currentSketchPath = '/home/filipe/ProcessingJS/sketch/';
+
+const baseSketchesPath = '/home/filipe/ProcessingJS/';
+
+let currentSketchPath = baseSketchesPath + '/sketch/';
 let currentFile = sketchMainFile;
 
 export function currentSketchFiles(): string[] {
@@ -69,6 +72,22 @@ export function renameSketchFile(orignalName: string, newName: string): boolean 
 export function createSketchFile(newName: string): boolean {
   try {
     fs.writeFileSync(currentSketchPath + newName, '');
+    return true;
+  } catch (err) {
+    alert(err);
+    return false;
+  }
+}
+
+export function createNewSketch(name: string): boolean {
+  try {
+    const newPath = baseSketchesPath + name + '/';
+    fs.mkdirSync(newPath);
+    fs.writeFileSync(newPath + sketchMainFile, '');
+
+    currentSketchPath = newPath;
+    currentFile = sketchMainFile;
+
     return true;
   } catch (err) {
     alert(err);
