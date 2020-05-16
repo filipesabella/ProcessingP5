@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { initEditor } from './Editor';
+import { Files } from './Files';
 import { openPreviewWindow } from './PreviewWindow';
-const { remote, ipcRenderer } = (window as any).require('electron');
+const { ipcRenderer } = (window as any).require('electron');
 
 require('../styles/app.less');
 
@@ -12,7 +13,9 @@ export const App = () => {
     openPreviewWindow();
   });
 
-  return <div className='app'></div>;
+  return <div className="app">
+    <Files />
+  </div>;
 };
 
 ipcRenderer.on('new-sketch', () => console.log('new sketch'));

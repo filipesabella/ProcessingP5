@@ -2,6 +2,8 @@ import * as monaco from 'monaco-editor';
 import { p5TypeDefinitions, readSketchMainFile, writeCurrentFile } from '../lib/file-system';
 import { reloadPreviewWindow } from './PreviewWindow';
 
+let editor: monaco.editor.IStandaloneCodeEditor;
+
 export const initEditor = () => {
   // this is the way to remove all the crap autocomplete suggestions,
   // but this has a bug in current monaco resulting in runtime errors.
@@ -15,7 +17,7 @@ export const initEditor = () => {
 
   // options
   // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditorconstructionoptions.html
-  const editor =
+  editor =
     monaco.editor.create(document.getElementById('editor-container')!, {
       value: readSketchMainFile(),
       language: 'javascript',
@@ -40,3 +42,7 @@ export const initEditor = () => {
     reloadPreviewWindow();
   });
 };
+
+export function updateEditorContent(content: string): void {
+  editor.setValue(content);
+}

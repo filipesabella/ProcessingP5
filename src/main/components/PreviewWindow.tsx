@@ -10,7 +10,7 @@ export function openPreviewWindow() {
   applyToPreviewWindow(w => !w.isDestroyed() && w.close());
 
   const scripts = [p5Path()].concat(currentSketchFiles())
-    .map(s => `<script src="${s}"></script>`)
+    .map(s => `<script src="file://${s}"></script>`)
     .join('\n');
 
   const src = readIndexTemplate().replace('$scripts', scripts);
