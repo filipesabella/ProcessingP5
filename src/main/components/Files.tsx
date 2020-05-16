@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useModal } from 'react-modal-hook';
 import * as fs from '../lib/file-system';
+import * as settings from '../lib/settings';
 import { updateEditorContent } from './Editor';
 import * as modals from './Modals';
 
@@ -9,15 +10,15 @@ require('../styles/files.less');
 
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
-  const [currentFile, setCurrentFile] = useState(fs.sketchMainFile);
+  const [currentFile, setCurrentFile] = useState(settings.sketchMainFile);
 
   useEffect(() => {
     const files = fs.currentSketchFiles()
       .map(f => f.replace(/.*\//, ''))
       .sort((a, b) => {
-        return a === fs.sketchMainFile
+        return a === settings.sketchMainFile
           ? - 1
-          : b === fs.sketchMainFile
+          : b === settings.sketchMainFile
             ? 1
             : a.localeCompare(b);
       });
@@ -45,7 +46,7 @@ export const Files = () => {
     [files, currentFile]);
 
   const containers = files.map(f => {
-    const isMainFile = f === fs.sketchMainFile;
+    const isMainFile = f === settings.sketchMainFile;
     const className = fs.currentOpenFile() === f ? 'active' : '';
     return <li key={f}>
       <span

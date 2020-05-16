@@ -1,32 +1,33 @@
 import * as settings from './settings';
+
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
+const path = remote.require('path');
 
-export const sketchMainFile = 'main.js';
+const currentSketchPath = () => settings.getCurrentSketchPath();
 
-const baseSketchesPath = settings.getBaseSketchesPath();
-const currentSketchPath = settings.getCurrentSketchPath();
-
-let currentFile = sketchMainFile;
+let currentFile = settings.sketchMainFile;
 
 export function currentSketchFiles(): string[] {
-  return (fs.readdirSync(currentSketchPath) as string[])
+  return (fs.readdirSync(currentSketchPath()) as string[])
     .filter(s => !s.startsWith('.'))
-    .map(s => currentSketchPath + s);
+    .map(s => path.join(currentSketchPath(), s));
 }
 
 export function readSketchMainFile(): string {
-  return readSketchFile(sketchMainFile);
+  return readSketchFile(settings.sketchMainFile);
 }
 
 export function readSketchFile(f: string): string {
   currentFile = f;
-  return fs.readFileSync(currentSketchPath + f).toString();
+  return fs
+    .readFileSync(path.join(currentSketchPath(), f))
+    .toString();
 }
 
 export function writeCurrentFile(content: string): void {
   fs.writeFileSync(
-    currentSketchPath + currentFile,
+    path.join(currentSketchPath(), currentFile),
     content);
 }
 
@@ -50,7 +51,7 @@ export function currentOpenFile(): string {
 
 export function deleteSketchFile(f: string): boolean {
   try {
-    fs.unlinkSync(currentSketchPath + f);
+    fs.unlinkSync(path.join(currentSketchPath(), f));
     return true;
   } catch (err) {
     alert(err);
@@ -61,8 +62,8 @@ export function deleteSketchFile(f: string): boolean {
 export function renameSketchFile(orignalName: string, newName: string): boolean {
   try {
     fs.renameSync(
-      currentSketchPath + orignalName,
-      currentSketchPath + newName);
+      path.join(currentSketchPath(), orignalName),
+      path.join(currentSketchPath(), newName));
     return true;
   } catch (err) {
     alert(err);
@@ -72,7 +73,7 @@ export function renameSketchFile(orignalName: string, newName: string): boolean 
 
 export function createSketchFile(newName: string): boolean {
   try {
-    fs.writeFileSync(currentSketchPath + newName, '');
+    fs.writeFileSync(path.join(currentSketchPath(), newName), '');
     return true;
   } catch (err) {
     alert(err);
@@ -80,11 +81,25 @@ export function createSketchFile(newName: string): boolean {
   }
 }
 
+const defaultSketchContent = `function setup() {
+  createCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+  rect(10, 10, 100, 100);
+}
+`;
+
 export function createNewSketch(name: string): boolean {
   try {
-    const newPath = baseSketchesPath + name + '/';
+    const newPath = path.join(
+      settings.getBaseSketchesPath(),
+      name);
+
     fs.mkdirSync(newPath);
-    fs.writeFileSync(newPath + sketchMainFile, '');
+    fs.writeFileSync(
+      path.join(newPath, settings.sketchMainFile),
+      defaultSketchContent);
 
     settings.setCurrentSketchPath(newPath);
 
