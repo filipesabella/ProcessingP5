@@ -1,11 +1,13 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
+const settings = remote.require('electron-settings');
 
 export const sketchMainFile = 'main.js';
 
-const baseSketchesPath = '/home/filipe/ProcessingJS/';
+const baseSketchesPath = settings.get('base-sketches-path') as string;
 
-let currentSketchPath = baseSketchesPath + '/sketch/';
+let currentSketchPath = settings.get('current-sketch-path') as string;
+
 let currentFile = sketchMainFile;
 
 export function currentSketchFiles(): string[] {

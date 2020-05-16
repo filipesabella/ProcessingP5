@@ -7,9 +7,11 @@ const {
   MenuItem,
 } = electron;
 
+const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const windowStateKeeper = require('electron-window-state');
+const settings = require('electron-settings');
 
 if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(
@@ -94,4 +96,26 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 app.on('window-all-closed', app.quit);
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+  intialiseSettings();
+});
+
+function intialiseSettings() {
+  settings.deleteAll();
+
+  // first time opening the app
+  if (!settings.has('base-sketches-path')) {
+    const basePath = path.join(app.getPath('documents'), 'ProcessingP5/');
+
+    settings.set('base-sketches-path', basePath);
+
+    const sketchPath = path.join(basePath + 'my-first-sketch/');
+    fs.mkdirSync(sketchPath, {
+      recursive: true
+    });
+    fs.writeFileSync(path.join(sketchPath, 'main.js'), '');
+
+    settings.set('current-sketch-path', sketchPath);
+  }
+}

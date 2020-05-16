@@ -28,7 +28,5 @@ export const App = () => {
   </div>;
 };
 
-
-
 ipcRenderer.on('save-sketch-as', () => console.log('save sketch as'));
 ipcRenderer.on('open-sketch', () => console.log('open sketch'));
