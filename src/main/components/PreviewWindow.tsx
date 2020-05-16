@@ -1,4 +1,5 @@
 import { BrowserWindow } from 'electron';
+import * as windows from '../lib/browser-window';
 import * as fs from '../lib/file-system';
 
 const windowStateKeeper = window.require('electron-window-state');
@@ -7,7 +8,7 @@ const remote = electron.remote;
 
 export function openPreviewWindow() {
   // close any current open windows
-  applyToPreviewWindow(w => !w.isDestroyed() && w.close());
+  windows.toPreview(w => !w.isDestroyed() && w.close());
 
   const win = buildBrowserWindow();
   win.loadURL(buildHTMLFile());
@@ -20,14 +21,12 @@ export function reloadPreviewWindow(): void {
   if (remote.BrowserWindow.getAllWindows().length === 1) {
     openPreviewWindow();
   } else {
-    applyToPreviewWindow(w => w.reload());
+    windows.toPreview(w => w.reload());
   }
 }
 
 export function reloadFiles(): void {
-  applyToPreviewWindow(w => {
-    w.loadURL(buildHTMLFile());
-  });
+  windows.toPreview(w => w.loadURL(buildHTMLFile()));
 }
 
 function buildBrowserWindow(): BrowserWindow {
@@ -72,8 +71,3 @@ function buildHTMLFile(): string {
   return 'data:text/html;charset=UTF-8,' + encodeURIComponent(src);
 }
 
-function applyToPreviewWindow(fn: (w: BrowserWindow) => void): void {
-  (remote.BrowserWindow.getAllWindows() as BrowserWindow[])
-    // the main editor window always gets id = 1
-    .forEach(w => w.id !== 1 && fn(w));
-}

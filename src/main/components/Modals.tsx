@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FormEvent, useState } from 'react';
+import * as windows from '../lib/browser-window';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { reloadFiles } from './PreviewWindow';
@@ -192,7 +193,5 @@ export function openSketchModal(
 }
 
 function reloadAll(): void {
-  remote.BrowserWindow
-    .getAllWindows()
-    .forEach((w: any) => w.reload());
+  windows.toAll(w => w.reload());
 }
