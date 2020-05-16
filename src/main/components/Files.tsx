@@ -5,6 +5,8 @@ import * as fs from '../lib/file-system';
 import { updateEditorContent } from './Editor';
 import * as modals from './Modals';
 
+require('../styles/files.less');
+
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
   const [currentFile, setCurrentFile] = useState(fs.sketchMainFile);

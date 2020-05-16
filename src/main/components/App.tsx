@@ -6,6 +6,7 @@ import { openPreviewWindow } from './PreviewWindow';
 const { ipcRenderer } = (window as any).require('electron');
 
 require('../styles/app.less');
+require('../styles/modals.less');
 
 export const App = () => {
   useEffect(() => {

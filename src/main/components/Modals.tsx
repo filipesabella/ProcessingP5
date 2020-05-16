@@ -34,7 +34,7 @@ export function editFileModal(
     }
   };
 
-  return <div className="fileModal">
+  return <div className="modal fileModal">
     <div className="container">
       <h1>Rename or Delete {fileName}</h1>
       <form className="rename" onSubmit={renameFile}>
@@ -75,7 +75,7 @@ export function createFileModal(
     e.preventDefault();
   };
 
-  return <div className="fileModal">
+  return <div className="modal fileModal">
     <div className="container">
       <h1>Create a New File</h1>
       <form className="name" onSubmit={createFile}>
@@ -92,6 +92,15 @@ export function createFileModal(
         className="closeButton"
         onClick={_ => hideModal()}>X</label>
     </div>
+    <div className="overlay" onClick={_ => hideModal()}></div>
+  </div>;
+}
+
+export function newSketchModal(
+  hideModal: () => void,
+): JSX.Element {
+  return <div className="modal sketchModal">
+    <div className="container">hello</div>
     <div className="overlay" onClick={_ => hideModal()}></div>
   </div>;
 }

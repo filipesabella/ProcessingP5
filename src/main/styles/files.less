@@ -1,0 +1,59 @@
+.files {
+  position: fixed;
+  width: var(--sidebar-width);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  font-family: 'Barlow';
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  .container {
+    padding: 1em;
+
+    h1 {
+      font-size: 1.1em;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--text-color);
+
+      button {
+        position: absolute;
+        right: 1.1em;
+        border: 1px solid var(--bg-color-transparent);
+        background-color: var(--text-color);
+        color: var(--bg-color);
+      }
+    }
+
+    ul {
+      margin-top: .5em;
+    }
+
+    li {
+      padding: .2em 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+
+      .fileName {
+        flex: 1;
+
+        &.active {
+          color: var(--intense-color);
+        }
+      }
+
+      .menu {
+        visibility: hidden;
+      }
+
+      &:hover {
+        color: var(--text-color-darker);
+
+        .menu {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}

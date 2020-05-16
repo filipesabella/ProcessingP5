@@ -1,0 +1,76 @@
+.modal {
+  top: 10em;
+  position: fixed;
+  right: 50%;
+  z-index: 3;
+  font-family: 'Barlow';
+
+  .container {
+    padding: 1em;
+    z-index: 3;
+    background: var(--bg-color);
+    color: var(--text-color);
+
+    h1 {
+      font-size: 1.1em;
+      padding-bottom: 5px;
+      margin-bottom: 1em;
+      display: inline-block;
+    }
+
+    button,
+    input {
+      background: var(--bg-color);
+      border: 1px solid var(--bg-color-transparent);
+      color: var(--text-color);
+      padding: 7px;
+    }
+
+    .closeButton {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      top: 7px;
+
+      &:hover {
+        cursor: pointer;
+        color: var(--bg-color-transparent);
+      }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color-transparent);
+    z-index: -1;
+  }
+}
+
+.fileModal {
+  width: 24em;
+  margin-right: -12em;
+
+  .container {
+
+    .rename,
+    .name {
+      label {
+        margin-right: 1em;
+      }
+
+      input {
+        margin-right: 1em;
+      }
+    }
+
+    .delete {
+      display: block;
+      margin-top: 1em;
+    }
+
+  }
+}
