@@ -1,9 +1,11 @@
 :root {
   --bg-color: #222831;
-  --text-color: #eeeeee;
+  --text-color: #eee;
+  --text-color-darker: #ccc;
   --other-color: #393e46;
   --intense-color: #b55400;
   --bg-color-transparent: rgba(0, 0, 0, .5);
+  --sidebar-width: 15em;
 }
 
 html,
@@ -14,7 +16,7 @@ body {
 
 .files {
   position: fixed;
-  width: 200px;
+  width: var(--sidebar-width);
   top: 0;
   right: 0;
   bottom: 0;
@@ -38,22 +40,99 @@ body {
     li {
       padding: .2em 0;
       cursor: pointer;
+      display: flex;
+      flex-direction: row;
 
-      &.active {
-        color: var(--intense-color);
+      .fileName {
+        flex: 1;
+
+        &.active {
+          color: var(--intense-color);
+        }
+      }
+
+      .menu {
+        visibility: hidden;
       }
 
       &:hover {
-        color: var(--other-color);
+        color: var(--text-color-darker);
+
+        .menu {
+          visibility: visible;
+        }
       }
     }
+  }
+}
+
+.fileModal {
+  position: fixed;
+  top: 10em;
+  right: 50%;
+  width: 24em;
+  margin-right: -12em;
+  z-index: 3;
+  font-family: 'Barlow';
+
+
+  .container {
+    padding: 1em;
+    z-index: 3;
+    background: var(--bg-color);
+    color: var(--text-color);
+
+    button,
+    input {
+      background: var(--bg-color);
+      border: 1px solid var(--bg-color-transparent);
+      color: var(--text-color);
+      padding: 7px;
+    }
+
+    .rename {
+      label {
+        margin-right: 1em;
+      }
+
+      input {
+        margin-right: 1em;
+      }
+    }
+
+    .delete {
+      display: block;
+      margin-top: 1em;
+    }
+
+    .closeButton {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      top: 7px;
+
+      &:hover {
+        cursor: pointer;
+        color: var(--bg-color-transparent);
+      }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color-transparent);
+    z-index: -1;
   }
 }
 
 #editor-container {
   position: fixed;
   top: 0;
-  right: 200px;
+  right: var(--sidebar-width);
   left: 0;
   bottom: 0;
 }

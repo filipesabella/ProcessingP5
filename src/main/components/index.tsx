@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { ModalProvider } from 'react-modal-hook';
 import { App } from './App';
 
 require('reset-css');
@@ -8,7 +9,7 @@ require('typeface-barlow');
 
 
 ReactDOM.render(
-  <App />,
+  <ModalProvider><App /></ModalProvider>,
   document.getElementById('root')
 );
 
