@@ -90,7 +90,7 @@ export const Files = () => {
 
   return <div className="files">
     <div className="container">
-      <h1>Files<button onClick={_ => showCreateFileModal()}>+</button></h1>
+      <h1>Files</h1>
       <ul>
         {containers}
       </ul>
