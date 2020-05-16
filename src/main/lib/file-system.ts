@@ -65,3 +65,13 @@ export function renameSketchFile(orignalName: string, newName: string): boolean 
     return false;
   }
 }
+
+export function createSketchFile(newName: string): boolean {
+  try {
+    fs.writeFileSync(currentSketchPath + newName, '');
+    return true;
+  } catch (err) {
+    alert(err);
+    return false;
+  }
+}

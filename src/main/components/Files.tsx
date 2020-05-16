@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useModal } from 'react-modal-hook';
 import { currentOpenFile, currentSketchFiles, readSketchFile, sketchMainFile } from '../lib/file-system';
 import { updateEditorContent } from './Editor';
-import { editFileModal } from './Modals';
+import { createFileModal, editFileModal } from './Modals';
 
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
@@ -38,6 +38,10 @@ export const Files = () => {
     showEditFileModal();
   };
 
+  const [showCreateFilModal, hideCreateFilModal] = useModal(() =>
+    createFileModal(files, hideCreateFilModal, selectFile),
+    [files, currentFile]);
+
   const containers = files.map(f => {
     const isMainFile = f === sketchMainFile;
     const className = currentOpenFile() === f ? 'active' : '';
@@ -52,7 +56,7 @@ export const Files = () => {
 
   return <div className="files">
     <div className="container">
-      <h1>Files</h1>
+      <h1>Files<button onClick={_ => showCreateFilModal()}>+</button></h1>
       <ul>
         {containers}
       </ul>
