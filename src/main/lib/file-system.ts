@@ -43,3 +43,25 @@ export function p5TypeDefinitions(): string {
 export function currentOpenFile(): string {
   return currentFile;
 }
+
+export function deleteSketchFile(f: string): boolean {
+  try {
+    fs.unlinkSync(currentSketchPath + f);
+    return true;
+  } catch (err) {
+    alert(err);
+    return false;
+  }
+}
+
+export function renameSketchFile(orignalName: string, newName: string): boolean {
+  try {
+    fs.renameSync(
+      currentSketchPath + orignalName,
+      currentSketchPath + newName);
+    return true;
+  } catch (err) {
+    alert(err);
+    return false;
+  }
+}

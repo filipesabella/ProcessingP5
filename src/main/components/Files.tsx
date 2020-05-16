@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { currentOpenFile, currentSketchFiles, readSketchFile, sketchMainFile } from '../lib/file-system';
+import { FormEvent, useEffect, useState } from 'react';
+import { useModal } from 'react-modal-hook';
+import { currentOpenFile, currentSketchFiles, deleteSketchFile, readSketchFile, renameSketchFile, sketchMainFile } from '../lib/file-system';
 import { updateEditorContent } from './Editor';
-
-const FileTree = require('react-filetree-electron');
 
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
@@ -29,11 +28,24 @@ export const Files = () => {
     setCurrentFile(f);
   };
 
+  const [showModal, hideModal] = useModal(() =>
+    fileModal(files, currentFile, hideModal, selectFile), [files]);
+
+  const showFileMenu = (f: string): void => {
+    selectFile(f);
+    window.setTimeout(showModal, 100);
+  };
+
   const containers = files.map(f => {
+    const isMainFile = f === sketchMainFile;
     const className = currentOpenFile() === f ? 'active' : '';
-    return <li key={f}
-      className={className}
-      onClick={_ => selectFile(f)}>{f}</li>;
+    return <li key={f}>
+      <span
+        className={'fileName ' + className}
+        onClick={_ => selectFile(f)}>{f}</span>
+      {!isMainFile && <span className="menu"
+        onClick={_ => showFileMenu(f)}>...</span>}
+    </li>;
   });
 
   return <div className="files">
@@ -45,3 +57,55 @@ export const Files = () => {
     </div>
   </div>;
 };
+
+function fileModal(
+  files: string[],
+  currentFile: string,
+  hideModal: () => void,
+  selectFile: (s: string) => void,
+): JSX.Element {
+  const existingFiles = files.filter(f => f !== currentFile).join('|');
+  const validationPattern = `^(?!(${existingFiles})).*(\.js)$`;
+  const [fileName, setFileName] = useState(currentFile);
+  const renameFile = (e: FormEvent<HTMLFormElement>) => {
+    if (renameSketchFile(currentFile, fileName)) {
+      selectFile(fileName);
+      hideModal();
+    }
+    e.preventDefault();
+  };
+
+  const [deleteButtonLabel, setDeleteButtonLabel] = useState('Delete');
+  const doDelete = () => {
+    if (deleteButtonLabel === 'Delete') {
+      setDeleteButtonLabel('Click to confirm deletion');
+    } else {
+      if (deleteSketchFile(currentFile)) {
+        selectFile(sketchMainFile);
+        hideModal();
+      }
+    }
+  };
+
+  return <div className="fileModal">
+    <div className="container">
+      <form className="rename" onSubmit={renameFile}>
+        <label>Rename</label>
+        <input type="text"
+          required={true}
+          pattern={validationPattern}
+          value={fileName}
+          onChange={e => setFileName(e.target.value)}
+          title="Must not have the same name as another file, and must end with .js"></input>
+        <button>Save</button>
+      </form>
+      <label
+        className="closeButton"
+        onClick={_ => hideModal()}>X</label>
+      <button
+        className="delete"
+        onClick={_ => doDelete()}>{deleteButtonLabel}</button>
+    </div>
+    <div className="overlay" onClick={_ => hideModal()}></div>
+  </div>;
+}
