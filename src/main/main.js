@@ -62,7 +62,24 @@ function createWindow() {
 }
 
 const template = [{
-  label: 'File',
+  label: 'ProcessingP5',
+  submenu: [{
+    label: 'New Sketch',
+    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
+    click: () => mainWindow.webContents.send('new-sketch'),
+  }, {
+    label: 'Open Sketch',
+    accelerator: process.platform === 'darwin' ? 'Cmd+O' : 'Ctrl+O',
+    click: () => mainWindow.webContents.send('open-sketch'),
+  }, {
+    type: 'separator'
+  }, {
+    label: 'Preferences',
+    accelerator: process.platform === 'darwin' ? 'Cmd+,' : 'Ctrl+,',
+    click: () => mainWindow.webContents.send('open-preferences'),
+  }]
+}, {
+  label: 'Sketch',
   submenu: [{
     label: 'Reload',
     accelerator: process.platform === 'darwin' ? 'Cmd+R' : 'Ctrl+R',
@@ -84,23 +101,9 @@ const template = [{
   }, {
     type: 'separator'
   }, {
-    label: 'New Sketch',
-    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
-    click: () => mainWindow.webContents.send('new-sketch'),
-  }, {
     label: 'Rename Sketch',
     accelerator: process.platform === 'darwin' ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
     click: () => mainWindow.webContents.send('rename-sketch'),
-  }, {
-    label: 'Open Sketch',
-    accelerator: process.platform === 'darwin' ? 'Cmd+O' : 'Ctrl+O',
-    click: () => mainWindow.webContents.send('open-sketch'),
-  }, {
-    type: 'separator'
-  }, {
-    label: 'Preferences',
-    accelerator: process.platform === 'darwin' ? 'Cmd+,' : 'Ctrl+,',
-    click: () => mainWindow.webContents.send('open-preferences'),
   }]
 }, {
   label: 'View',
