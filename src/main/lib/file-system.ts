@@ -1,12 +1,11 @@
+import * as settings from './settings';
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
-const settings = remote.require('electron-settings');
 
 export const sketchMainFile = 'main.js';
 
-const baseSketchesPath = settings.get('base-sketches-path') as string;
-
-let currentSketchPath = settings.get('current-sketch-path') as string;
+const baseSketchesPath = settings.getBaseSketchesPath();
+const currentSketchPath = settings.getCurrentSketchPath();
 
 let currentFile = sketchMainFile;
 
@@ -87,8 +86,7 @@ export function createNewSketch(name: string): boolean {
     fs.mkdirSync(newPath);
     fs.writeFileSync(newPath + sketchMainFile, '');
 
-    currentSketchPath = newPath;
-    currentFile = sketchMainFile;
+    settings.setCurrentSketchPath(newPath);
 
     return true;
   } catch (err) {

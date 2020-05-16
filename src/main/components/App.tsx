@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
+import { initSettings } from '../lib/settings';
 import { initEditor } from './Editor';
 import { Files } from './Files';
 import { newSketchModal } from './Modals';
@@ -12,6 +13,7 @@ require('../styles/modals.less');
 
 export const App = () => {
   useEffect(() => {
+    initSettings();
     initEditor();
     openPreviewWindow();
   });

@@ -98,24 +98,4 @@ Menu.setApplicationMenu(menu);
 app.on('window-all-closed', app.quit);
 app.on('ready', () => {
   createWindow();
-  intialiseSettings();
 });
-
-function intialiseSettings() {
-  settings.deleteAll();
-
-  // first time opening the app
-  if (!settings.has('base-sketches-path')) {
-    const basePath = path.join(app.getPath('documents'), 'ProcessingP5/');
-
-    settings.set('base-sketches-path', basePath);
-
-    const sketchPath = path.join(basePath + 'my-first-sketch/');
-    fs.mkdirSync(sketchPath, {
-      recursive: true
-    });
-    fs.writeFileSync(path.join(sketchPath, 'main.js'), '');
-
-    settings.set('current-sketch-path', sketchPath);
-  }
-}
