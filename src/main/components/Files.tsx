@@ -55,6 +55,7 @@ export const Files = () => {
 
     ipcRenderer.on('next-file', nextFile);
     ipcRenderer.on('previous-file', previousFile);
+
     return () => {
       ipcRenderer.removeListener('new-file', showCreateFileModal);
       ipcRenderer.removeListener('next-file', nextFile);
