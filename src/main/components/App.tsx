@@ -6,7 +6,7 @@ import * as settings from '../lib/settings';
 import { initEditor } from './Editor';
 import { Files } from './Files';
 import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
-import { openPreferencesDialog } from './PreferencesDialog';
+import { changeDarkMode, openPreferencesDialog } from './PreferencesDialog';
 import { openPreviewWindow } from './PreviewWindow';
 
 const { ipcRenderer } = window.require('electron');
@@ -45,6 +45,8 @@ export const App = () => {
     ipcRenderer.on('open-preferences', showPreferencesModal);
 
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
+
+    changeDarkMode(settings.getDarkMode());
 
     // remove me
     // showPreferencesModal();

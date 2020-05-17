@@ -15,12 +15,11 @@ const defaultSketchesWorkspaceName = 'ProcessingP5/';
 const keys = {
   baseSketchesPath: 'base-sketches-path',
   currentSketchPath: 'current-sketch-path',
+  darkMode: 'dark-mode',
 };
 
 // oh my this is a hot mess
 export function initSettings(): void {
-  console.log('settings.initSettings()');
-
   // useful for dev mode
   // settings.deleteAll();
 
@@ -80,5 +79,13 @@ export function setCurrentSketchPath(newPath: string): void {
 
 export function setBaseSketchesPath(newPath: string): void {
   settings.set(keys.baseSketchesPath, newPath);
+}
+
+export function getDarkMode(): boolean {
+  return settings.get(keys.darkMode) as boolean;
+}
+
+export function setDarkMode(darkMode: boolean): void {
+  settings.set(keys.darkMode, darkMode);
 }
 

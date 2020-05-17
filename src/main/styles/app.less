@@ -1,10 +1,21 @@
-:root {
-  --bg-color: #222831;
-  --text-color: #eee;
-  --text-color-darker: #ccc;
-  --other-color: #393e46;
-  --intense-color: #b55400;
-  --bg-color-transparent: rgba(0, 0, 0, .5);
+body {
+  --intense-color: rgb(181, 84, 0);
+
+  &.light {
+    --bg-color: rgb(238, 238, 238);
+    --text-color: rgb(34, 40, 49);
+    --bg-color-transparent: rgba(34, 40, 49, .5);
+    --border-color: rgba(238, 238, 238, .1);
+  }
+
+  &.dark {
+    --bg-color: rgb(34, 40, 49);
+    --text-color: rgb(238, 238, 238);
+    --intense-color: rgb(181, 84, 0);
+    --bg-color-transparent: rgba(34, 40, 49, .5);
+    --border-color: rgba(34, 34, 34, .3);
+  }
+
   --sidebar-width: 15em;
 }
 

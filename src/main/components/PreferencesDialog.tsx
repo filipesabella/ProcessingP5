@@ -1,3 +1,4 @@
+import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import { useState } from 'react';
 import * as windows from '../lib/browser-window';
@@ -39,12 +40,20 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     }
   };
 
+  const [darkMode, setDarkMode] = useState(settings.getDarkMode() || true);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    changeDarkMode(!darkMode);
+  };
+
   return <div className="modal preferencesModal">
     <div className="container">
       <h1>Preferences</h1>
       <div>
         <label>Dark Mode</label>
-        <input type="checkbox" defaultChecked={true}></input>
+        <input type="checkbox"
+          checked={darkMode}
+          onChange={_ => toggleDarkMode()}></input>
       </div>
       <div>
         <label>Sketches directory</label>
@@ -73,4 +82,14 @@ function directoryChooser(currentDirectory: string): string | undefined {
   });
 
   return result ? result[0] : undefined;
+}
+
+export function changeDarkMode(darkMode: boolean): void {
+  settings.setDarkMode(darkMode);
+  monaco.editor.setTheme(darkMode ? 'vs-dark' : 'vs-light');
+
+  const toRemove = darkMode ? 'light' : 'dark';
+  const toAdd = darkMode ? 'dark' : 'light';
+  document.body.classList.remove(toRemove);
+  document.body.classList.add(toAdd);
 }

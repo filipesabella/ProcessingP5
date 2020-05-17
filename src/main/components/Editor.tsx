@@ -1,5 +1,6 @@
 import * as monaco from 'monaco-editor';
 import * as fs from '../lib/file-system';
+import * as settings from '../lib/settings';
 import { reloadPreviewWindow } from './PreviewWindow';
 
 let editor: monaco.editor.IStandaloneCodeEditor;
@@ -23,8 +24,7 @@ export const initEditor = () => {
       language: 'javascript',
       fontFamily: 'JetBrains Mono',
       fontSize: 16,
-      theme: 'vs-dark',
-      // theme: 'vs-light',
+      theme: settings.getDarkMode() ? 'vs-dark' : 'vs-light',
       folding: false,
       formatOnType: true,
       formatOnPaste: true,
