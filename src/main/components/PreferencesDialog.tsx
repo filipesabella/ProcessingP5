@@ -11,7 +11,6 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     useState(settings.getBaseSketchesPath());
 
   const changeSketchesDirectory = () => {
-    console.log(sketchesDirectory);
     const newDirectory = directoryChooser(sketchesDirectory);
     if (newDirectory) {
       setSketchesDirectory(newDirectory);
