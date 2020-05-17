@@ -117,7 +117,7 @@ const template = [{
     click: () => mainWindow.webContents.send('toggle-sidebar'),
   }, {
     label: 'Toggle developer tools',
-    accelerator: 'Ctrl+Shift+I',
+    accelerator: 'Ctrl+Shift+J',
     click: () => mainWindow.webContents.send('toggle-dev-tools'),
   }, {
     type: 'separator'
