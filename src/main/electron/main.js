@@ -13,6 +13,8 @@ if (process.env.ELECTRON_START_URL) {
     });
 }
 
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+
 app.on('window-all-closed', app.quit);
 app.on('ready', () => {
   const mainWindow = require('./main-window').initialise();
