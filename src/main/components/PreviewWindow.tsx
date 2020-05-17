@@ -39,7 +39,7 @@ export function openPreviewWindow() {
   ipcRenderer.send('start-file-server', settings.getCurrentSketchPath());
   ipcRenderer.on('file-server-started', fileServerStarted);
 
-  win.on('closed', () => {
+  win.on('close', () => {
     // simply reopen, this window is not meant to be closed
     ipcRenderer.removeListener('toggle-full-screen', toggleFullScreen);
     ipcRenderer.removeListener('exit-full-screen', exitFullScreen);
