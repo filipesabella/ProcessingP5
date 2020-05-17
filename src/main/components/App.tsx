@@ -62,6 +62,16 @@ export const App = () => {
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
 
     changeDarkMode(settings.getDarkMode());
+
+    // behold, the uglies hack in the app. didn't want to bind
+    // the escape key to all 6 modals to close them, so we force
+    // a click on the 'overlay' div to trigger the hiding
+    document.onkeyup = e => {
+      if (e.which === 27) {
+        const modalOverlay = document.querySelector<HTMLDivElement>('.overlay');
+        modalOverlay && modalOverlay.click();
+      }
+    };
   }, []);
 
   return <Files />;
