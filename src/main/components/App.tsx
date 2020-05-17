@@ -61,7 +61,7 @@ export const App = () => {
     changeDarkMode(settings.getDarkMode());
   });
 
-  return <div className="app">
+  return <div>
     <Files />
   </div>;
 };

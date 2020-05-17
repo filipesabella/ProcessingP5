@@ -12,7 +12,7 @@ initSettings();
 
 ReactDOM.render(
   <ModalProvider><App /></ModalProvider>,
-  document.getElementById('root')
+  document.getElementById('app')
 );
 
 // initialise the Monaco editor. this is actually necessary
