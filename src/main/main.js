@@ -4,14 +4,13 @@ const {
   app,
   BrowserWindow,
   Menu,
-  MenuItem,
+  ipcMain,
 } = electron;
 
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const windowStateKeeper = require('electron-window-state');
-const settings = require('electron-settings');
 
 if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(
@@ -64,6 +63,37 @@ function createWindow() {
   mainWindow.once('closed', () =>
     BrowserWindow.getAllWindows().forEach(w => w.close()));
 }
+
+// file server stuff
+
+let server;
+
+function startFileServer(path) {
+  const static = require('node-static');
+  const file = new static.Server(path);
+
+  if (server) {
+    server.close();
+  }
+
+  server = require('http').createServer((request, response) => {
+    request.addListener('end', () => {
+      file.serve(request, response);
+    }).resume();
+  });
+
+  server.listen(0, () => {
+    const port = server.address().port;
+    mainWindow.webContents.send('file-server-started', port);
+  });
+}
+
+ipcMain.on('start-file-server', (event, arg) => {
+  startFileServer(arg);
+});
+
+
+// menu stuff
 
 const isMac = process.platform === 'darwin';
 

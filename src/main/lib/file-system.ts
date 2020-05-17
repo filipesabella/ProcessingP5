@@ -23,6 +23,12 @@ export function currentSketchFiles(): string[] {
     .map(s => path.join(currentSketchPath(), s));
 }
 
+export function writeIndexFile(src: string): void {
+  fs.writeFileSync(
+    path.join(settings.getCurrentSketchPath(), 'index.html'),
+    src);
+}
+
 export function readSketchMainFile(): string {
   return readSketchFile(settings.sketchMainFile);
 }
