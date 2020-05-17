@@ -45,10 +45,10 @@ export const App = () => {
     ipcRenderer.on('open-preferences', showPreferencesModal);
 
     ipcRenderer.on('toggle-sidebar', () => {
-      const s = document.body.style;
-      const width = s.getPropertyValue('--sidebar-width');
-      const current = s.getPropertyValue('--sidebar-width-current');
-      s.setProperty('--sidebar-width-current',
+      const s = getComputedStyle(document.body);
+      const width = s.getPropertyValue('--sidebar-width').trim();
+      const current = s.getPropertyValue('--sidebar-width-current').trim();
+      document.body.style.setProperty('--sidebar-width-current',
         current === '0em' ? width : '0em');
     });
 
