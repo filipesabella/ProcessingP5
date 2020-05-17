@@ -32,7 +32,6 @@ export function openPreviewWindow() {
   ipcRenderer.on('exit-full-screen', exitFullScreen);
 
   const fileServerStarted = (_: any, port: string) => {
-    console.log('woohoo', port);
     win.loadURL(`http://localhost:${port}/index.html`);
     win.showInactive();
   };
