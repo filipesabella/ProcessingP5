@@ -19,7 +19,7 @@ function draw() {
 
 export function currentSketchFiles(): string[] {
   return (fs.readdirSync(currentSketchPath()) as string[])
-    .filter(s => !s.startsWith('.'))
+    .filter(s => !s.startsWith('.') && s.endsWith('.js'))
     .map(s => path.join(currentSketchPath(), s));
 }
 

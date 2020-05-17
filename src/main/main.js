@@ -53,7 +53,7 @@ function createWindow() {
   });
 
   mainWindow.loadURL(startUrl);
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('page-title-updated', e => {
     // alow the app to change the title
@@ -65,21 +65,23 @@ function createWindow() {
     BrowserWindow.getAllWindows().forEach(w => w.close()));
 }
 
+const isMac = process.platform === 'darwin';
+
 const template = [{
   label: 'ProcessingP5',
   submenu: [{
     label: 'New Sketch',
-    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
+    accelerator: isMac ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
     click: () => mainWindow.webContents.send('new-sketch'),
   }, {
     label: 'Open Sketch',
-    accelerator: process.platform === 'darwin' ? 'Cmd+O' : 'Ctrl+O',
+    accelerator: isMac ? 'Cmd+O' : 'Ctrl+O',
     click: () => mainWindow.webContents.send('open-sketch'),
   }, {
     type: 'separator'
   }, {
     label: 'Preferences',
-    accelerator: process.platform === 'darwin' ? 'Cmd+,' : 'Ctrl+,',
+    accelerator: isMac ? 'Cmd+,' : 'Ctrl+,',
     click: () => mainWindow.webContents.send('open-preferences'),
   }]
 }, {
@@ -90,7 +92,7 @@ const template = [{
     click: () => mainWindow.webContents.send('reload'),
   }, {
     label: 'New File',
-    accelerator: process.platform === 'darwin' ? 'Cmd+N' : 'Ctrl+N',
+    accelerator: isMac ? 'Cmd+N' : 'Ctrl+N',
     click: () => mainWindow.webContents.send('new-file'),
   }, {
     type: 'separator'
@@ -106,7 +108,7 @@ const template = [{
     type: 'separator'
   }, {
     label: 'Rename Sketch',
-    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
+    accelerator: isMac ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
     click: () => mainWindow.webContents.send('rename-sketch'),
   }]
 }, {
@@ -143,7 +145,14 @@ const template = [{
     label: 'Reset font size',
     accelerator: 'Ctrl+Shift+0',
     click: () => mainWindow.webContents.send('font-size-reset'),
-  }]
+  }],
+}, {
+  label: 'Dev',
+  submenu: [{
+    label: 'Developer Tools',
+    accelerator: 'F12',
+    click: () => mainWindow.webContents.toggleDevTools(),
+  }],
 }, ];
 
 const menu = Menu.buildFromTemplate(template);
