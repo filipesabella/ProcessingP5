@@ -45,8 +45,10 @@ export function readIndexTemplate(): string {
   return fs.readFileSync(path).toString();
 }
 
-export function p5Path(): string {
-  return `${remote.app.getAppPath()}/assets/p5.js`;
+export function p5Paths(): string[] {
+  return [
+    `${remote.app.getAppPath()}/assets/p5.js`,
+  ];
 }
 
 export function p5TypeDefinitions(): string {

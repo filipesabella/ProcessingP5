@@ -64,7 +64,7 @@ function buildBrowserWindow(): BrowserWindow {
 }
 
 function buildHTMLFile(): string {
-  const scripts = [fs.p5Path()].concat(fs.currentSketchFiles())
+  const scripts = fs.p5Paths().concat(fs.currentSketchFiles())
     .map(s => `<script src="file://${s}"></script>`)
     .join('\n');
 
