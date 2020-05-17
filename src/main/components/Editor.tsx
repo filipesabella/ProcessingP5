@@ -24,7 +24,7 @@ export const initEditor = () => {
       value: fs.readSketchMainFile(),
       language: 'javascript',
       fontFamily: 'JetBrains Mono',
-      fontSize: 16,
+      fontSize: settings.getFontSize(),
       theme: settings.getDarkMode() ? 'vs-dark' : 'vs-light',
       folding: false,
       formatOnType: true,
@@ -50,6 +50,25 @@ export const initEditor = () => {
       editor.layout();
     }, 500); // time to allow the sidebar animation to finish
   });
+
+
+  const changeFontSize = (n: number) => {
+    editor.updateOptions({ 'fontSize': n });
+    settings.setFontSize(n);
+  };
+
+  ipcRenderer.on('font-size-reset', () => {
+    changeFontSize(settings.defaultFontSize);
+  });
+
+  ipcRenderer.on('font-size-increase', () => {
+    changeFontSize(settings.getFontSize() + 1);
+  });
+
+  ipcRenderer.on('font-size-decrease', () => {
+    changeFontSize(settings.getFontSize() - 1);
+  });
+
 };
 
 export function updateEditorContent(content: string): void {

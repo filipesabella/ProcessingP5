@@ -118,11 +118,17 @@ const template = [{
   }, {
     type: 'separator'
   }, {
-    role: 'resetzoom'
+    label: 'Increase font size',
+    accelerator: 'Ctrl+Shift+=',
+    click: () => mainWindow.webContents.send('font-size-increase'),
   }, {
-    role: 'zoomin'
+    label: 'Decrease font size',
+    accelerator: 'Ctrl+Shift+-',
+    click: () => mainWindow.webContents.send('font-size-decrease'),
   }, {
-    role: 'zoomout'
+    label: 'Reset font size',
+    accelerator: 'Ctrl+Shift+0',
+    click: () => mainWindow.webContents.send('font-size-reset'),
   }]
 }, ];
 

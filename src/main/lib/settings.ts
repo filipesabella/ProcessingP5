@@ -17,6 +17,7 @@ const keys = {
   currentSketchPath: 'current-sketch-path',
   darkMode: 'dark-mode',
   runMode: 'run-mode',
+  fontSize: 'font-size',
 };
 
 // oh my this is a hot mess
@@ -98,4 +99,14 @@ export function getRunMode(): RunModes {
 
 export function setRunMode(runMode: RunModes): void {
   settings.set(keys.runMode, runMode);
+}
+
+export const defaultFontSize = 16;
+
+export function getFontSize(): number {
+  return settings.get(keys.fontSize) ?? defaultFontSize;
+}
+
+export function setFontSize(fontSize: number): void {
+  settings.set(keys.fontSize, fontSize);
 }
