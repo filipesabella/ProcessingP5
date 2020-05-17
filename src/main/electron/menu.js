@@ -53,6 +53,8 @@ function initialise(mainWindow) {
       accelerator: isMac ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
       click: () => mainWindow.webContents.send('rename-sketch'),
     }, {
+      type: 'separator'
+    }, {
       label: 'Export',
       click: () => mainWindow.webContents.send('export-sketch'),
     }]

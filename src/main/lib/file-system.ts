@@ -164,8 +164,10 @@ export function buildIndexHtml(): void {
 
 export function exportSketch(): void {
   const p5scripts = [
-    `/home/filipe/Downloads/p5.min.js`,
-    // `/home/filipe/Downloads/p5.sound.min.js`,
+    `${remote.app.getAppPath()}/assets/p5.js`,
+
+    // the sound library breaks the sketch bundle running as a file
+    //`${remote.app.getAppPath()}/assets/p5.sound.js`,
   ];
 
   const currentSketchScripts =
@@ -175,7 +177,7 @@ export function exportSketch(): void {
 
   const scripts =
     p5scripts.concat(currentSketchScripts)
-      .map(f => `// file:::${f}\n${fs.readFileSync(f).toString()}\n// file:::end:::${f}`)
+      .map(f => fs.readFileSync(f).toString())
       .join('\n');
 
   const sketchName = path.basename(settings.getCurrentSketchPath());
@@ -184,6 +186,7 @@ export function exportSketch(): void {
     <html>
       <head>
         <title>${sketchName}</title>
+        <style>html, body { margin: 0; padding: 0; }</style>
         <script>
           ${scripts}
         </script>
