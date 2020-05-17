@@ -19,10 +19,10 @@ export const openPreferencesDialog = (hideModal: () => void) => {
   };
 
   const save = () => {
-    const changedSketchesDirectory =
-      sketchesDirectory !== settings.getBaseSketchesPath();
-
     settings.setBaseSketchesPath(sketchesDirectory);
+
+    // force the app to either find a new one in the new directory
+    // or create an empty sketch
     settings.setCurrentSketchPath('');
 
     windows.toAll(w => w.reload());
