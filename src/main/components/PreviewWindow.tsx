@@ -88,8 +88,11 @@ function buildBrowserWindow(): BrowserWindow {
 }
 
 function buildHTMLFile(): void {
-  const scripts = fs.p5Paths().concat(fs.currentSketchFiles())
+  const scripts = fs.p5Paths()
     .map(s => `<script src="file://${s}"></script>`)
+    .concat(
+      fs.currentSketchFileNames()
+        .map(s => `<script src="${s}"></script>`))
     .join('\n');
 
   const src = fs.readIndexTemplate().replace('$scripts', scripts);
