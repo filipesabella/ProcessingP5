@@ -1,8 +1,9 @@
 .files {
   position: fixed;
-  width: var(--sidebar-width);
+  width: 15em;
   top: 0;
-  right: 0;
+  right: calc(var(--sidebar-width) * -1 + var(--sidebar-width-current));
+  transition: right .5s ease;
   bottom: 0;
   font-family: 'Barlow';
   background-color: var(--bg-color);

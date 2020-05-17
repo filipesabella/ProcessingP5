@@ -17,6 +17,7 @@ body {
   }
 
   --sidebar-width: 15em;
+  --sidebar-width-current: var(--sidebar-width);
 }
 
 html,
@@ -28,7 +29,7 @@ body {
 #editor-container {
   position: fixed;
   top: 0;
-  right: var(--sidebar-width);
+  right: var(--sidebar-width-current);
   left: 0;
   bottom: 0;
 }

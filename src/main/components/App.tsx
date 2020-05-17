@@ -44,6 +44,18 @@ export const App = () => {
 
     ipcRenderer.on('open-preferences', showPreferencesModal);
 
+    ipcRenderer.on('toggle-sidebar', () => {
+      const s = document.body.style;
+      const width = s.getPropertyValue('--sidebar-width');
+      const current = s.getPropertyValue('--sidebar-width-current');
+      s.setProperty('--sidebar-width-current',
+        current === '0em' ? width : '0em');
+
+      // const w = windows.main();
+      // w.setBounds({ width: w.getBounds().width + 1 });
+      // w.setBounds({ width: w.getBounds().width - 1 });
+    });
+
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
 
     changeDarkMode(settings.getDarkMode());

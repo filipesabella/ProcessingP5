@@ -108,8 +108,12 @@ const template = [{
 }, {
   label: 'View',
   submenu: [{
+    label: 'Toggle Sidebar',
+    accelerator: 'Alt+/',
+    click: () => mainWindow.webContents.send('toggle-sidebar'),
+  }, {
     label: 'Toggle developer tools',
-    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+I' : 'Ctrl+shift+I',
+    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+I' : 'Ctrl+Shift+I',
     click: () => mainWindow.webContents.send('toggle-dev-tools'),
   }, {
     type: 'separator'
