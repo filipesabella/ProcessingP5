@@ -12,7 +12,9 @@ let server;
 function initialise(mainWindow) {
   function startFileServer(path) {
     const static = require('node-static');
-    const file = new static.Server(path);
+    const file = new static.Server(path, {
+      cache: 0
+    });
 
     if (server) {
       server.close();
