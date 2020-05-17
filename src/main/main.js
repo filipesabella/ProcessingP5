@@ -37,6 +37,7 @@ function createWindow() {
     y: mainWindowState.y === undefined ? 0 : mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
+    autoHideMenuBar: true,
     webPreferences: {
       webSecurity: true,
       nodeIntegration: true,
