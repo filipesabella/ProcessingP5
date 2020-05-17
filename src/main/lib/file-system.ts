@@ -19,8 +19,11 @@ function draw() {
 
 export function currentSketchFiles(): string[] {
   return (fs.readdirSync(currentSketchPath()) as string[])
-    .filter(s => !s.startsWith('.') && s.endsWith('.js'))
     .map(s => path.join(currentSketchPath(), s));
+}
+
+export function currentSketchFileNames(): string[] {
+  return fs.readdirSync(currentSketchPath()) as string[];
 }
 
 export function writeIndexFile(src: string): void {

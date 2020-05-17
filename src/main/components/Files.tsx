@@ -15,8 +15,7 @@ export const Files = () => {
   const [currentFile, setCurrentFile] = useState(settings.sketchMainFile);
 
   useEffect(() => {
-    const files = fs.currentSketchFiles()
-      .map(f => f.replace(/.*\//, ''))
+    const files = fs.currentSketchFileNames()
       .sort((a, b) => {
         return a === settings.sketchMainFile
           ? - 1
@@ -76,23 +75,37 @@ export const Files = () => {
     modals.createFileModal(files, hideCreateFileModal, selectFile),
     [files, currentFile]);
 
-  const containers = files.map(f => {
-    const isMainFile = f === settings.sketchMainFile;
-    const className = fs.currentOpenFile() === f ? 'active' : '';
-    return <li key={f}>
-      <span
-        className={'fileName ' + className}
-        onClick={_ => selectFile(f)}>{f}</span>
-      {!isMainFile && <span className="menu"
-        onClick={_ => showFileMenu(f)}>...</span>}
-    </li>;
-  });
+  const scriptsContainers = files
+    .filter(f => f.endsWith('.js'))
+    .map(f => {
+      const isMainFile = f === settings.sketchMainFile;
+      const className = fs.currentOpenFile() === f ? 'active' : '';
+      return <li key={f} className="file">
+        <span
+          className={'fileName ' + className}
+          onClick={_ => selectFile(f)}>{f}</span>
+        {!isMainFile && <span className="menu"
+          onClick={_ => showFileMenu(f)}>...</span>}
+      </li>;
+    });
+
+  const otherFilesContainers = files
+    .filter(f => f !== 'index.html' && !f.endsWith('.js'))
+    .map(f => {
+      return <li key={f}>
+        <span>{f}</span>
+      </li>;
+    });
 
   return <div className="files">
     <div className="container">
       <h1>Files</h1>
       <ul>
-        {containers}
+        {scriptsContainers}
+      </ul>
+      {otherFilesContainers.length > 0 && <h2>Other files</h2>}
+      <ul>
+        {otherFilesContainers}
       </ul>
     </div>
   </div>;
