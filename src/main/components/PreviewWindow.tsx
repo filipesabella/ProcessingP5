@@ -25,7 +25,7 @@ export function openPreviewWindow() {
 
   const exitFullScreen = () => {
     win.setFullScreen(false);
-    windows.main().focus();
+    windows.toMain(w => w.focus());
   };
 
   ipcRenderer.on('toggle-full-screen', toggleFullScreen);

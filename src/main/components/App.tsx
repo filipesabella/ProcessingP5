@@ -43,7 +43,7 @@ export const App = () => {
     });
 
     ipcRenderer.on('auto-hide-menu-bar', () => {
-      windows.main().autoHideMenuBar = true;
+      windows.toMain(w => w.autoHideMenuBar = true);
     });
 
     ipcRenderer.on('open-preferences', showPreferencesModal);
