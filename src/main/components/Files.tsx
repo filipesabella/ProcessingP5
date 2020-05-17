@@ -30,18 +30,24 @@ export const Files = () => {
   useEffect(() => {
     ipcRenderer.on('new-file', showCreateFileModal);
 
+    const scripts = files.filter(f => f.endsWith('.js'));
+
     const nextFile = () => {
-      for (let i = 0; i < files.length; i++) {
-        if (files[i] === currentFile) {
-          selectFile(files[i + 1] ? files[i + 1] : files[0]);
+      for (let i = 0; i < scripts.length; i++) {
+        if (scripts[i] === currentFile) {
+          selectFile(scripts[i + 1]
+            ? scripts[i + 1]
+            : scripts[0]);
           break;
         }
       }
     };
     const previousFile = () => {
-      for (let i = 0; i < files.length; i++) {
-        if (files[i] === currentFile) {
-          selectFile(files[i - 1] ? files[i - 1] : files[files.length - 1]);
+      for (let i = 0; i < scripts.length; i++) {
+        if (scripts[i] === currentFile) {
+          selectFile(scripts[i - 1]
+            ? scripts[i - 1]
+            : scripts[scripts.length - 1]);
           break;
         }
       }
