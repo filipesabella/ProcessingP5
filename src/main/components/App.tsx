@@ -50,10 +50,6 @@ export const App = () => {
       const current = s.getPropertyValue('--sidebar-width-current');
       s.setProperty('--sidebar-width-current',
         current === '0em' ? width : '0em');
-
-      // const w = windows.main();
-      // w.setBounds({ width: w.getBounds().width + 1 });
-      // w.setBounds({ width: w.getBounds().width - 1 });
     });
 
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
@@ -61,7 +57,5 @@ export const App = () => {
     changeDarkMode(settings.getDarkMode());
   });
 
-  return <div>
-    <Files />
-  </div>;
+  return <Files />;
 };

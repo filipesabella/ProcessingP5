@@ -2,6 +2,7 @@ import * as monaco from 'monaco-editor';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { reloadPreviewWindow } from './PreviewWindow';
+const { ipcRenderer } = window.require('electron');
 
 let editor: monaco.editor.IStandaloneCodeEditor;
 
@@ -40,6 +41,12 @@ export const initEditor = () => {
   editor.onDidChangeModelContent((_: any) => {
     fs.writeCurrentFile(editor.getValue());
     reloadPreviewWindow();
+  });
+
+  ipcRenderer.on('toggle-sidebar', () => {
+    window.setTimeout(() => {
+      editor.layout();
+    }, 500); // time to allow the sidebar animation to finish
   });
 };
 
