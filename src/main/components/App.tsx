@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
 import * as windows from '../lib/browser-window';
-import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { initEditor } from './Editor';
+import { openExportSketchDialog } from './ExportDialog';
 import { Files } from './Files';
 import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
 import { changeDarkMode, openPreferencesDialog } from './PreferencesDialog';
@@ -47,9 +47,7 @@ export const App = () => {
       windows.toMain(w => w.autoHideMenuBar = true);
     });
 
-    ipcRenderer.on('export-sketch', () => {
-      fs.exportSketch();
-    });
+    ipcRenderer.on('export-sketch', openExportSketchDialog);
 
     ipcRenderer.on('open-preferences', showPreferencesModal);
 

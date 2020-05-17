@@ -162,7 +162,7 @@ export function buildIndexHtml(): void {
     src);
 }
 
-export function exportSketch(): void {
+export function exportSketch(directory: string): void {
   const p5scripts = [
     `${remote.app.getAppPath()}/assets/p5.js`,
 
@@ -196,7 +196,7 @@ export function exportSketch(): void {
   `.split('\n');
 
   const stream = fs.createWriteStream(
-    path.join('/home/filipe/Downloads', `${sketchName}.html`),
+    path.join(directory, `${sketchName}.html`),
     { flags: 'w' });
 
   for (let line of src) {
