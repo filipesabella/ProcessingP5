@@ -59,7 +59,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal-hook": "^3.0.0",
-    "remote": "^0.2.6",
     "reset-css": "^5.0.1",
     "typeface-barlow": "^0.0.71",
     "typeface-jetbrains-mono": "^1.0.5"
