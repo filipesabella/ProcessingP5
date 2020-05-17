@@ -42,6 +42,10 @@ export const App = () => {
       windows.toPreview(w => w.webContents.toggleDevTools());
     });
 
+    ipcRenderer.on('auto-hide-menu-bar', () => {
+      windows.main().autoHideMenuBar = true;
+    });
+
     ipcRenderer.on('open-preferences', showPreferencesModal);
 
     ipcRenderer.on('toggle-sidebar', () => {

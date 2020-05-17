@@ -97,5 +97,13 @@ function initialise(mainWindow) {
     }],
   }, ];
 
+  if (!isMac) {
+    // view menu
+    template[2].submenu.push({
+      label: 'Auto-hide menu bar',
+      click: () => mainWindow.webContents.send('auto-hide-menu-bar'),
+    });
+  }
+
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
