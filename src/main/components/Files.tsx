@@ -30,7 +30,7 @@ export const Files = () => {
   useEffect(() => {
     ipcRenderer.on('new-file', showCreateFileModal);
 
-    const scripts = files.filter(f => f.endsWith('.js'));
+    const scripts = files.filter(fs.isScriptFile);
 
     const nextFile = () => {
       for (let i = 0; i < scripts.length; i++) {
@@ -83,7 +83,7 @@ export const Files = () => {
     [files, currentFile]);
 
   const scriptsContainers = files
-    .filter(f => f.endsWith('.js'))
+    .filter(fs.isScriptFile)
     .map(f => {
       const isMainFile = f === settings.sketchMainFile;
       const className = fs.currentOpenFile() === f ? 'active' : '';
@@ -97,7 +97,7 @@ export const Files = () => {
     });
 
   const otherFilesContainers = files
-    .filter(f => f !== 'index.html' && !f.endsWith('.js'))
+    .filter(f => f !== 'index.html' && !fs.isScriptFile(f))
     .map(f => {
       return <li key={f}>
         <span>{f}</span>

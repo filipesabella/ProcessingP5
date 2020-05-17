@@ -148,7 +148,7 @@ export function buildIndexHtml(): void {
     .map(s => `<script src="file://${s}"></script>`)
     .concat(
       currentSketchFileNames()
-        .filter(f => f.endsWith('.js'))
+        .filter(isScriptFile)
         .map(s => `<script src="${s}"></script>`))
     .join('\n');
 
@@ -173,7 +173,7 @@ export function exportSketch(directory: string): void {
 
   const currentSketchScripts =
     (fs.readdirSync(currentSketchPath()) as string[])
-      .filter(f => f.endsWith('.js'))
+      .filter(isScriptFile)
       .map(s => path.join(currentSketchPath(), s));
 
   const scripts =
@@ -203,4 +203,8 @@ export function exportSketch(directory: string): void {
   for (let line of src) {
     stream.write(line + '\n');
   }
+}
+
+export function isScriptFile(s: string): boolean {
+  return s.endsWith('.js');
 }
