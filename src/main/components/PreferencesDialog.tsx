@@ -2,7 +2,6 @@ import * as monaco from 'monaco-editor';
 import * as React from 'react';
 import { useState } from 'react';
 import * as windows from '../lib/browser-window';
-import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 
 const { dialog } = window.require('electron').remote;
@@ -23,21 +22,10 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     const changedSketchesDirectory =
       sketchesDirectory !== settings.getBaseSketchesPath();
 
-    if (changedSketchesDirectory) {
-      const confirmed = dialog.showMessageBoxSync({
-        type: 'question',
-        title: 'Moving Sketches Directory',
-        message: 'You have changed the sketches directory. All current ' +
-          'sketches will be moved to that new location.',
-        buttons: ['Ok', 'Cancel'],
-      }) === 0;
-      if (confirmed) {
-        if (fs.changeBaseSketchesPath(sketchesDirectory)) {
-          settings.setBaseSketchesPath(sketchesDirectory);
-          windows.toAll(w => w.reload());
-        }
-      }
-    }
+    settings.setBaseSketchesPath(sketchesDirectory);
+    settings.setCurrentSketchPath('');
+
+    windows.toAll(w => w.reload());
   };
 
   const [darkMode, setDarkMode] = useState(settings.getDarkMode());
