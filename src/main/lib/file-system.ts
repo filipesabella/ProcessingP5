@@ -148,6 +148,7 @@ export function buildIndexHtml(): void {
     .map(s => `<script src="file://${s}"></script>`)
     .concat(
       currentSketchFileNames()
+        .filter(f => f.endsWith('.js'))
         .map(s => `<script src="${s}"></script>`))
     .join('\n');
 
