@@ -73,6 +73,7 @@ export function createFileModal(
   const createFile = (e: FormEvent<HTMLFormElement>) => {
     if (fs.createSketchFile(fileName)) {
       selectFile(fileName);
+      reloadFiles();
       hideModal();
     }
     e.preventDefault();
