@@ -82,7 +82,8 @@ export function setBaseSketchesPath(newPath: string): void {
 }
 
 export function getDarkMode(): boolean {
-  return settings.get(keys.darkMode) as boolean;
+  const b = settings.get(keys.darkMode) as boolean;
+  return b === undefined ? true : b;
 }
 
 export function setDarkMode(darkMode: boolean): void {

@@ -47,9 +47,6 @@ export const App = () => {
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
 
     changeDarkMode(settings.getDarkMode());
-
-    // remove me
-    // showPreferencesModal();
   });
 
   return <div className="app">

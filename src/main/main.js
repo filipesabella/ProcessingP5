@@ -58,7 +58,7 @@ function createWindow() {
     e.preventDefault();
   });
 
-  mainWindow.once('ready-to-show', () => mainWindow.showInactive());
+  mainWindow.once('ready-to-show', () => mainWindow.show());
 }
 
 const template = [{

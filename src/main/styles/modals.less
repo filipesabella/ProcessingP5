@@ -107,15 +107,26 @@
 }
 
 .preferencesModal {
-  width: 24em;
-  margin-right: -12em;
+  width: 32em;
+  margin-right: -16em;
 
-  li {
-    cursor: pointer;
-    line-height: 2em;
-
-    &:hover {
-      color: brightness(0.6);
+  .darkMode,
+  .directory {
+    label {
+      display: inline-block;
+      width: 9em;
     }
+
+    margin-bottom: 1em;
+  }
+
+  .directory {
+    input {
+      width: 24em;
+    }
+  }
+
+  .buttonContainer {
+    text-align: right;
   }
 }

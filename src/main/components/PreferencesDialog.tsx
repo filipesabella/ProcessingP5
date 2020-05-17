@@ -40,7 +40,7 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     }
   };
 
-  const [darkMode, setDarkMode] = useState(settings.getDarkMode() || true);
+  const [darkMode, setDarkMode] = useState(settings.getDarkMode());
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     changeDarkMode(!darkMode);
@@ -49,23 +49,23 @@ export const openPreferencesDialog = (hideModal: () => void) => {
   return <div className="modal preferencesModal">
     <div className="container">
       <h1>Preferences</h1>
-      <div>
+      <div className="darkMode">
         <label>Dark Mode</label>
         <input type="checkbox"
           checked={darkMode}
           onChange={_ => toggleDarkMode()}></input>
       </div>
-      <div>
+      <div className="directory">
         <label>Sketches directory</label>
         <input
           readOnly={true}
-          value={sketchesDirectory}></input>
-        <button
-          onClick={_ => changeSketchesDirectory()}>...</button>
+          value={sketchesDirectory}
+          onClick={_ => changeSketchesDirectory()}></input>
       </div>
-      <div>
-        <button onClick={_ => save()}>Save</button>
-      </div>
+      {sketchesDirectory !== settings.getBaseSketchesPath() &&
+        <div className="buttonContainer">
+          <button onClick={_ => save()}>Save</button>
+        </div>}
       <label
         className="closeButton"
         onClick={_ => hideModal()}>X</label>
