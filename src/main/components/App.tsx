@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
 import * as windows from '../lib/browser-window';
+import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { initEditor } from './Editor';
 import { Files } from './Files';
@@ -44,6 +45,10 @@ export const App = () => {
 
     ipcRenderer.on('auto-hide-menu-bar', () => {
       windows.toMain(w => w.autoHideMenuBar = true);
+    });
+
+    ipcRenderer.on('export-sketch', () => {
+      fs.exportSketch();
     });
 
     ipcRenderer.on('open-preferences', showPreferencesModal);

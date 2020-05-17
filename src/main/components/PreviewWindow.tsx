@@ -10,7 +10,7 @@ const { remote, ipcRenderer } = window.require('electron');
 const http = window.require('http');
 
 export function openPreviewWindow() {
-  buildHTMLFile();
+  fs.buildIndexHtml();
 
   // close any current open windows
   windows.toPreview(w => !w.isDestroyed() && w.close());
@@ -53,7 +53,7 @@ export function reloadPreviewWindow(): void {
 }
 
 export function reloadFiles(): void {
-  buildHTMLFile();
+  fs.buildIndexHtml();
   reloadPreviewWindow();
 }
 
@@ -85,17 +85,5 @@ function buildBrowserWindow(): BrowserWindow {
   windowState.manage(win);
 
   return win;
-}
-
-function buildHTMLFile(): void {
-  const scripts = fs.p5Paths()
-    .map(s => `<script src="file://${s}"></script>`)
-    .concat(
-      fs.currentSketchFileNames()
-        .map(s => `<script src="${s}"></script>`))
-    .join('\n');
-
-  const src = fs.readIndexTemplate().replace('$scripts', scripts);
-  fs.writeIndexFile(src);
 }
 

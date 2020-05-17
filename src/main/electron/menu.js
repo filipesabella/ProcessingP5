@@ -52,6 +52,9 @@ function initialise(mainWindow) {
       label: 'Rename Sketch',
       accelerator: isMac ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
       click: () => mainWindow.webContents.send('rename-sketch'),
+    }, {
+      label: 'Export',
+      click: () => mainWindow.webContents.send('export-sketch'),
     }]
   }, {
     label: 'View',
