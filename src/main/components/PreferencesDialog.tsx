@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import * as React from 'react';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import * as windows from '../lib/browser-window';
 import * as settings from '../lib/settings';
 
@@ -34,16 +34,30 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     changeDarkMode(!darkMode);
   };
 
+  const [runMode, setRunMode] = useState(settings.getRunMode());
+  const changeRunMode = (e: ChangeEvent<HTMLSelectElement>) => {
+    const mode = e.target.value as settings.RunModes;
+    setRunMode(mode);
+    settings.setRunMode(mode);
+  };
+
   return <div className="modal preferencesModal">
     <div className="container">
       <h1>Preferences</h1>
-      <div className="darkMode">
+      <div className="field darkMode">
         <label>Dark Mode</label>
         <input type="checkbox"
           checked={darkMode}
           onChange={_ => toggleDarkMode()}></input>
       </div>
-      <div className="directory">
+      <div className="field directory">
+        <label>When to run the sketch</label>
+        <select value={runMode} onChange={changeRunMode}>
+          <option value="manual">Only when I press ctrl+r</option>
+          <option value="keystroke">On every keystroke</option>
+        </select>
+      </div>
+      <div className="field directory">
         <label>Sketches directory</label>
         <input
           readOnly={true}

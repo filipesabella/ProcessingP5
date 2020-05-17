@@ -16,6 +16,7 @@ const keys = {
   baseSketchesPath: 'base-sketches-path',
   currentSketchPath: 'current-sketch-path',
   darkMode: 'dark-mode',
+  runMode: 'run-mode',
 };
 
 // oh my this is a hot mess
@@ -89,3 +90,12 @@ export function setDarkMode(darkMode: boolean): void {
   settings.set(keys.darkMode, darkMode);
 }
 
+export type RunModes = 'keystroke' | 'manual';
+
+export function getRunMode(): RunModes {
+  return settings.get(keys.runMode) ?? 'manual';
+}
+
+export function setRunMode(runMode: RunModes): void {
+  settings.set(keys.runMode, runMode);
+}

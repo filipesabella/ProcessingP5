@@ -81,8 +81,8 @@ const template = [{
 }, {
   label: 'Sketch',
   submenu: [{
-    label: 'Reload',
-    accelerator: process.platform === 'darwin' ? 'Cmd+R' : 'Ctrl+R',
+    label: 'Run',
+    accelerator: 'Ctrl+R',
     click: () => mainWindow.webContents.send('reload'),
   }, {
     label: 'New File',

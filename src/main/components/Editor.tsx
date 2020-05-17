@@ -40,7 +40,9 @@ export const initEditor = () => {
 
   editor.onDidChangeModelContent((_: any) => {
     fs.writeCurrentFile(editor.getValue());
-    reloadPreviewWindow();
+    if (settings.getRunMode() === 'keystroke') {
+      reloadPreviewWindow();
+    }
   });
 
   ipcRenderer.on('toggle-sidebar', () => {
