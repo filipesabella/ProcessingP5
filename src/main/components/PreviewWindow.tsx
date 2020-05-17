@@ -18,8 +18,8 @@ export function openPreviewWindow() {
   const win = buildBrowserWindow();
   win.on('resize', win.reload);
 
-  const enterFullScreen = () => {
-    win.setFullScreen(true);
+  const toggleFullScreen = () => {
+    win.setFullScreen(!win.isFullScreen());
     win.focus();
   };
 
@@ -28,7 +28,7 @@ export function openPreviewWindow() {
     windows.main().focus();
   };
 
-  ipcRenderer.on('toggle-full-screen', enterFullScreen);
+  ipcRenderer.on('toggle-full-screen', toggleFullScreen);
   ipcRenderer.on('exit-full-screen', exitFullScreen);
 
   const fileServerStarted = (_: any, port: string) => {
@@ -42,7 +42,7 @@ export function openPreviewWindow() {
 
   win.on('closed', () => {
     // simply reopen, this window is not meant to be closed
-    ipcRenderer.removeListener('toggle-full-screen', enterFullScreen);
+    ipcRenderer.removeListener('toggle-full-screen', toggleFullScreen);
     ipcRenderer.removeListener('exit-full-screen', exitFullScreen);
     ipcRenderer.removeListener('file-server-started', fileServerStarted);
     openPreviewWindow();
