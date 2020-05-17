@@ -57,6 +57,7 @@ export function readIndexTemplate(): string {
 export function p5Paths(): string[] {
   return [
     `${remote.app.getAppPath()}/assets/p5.js`,
+    `${remote.app.getAppPath()}/assets/p5.sound.js`,
   ];
 }
 
