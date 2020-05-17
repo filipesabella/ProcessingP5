@@ -156,7 +156,9 @@ export function buildIndexHtml(): void {
     .readFileSync(indexTemplatePath)
     .toString();
 
-  const src = indexTemplate.replace('$scripts', scripts);
+  const src = indexTemplate
+    .replace('$scripts', scripts)
+    .replace('$title', sketchName());
 
   fs.writeFileSync(
     path.join(settings.getCurrentSketchPath(), 'index.html'),
@@ -181,12 +183,11 @@ export function exportSketch(directory: string): void {
       .map(f => fs.readFileSync(f).toString())
       .join('\n');
 
-  const sketchName = path.basename(settings.getCurrentSketchPath());
 
   const src = `
     <html>
       <head>
-        <title>${sketchName}</title>
+        <title>${sketchName()}</title>
         <style>html, body { margin: 0; padding: 0; }</style>
         <script>
           ${scripts}
@@ -207,4 +208,8 @@ export function exportSketch(directory: string): void {
 
 export function isScriptFile(s: string): boolean {
   return s.endsWith('.js');
+}
+
+function sketchName(): string {
+  return path.basename(settings.getCurrentSketchPath());
 }
