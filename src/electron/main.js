@@ -7,9 +7,9 @@ const {
 
 if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(
-    path.join(__dirname, '../../../dist'), {
+    path.join(__dirname, '../../dist'), {
       // this enables hard resets, don't know if I need it
-      //electron: '../../../dist'
+      //electron: '../../dist'
     });
 }
 
