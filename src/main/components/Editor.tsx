@@ -30,6 +30,7 @@ export const initEditor = () => {
       formatOnType: true,
       formatOnPaste: true,
       highlightActiveIndentGuide: false,
+      renderLineHighlight: 'gutter',
       lineNumbers: settings.getShowLineNumbers() ? 'on' : 'off',
       minimap: {
         enabled: false,
