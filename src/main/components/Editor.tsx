@@ -30,7 +30,7 @@ export const initEditor = () => {
       formatOnType: true,
       formatOnPaste: true,
       highlightActiveIndentGuide: false,
-      lineNumbers: 'on',
+      lineNumbers: settings.getShowLineNumbers() ? 'on' : 'off',
       minimap: {
         enabled: false,
       },
@@ -45,12 +45,15 @@ export const initEditor = () => {
     }
   });
 
+  settings.watchShowLineNumbers(showLineNumbers => {
+    editor.updateOptions({ 'lineNumbers': showLineNumbers ? 'on' : 'off' });
+  });
+
   ipcRenderer.on('toggle-sidebar', () => {
     window.setTimeout(() => {
       editor.layout();
     }, 500); // time to allow the sidebar animation to finish
   });
-
 
   const changeFontSize = (n: number) => {
     editor.updateOptions({ 'fontSize': n });

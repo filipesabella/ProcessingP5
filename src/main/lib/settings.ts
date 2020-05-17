@@ -16,6 +16,7 @@ const keys = {
   baseSketchesPath: 'base-sketches-path',
   currentSketchPath: 'current-sketch-path',
   darkMode: 'dark-mode',
+  showLineNumbers: 'show-line-numbers',
   runMode: 'run-mode',
   fontSize: 'font-size',
 };
@@ -109,4 +110,16 @@ export function getFontSize(): number {
 
 export function setFontSize(fontSize: number): void {
   settings.set(keys.fontSize, fontSize);
+}
+
+export function getShowLineNumbers(): boolean {
+  return settings.get(keys.showLineNumbers) ?? false;
+}
+
+export function setShowLineNumbers(showLineNumbers: boolean): void {
+  settings.set(keys.showLineNumbers, showLineNumbers);
+}
+
+export function watchShowLineNumbers(fn: (b: boolean) => void): void {
+  settings.watch(keys.showLineNumbers, fn);
 }

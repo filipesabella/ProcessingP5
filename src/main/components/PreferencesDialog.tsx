@@ -34,6 +34,13 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     changeDarkMode(!darkMode);
   };
 
+  const [showLineNumbers, setShowLineNumbers] =
+    useState(settings.getShowLineNumbers());
+  const toggleShowLineNumbers = () => {
+    setShowLineNumbers(!showLineNumbers);
+    settings.setShowLineNumbers(!showLineNumbers);
+  };
+
   const [runMode, setRunMode] = useState(settings.getRunMode());
   const changeRunMode = (e: ChangeEvent<HTMLSelectElement>) => {
     const mode = e.target.value as settings.RunModes;
@@ -49,6 +56,12 @@ export const openPreferencesDialog = (hideModal: () => void) => {
         <input type="checkbox"
           checked={darkMode}
           onChange={_ => toggleDarkMode()}></input>
+      </div>
+      <div className="field showLineNumbers">
+        <label>Show Line Numbers</label>
+        <input type="checkbox"
+          checked={showLineNumbers}
+          onChange={_ => toggleShowLineNumbers()}></input>
       </div>
       <div className="field directory">
         <label>When to run the sketch</label>
