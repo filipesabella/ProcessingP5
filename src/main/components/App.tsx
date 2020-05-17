@@ -18,7 +18,7 @@ export const App = () => {
   useEffect(() => {
     initEditor();
     openPreviewWindow();
-  });
+  }, []);
 
   const [showNewSketchModal, hideNewSketchModal] = useModal(() =>
     newSketchModal(hideNewSketchModal), []);
@@ -55,7 +55,7 @@ export const App = () => {
     windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
 
     changeDarkMode(settings.getDarkMode());
-  });
+  }, []);
 
   return <Files />;
 };
