@@ -26,7 +26,7 @@ let mainWindow;
 function createWindow() {
   const monitor = electron.screen.getPrimaryDisplay();
   const mainWindowState = windowStateKeeper({
-    file: 'mainWindow.json',
+    file: 'window-state-main.json',
     defaultWidth: monitor.size.width / 2,
     defaultHeight: monitor.size.height,
   });
@@ -61,6 +61,8 @@ function createWindow() {
   });
 
   mainWindow.once('ready-to-show', () => mainWindow.show());
+  mainWindow.once('closed', () =>
+    BrowserWindow.getAllWindows().forEach(w => w.close()));
 }
 
 const template = [{
@@ -115,8 +117,18 @@ const template = [{
     click: () => mainWindow.webContents.send('toggle-sidebar'),
   }, {
     label: 'Toggle developer tools',
-    accelerator: process.platform === 'darwin' ? 'Cmd+Shift+I' : 'Ctrl+Shift+I',
+    accelerator: 'Ctrl+Shift+I',
     click: () => mainWindow.webContents.send('toggle-dev-tools'),
+  }, {
+    type: 'separator'
+  }, {
+    label: 'Toggle Full Screen',
+    accelerator: 'Ctrl+Shift+F',
+    click: () => mainWindow.webContents.send('toggle-full-screen'),
+  }, {
+    label: 'Exit Full Screen',
+    accelerator: 'Esc',
+    click: () => mainWindow.webContents.send('exit-full-screen'),
   }, {
     type: 'separator'
   }, {
@@ -136,12 +148,6 @@ const template = [{
 
 const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
-
-const {
-  dialog,
-  ipcMain
-} = require('electron')
-
 
 app.on('window-all-closed', app.quit);
 app.on('ready', () => {

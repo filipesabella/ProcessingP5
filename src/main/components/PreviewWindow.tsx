@@ -3,8 +3,7 @@ import * as windows from '../lib/browser-window';
 import * as fs from '../lib/file-system';
 
 const windowStateKeeper = window.require('electron-window-state');
-const electron = window.require('electron');
-const remote = electron.remote;
+const { remote, ipcRenderer } = window.require('electron');
 
 export function openPreviewWindow() {
   // close any current open windows
@@ -13,17 +12,30 @@ export function openPreviewWindow() {
   const win = buildBrowserWindow();
   win.loadURL(buildHTMLFile());
   win.showInactive();
+
+  win.on('resize', win.reload);
+
+  const enterFullScreen = () => {
+    win.setFullScreen(true);
+    win.focus();
+  };
+
+  const exitFullScreen = () => {
+    win.setFullScreen(false);
+    windows.main().focus();
+  };
+
+  ipcRenderer.on('toggle-full-screen', enterFullScreen);
+  ipcRenderer.on('exit-full-screen', exitFullScreen);
+  win.on('closed', () => {
+    ipcRenderer.removeListener('toggle-full-screen', enterFullScreen);
+    ipcRenderer.removeListener('exit-full-screen', exitFullScreen);
+    openPreviewWindow();
+  });
 }
 
 export function reloadPreviewWindow(): void {
-  // it's not possible to block the user from accidentaly closing the
-  // preview winndow. So on reload, we check if it still exists, and,
-  // if not, reopen it
-  if (windows.all().length === 1) {
-    openPreviewWindow();
-  } else {
-    windows.toPreview(w => w.reload());
-  }
+  windows.toPreview(w => w.reload());
 }
 
 export function reloadFiles(): void {
@@ -32,13 +44,12 @@ export function reloadFiles(): void {
 
 function buildBrowserWindow(): BrowserWindow {
   const windowState = windowStateKeeper({
+    file: 'window-state-preview.json',
     defaultWidth: window.screen.availWidth / 2,
     defaultHeight: window.screen.availHeight,
   });
 
   const win = new remote.BrowserWindow({
-    file: 'previewWindow.json',
-    parent: remote.getCurrentWindow(),
     modal: false,
     show: false,
     titleBarStyle: 'hiddenInset',
@@ -57,8 +68,6 @@ function buildBrowserWindow(): BrowserWindow {
   }) as BrowserWindow;
 
   windowState.manage(win);
-
-  win.on('resize', () => win.reload());
 
   return win;
 }

@@ -7,7 +7,7 @@ import { initEditor } from './Editor';
 import { Files } from './Files';
 import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
 import { changeDarkMode, openPreferencesDialog } from './PreferencesDialog';
-import { openPreviewWindow } from './PreviewWindow';
+import { openPreviewWindow, reloadPreviewWindow } from './PreviewWindow';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -36,7 +36,7 @@ export const App = () => {
     ipcRenderer.on('new-sketch', showNewSketchModal);
     ipcRenderer.on('rename-sketch', showRenameSketchModal);
     ipcRenderer.on('open-sketch', showOpenSketchModal);
-    ipcRenderer.on('reload', () => windows.toPreview(w => w.reload()));
+    ipcRenderer.on('reload', reloadPreviewWindow);
 
     ipcRenderer.on('toggle-dev-tools', () => {
       windows.toPreview(w => w.webContents.toggleDevTools());
