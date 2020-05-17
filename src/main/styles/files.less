@@ -1,11 +1,11 @@
 .files {
   position: fixed;
-  width: 15em;
+  z-index: 2;
+  width: var(--sidebar-width);
   top: 0;
+  bottom: 0;
   right: calc(var(--sidebar-width) * -1 + var(--sidebar-width-current));
   transition: right .5s ease;
-  bottom: 0;
-  z-index: 2;
   font-family: 'Barlow';
   background-color: var(--bg-color);
   color: var(--text-color);
