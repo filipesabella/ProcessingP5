@@ -4,7 +4,7 @@
   "author": "Filipe Sabella",
   "repository": "https://github.com/filipesabella/processingJS",
   "version": "1.0.0",
-  "main": "src/main/main.js",
+  "main": "src/main/electron/main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "server": "parcel ./src/main/index.html --no-hmr",
@@ -26,7 +26,7 @@
       }
     ],
     "files": [
-      "main.js",
+      "src/main/electron/main.js",
       "dist/*",
       "assets/*"
     ]
