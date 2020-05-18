@@ -1,6 +1,7 @@
 const {
   ipcMain
 } = require('electron');
+const static = require('node-static');
 
 
 module.exports = {
@@ -11,7 +12,6 @@ let server;
 
 function initialise(mainWindow) {
   function startFileServer(path) {
-    const static = require('node-static');
     const file = new static.Server(path, {
       cache: 0
     });

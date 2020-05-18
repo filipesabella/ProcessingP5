@@ -7,12 +7,13 @@ import * as recast from 'recast';
 // injected script
 const AllVarsVariableName = '__AllVars';
 
-let previousCode: any = null;
+// all previously parsed code files by filename
+let previousCodes: { [key: string]: any } = {};
 
-export function codeHasChanged(userCode: string): boolean {
+export function codeHasChanged(file: string, userCode: string): boolean {
   return detectCodeChanges(
     astFromUserCode(userCode).program.body,
-    previousCode.program.body);
+    previousCodes[file].program.body);
 }
 
 /**
@@ -24,7 +25,7 @@ export function codeHasChanged(userCode: string): boolean {
  *   aHash: 1
  * }; let a = __AllVars['aHash'];
  */
-export function parseCode(userCode: string): string {
+export function parseCode(file: string, userCode: string): string {
   try {
     const vars: { [key: string]: string } = {};
     const ast = astFromUserCode(userCode);
@@ -45,12 +46,14 @@ export function parseCode(userCode: string): string {
 
     const modifiedUserCode = recast.prettyPrint(ast).code;
 
-    previousCode = astFromUserCode(userCode);
+    previousCodes[file] = astFromUserCode(userCode);
 
-    const jsonVars = JSON.stringify(vars);
-    return `const ${AllVarsVariableName} = ${jsonVars}; ${modifiedUserCode}`;
+    const varAssignments = Object.keys(vars).map(key => {
+      return `${AllVarsVariableName}['${key}'] = ${vars[key]};`;
+    }).join('');
+    return `${varAssignments} ${modifiedUserCode}`;
   } catch (e) {
-    return parseCode(recast.prettyPrint(previousCode).toString());
+    return parseCode(file, recast.prettyPrint(previousCodes[file]).toString());
   }
 }
 

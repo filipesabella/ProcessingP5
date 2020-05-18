@@ -1,4 +1,6 @@
 import * as monaco from 'monaco-editor';
+import * as windows from '../lib/browser-window';
+import * as parser from '../lib/code-parser';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { reloadPreviewWindow } from './PreviewWindow';
@@ -40,8 +42,21 @@ export const initEditor = () => {
     });
 
   editor.onDidChangeModelContent((_: any) => {
-    fs.writeCurrentFile(editor.getValue());
-    if (settings.getRunMode() === 'keystroke') {
+    const text = editor.getValue();
+    fs.writeCurrentFile(text);
+
+    if (settings.getHotCodeReload()) {
+      const currentFile = fs.currentOpenFile();
+      if (parser.codeHasChanged(currentFile, text)) {
+        fs.buildIndexHtml();
+        reloadPreviewWindow();
+      } else {
+        windows.toPreview(w => w.webContents.send('postMessage',
+          JSON.stringify({
+            vars: parser.getVars(text),
+          })));
+      }
+    } else if (settings.getRunMode() === 'keystroke') {
       reloadPreviewWindow();
     }
   });

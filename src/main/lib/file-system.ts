@@ -1,3 +1,4 @@
+import * as parser from './code-parser';
 import * as settings from './settings';
 
 const remote = window.require('electron').remote;
@@ -146,24 +147,44 @@ const p5scripts = [
 const indexTemplatePath = `${remote.app.getAppPath()}/assets/index.html`;
 
 export function buildIndexHtml(): void {
-  const scripts = p5scripts
-    .map(s => `<script src="file://${s}"></script>`)
-    .concat(
+  const dependencies = p5scripts
+    .map(s => `<script src="file://${s}"></script>`);
+
+  let sketchScripts: string[] = [];
+  if (settings.getHotCodeReload()) {
+    sketchScripts =
       currentSketchFileNames()
         .filter(isScriptFile)
-        .map(s => `<script src="${s}"></script>`))
-    .join('\n');
+        .map(fileName => {
+          const originalFilePath =
+            path.join(settings.getCurrentSketchPath(), fileName);
+          const code = fs.readFileSync(originalFilePath).toString();
+
+          const parsedFileName = '.' + fileName;
+          const parsedCode = parser.parseCode(fileName, code);
+          const parsedFilePath =
+            path.join(settings.getCurrentSketchPath(), parsedFileName);
+          fs.writeFileSync(parsedFilePath, parsedCode);
+
+          return `<script src="${parsedFileName}"></script>`;
+        });
+  } else {
+    sketchScripts =
+      currentSketchFileNames()
+        .filter(isScriptFile)
+        .map(s => `<script src="${s}"></script>`);
+  }
 
   const indexTemplate = fs
     .readFileSync(indexTemplatePath)
     .toString();
 
   const src = indexTemplate
-    .replace('$scripts', scripts)
+    .replace('$scripts', dependencies.concat(sketchScripts).join('\n'))
     .replace('$title', sketchName());
 
   fs.writeFileSync(
-    path.join(settings.getCurrentSketchPath(), indexFile),
+    path.join(settings.getCurrentSketchPath(), '.index.html'),
     src);
 }
 
@@ -209,7 +230,7 @@ export function exportSketch(directory: string): void {
 }
 
 export function isScriptFile(s: string): boolean {
-  return s.endsWith('.js');
+  return s.endsWith('.js') && !s.startsWith('.');
 }
 
 function sketchName(): string {
