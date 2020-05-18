@@ -20,7 +20,7 @@
 <script>
   const __AllVars = {};
 
-  require('electron').ipcRenderer.on('postMessage', (event, data) => {
+  require('electron').ipcRenderer.on('vars-updated', (event, data) => {
     const vars = JSON.parse(data).vars;
     for (k in vars) {
       __AllVars[k] = vars[k];

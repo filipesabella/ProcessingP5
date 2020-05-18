@@ -4,7 +4,7 @@ import * as parser from '../lib/code-parser';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import * as sketch from '../lib/sketch';
-import { reloadPreviewWindow } from './PreviewWindow';
+import * as previewWindow from './PreviewWindow';
 const { ipcRenderer } = window.require('electron');
 
 let editor: monaco.editor.IStandaloneCodeEditor;
@@ -42,25 +42,7 @@ export const initEditor = () => {
       automaticLayout: true,
     });
 
-  editor.onDidChangeModelContent((_: any) => {
-    const text = editor.getValue();
-    fs.writeCurrentFile(text);
-
-    if (settings.getHotCodeReload()) {
-      const currentFile = fs.currentOpenFile();
-      if (parser.codeHasChanged(currentFile, text)) {
-        sketch.buildIndexHtml();
-        reloadPreviewWindow();
-      } else {
-        windows.toPreview(w => w.webContents.send('postMessage',
-          JSON.stringify({
-            vars: parser.getVars(text),
-          })));
-      }
-    } else if (settings.getRunMode() === 'keystroke') {
-      reloadPreviewWindow();
-    }
-  });
+  editor.onDidChangeModelContent(handleEditorChange);
 
   settings.watchShowLineNumbers(showLineNumbers => {
     editor.updateOptions({ 'lineNumbers': showLineNumbers ? 'on' : 'off' });
@@ -93,4 +75,24 @@ export const initEditor = () => {
 
 export function updateEditorContent(content: string): void {
   editor.setValue(content);
+}
+
+function handleEditorChange(_: any): void {
+  const text = editor.getValue();
+  fs.writeCurrentFile(text);
+
+  if (settings.getHotCodeReload()) {
+    const currentFile = fs.currentOpenFile();
+    if (parser.codeHasChanged(currentFile, text)) {
+      sketch.buildIndexHtml();
+      previewWindow.reloadPreviewWindow();
+    } else {
+      windows.toPreview(w => w.webContents.send('vars-updated',
+        JSON.stringify({
+          vars: parser.getVars(text),
+        })));
+    }
+  } else if (settings.getRunMode() === 'keystroke') {
+    previewWindow.reloadPreviewWindow();
+  }
 }

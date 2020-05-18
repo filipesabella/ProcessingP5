@@ -10,6 +10,10 @@ const AllVarsVariableName = '__AllVars';
 // all previously parsed code files by filename
 let previousCodes: { [key: string]: any } = {};
 
+/**
+ * Returns if the code has changed structurally or just literal
+ * values have been modified.
+ */
 export function codeHasChanged(file: string, userCode: string): boolean {
   return detectCodeChanges(
     astFromUserCode(userCode).program.body,
