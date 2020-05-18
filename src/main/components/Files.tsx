@@ -97,7 +97,7 @@ export const Files = () => {
     });
 
   const otherFilesContainers = files
-    .filter(f => f !== 'index.html' && !fs.isScriptFile(f))
+    .filter(f => f !== fs.indexFile && !fs.isScriptFile(f))
     .map(f => {
       return <li key={f}>
         <span>{f}</span>

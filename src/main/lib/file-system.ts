@@ -4,6 +4,8 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 
+export const indexFile = '.index.html';
+
 const currentSketchPath = () => settings.getCurrentSketchPath();
 
 let currentFile = settings.sketchMainFile;
@@ -161,7 +163,7 @@ export function buildIndexHtml(): void {
     .replace('$title', sketchName());
 
   fs.writeFileSync(
-    path.join(settings.getCurrentSketchPath(), 'index.html'),
+    path.join(settings.getCurrentSketchPath(), indexFile),
     src);
 }
 
