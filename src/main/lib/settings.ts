@@ -19,6 +19,7 @@ const keys = {
   showLineNumbers: 'show-line-numbers',
   runMode: 'run-mode',
   fontSize: 'font-size',
+  hotCodeReload: 'hot-code-reload',
 };
 
 // oh my this is a hot mess
@@ -122,4 +123,12 @@ export function setShowLineNumbers(showLineNumbers: boolean): void {
 
 export function watchShowLineNumbers(fn: (b: boolean) => void): void {
   settings.watch(keys.showLineNumbers, fn);
+}
+
+export function getHotCodeReload(): boolean {
+  return settings.get(keys.hotCodeReload) ?? true;
+}
+
+export function setHotCodeReload(hotCodeReload: boolean): void {
+  settings.set(keys.hotCodeReload, hotCodeReload);
 }

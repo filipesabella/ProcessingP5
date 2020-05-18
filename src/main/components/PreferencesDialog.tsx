@@ -47,6 +47,13 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     settings.setRunMode(mode);
   };
 
+  const [hotCodeReload, setHotCodeReload] =
+    useState(settings.getHotCodeReload());
+  const toggleHotCodeReload = () => {
+    setHotCodeReload(!hotCodeReload);
+    settings.setHotCodeReload(!hotCodeReload);
+  };
+
   return <div className="modal preferencesModal">
     <div className="container">
       <h1>Preferences</h1>
@@ -68,6 +75,12 @@ export const openPreferencesDialog = (hideModal: () => void) => {
           <option value="manual">Only when I press ctrl+r</option>
           <option value="keystroke">On every keystroke</option>
         </select>
+      </div>
+      <div className="field">
+        <label>Hot Code Reload</label>
+        <input type="checkbox"
+          checked={hotCodeReload}
+          onChange={_ => toggleHotCodeReload()}></input>
       </div>
       <div className="field directory">
         <label>Sketches directory</label>
