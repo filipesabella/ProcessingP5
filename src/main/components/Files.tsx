@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useModal } from 'react-modal-hook';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
+import * as sketch from '../lib/sketch';
 import { updateEditorContent } from './Editor';
 import * as modals from './Modals';
 
@@ -30,7 +31,7 @@ export const Files = () => {
   useEffect(() => {
     ipcRenderer.on('new-file', showCreateFileModal);
 
-    const scripts = files.filter(fs.isScriptFile);
+    const scripts = files.filter(sketch.isScriptFile);
 
     const nextFile = () => {
       for (let i = 0; i < scripts.length; i++) {
@@ -83,7 +84,7 @@ export const Files = () => {
     [files, currentFile]);
 
   const scriptsContainers = files
-    .filter(fs.isScriptFile)
+    .filter(sketch.isScriptFile)
     .map(f => {
       const isMainFile = f === settings.sketchMainFile;
       const className = fs.currentOpenFile() === f ? 'active' : '';
@@ -97,7 +98,7 @@ export const Files = () => {
     });
 
   const otherFilesContainers = files
-    .filter(f => f !== fs.indexFile && !fs.isScriptFile(f))
+    .filter(f => f !== fs.indexFile && !sketch.isScriptFile(f))
     .map(f => {
       return <li key={f}>
         <span>{f}</span>

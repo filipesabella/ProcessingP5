@@ -1,5 +1,5 @@
 import * as windows from '../lib/browser-window';
-import * as fs from '../lib/file-system';
+import * as sketch from '../lib/sketch';
 
 const { dialog } = window.require('electron').remote;
 
@@ -11,6 +11,6 @@ export const openExportSketchDialog = () => {
   });
 
   if (result) {
-    fs.exportSketch(result[0]);
+    sketch.exportSketch(result[0]);
   }
 };

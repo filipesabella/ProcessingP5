@@ -3,6 +3,7 @@ import * as windows from '../lib/browser-window';
 import * as parser from '../lib/code-parser';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
+import * as sketch from '../lib/sketch';
 import { reloadPreviewWindow } from './PreviewWindow';
 const { ipcRenderer } = window.require('electron');
 
@@ -48,7 +49,7 @@ export const initEditor = () => {
     if (settings.getHotCodeReload()) {
       const currentFile = fs.currentOpenFile();
       if (parser.codeHasChanged(currentFile, text)) {
-        fs.buildIndexHtml();
+        sketch.buildIndexHtml();
         reloadPreviewWindow();
       } else {
         windows.toPreview(w => w.webContents.send('postMessage',

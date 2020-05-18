@@ -2,6 +2,7 @@ import { BrowserWindow } from 'electron';
 import * as windows from '../lib/browser-window';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
+import * as sketch from '../lib/sketch';
 
 const windowStateKeeper = window.require('electron-window-state');
 const { remote, ipcRenderer } = window.require('electron');
@@ -10,7 +11,7 @@ const { remote, ipcRenderer } = window.require('electron');
 const http = window.require('http');
 
 export function openPreviewWindow() {
-  fs.buildIndexHtml();
+  sketch.buildIndexHtml();
 
   // close any current open windows
   windows.toPreview(w => !w.isDestroyed() && w.close());
@@ -53,7 +54,7 @@ export function reloadPreviewWindow(): void {
 }
 
 export function reloadFiles(): void {
-  fs.buildIndexHtml();
+  sketch.buildIndexHtml();
   reloadPreviewWindow();
 }
 

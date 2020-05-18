@@ -11,7 +11,6 @@ export const sketchMainFile = 'main.js';
 const veryFirstSketchName = 'my-first-sketch/';
 const defaultSketchesWorkspaceName = 'ProcessingP5/';
 
-
 const keys = {
   baseSketchesPath: 'base-sketches-path',
   currentSketchPath: 'current-sketch-path',
