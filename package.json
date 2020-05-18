@@ -2,7 +2,7 @@
   "name": "ProcessingP5",
   "description": "A processing js playgound",
   "author": "Filipe Sabella",
-  "repository": "https://github.com/filipesabella/processingJS",
+  "repository": "https://github.com/filipesabella/ProcessingP5",
   "version": "1.0.0",
   "main": "src/electron/main.js",
   "scripts": {
@@ -22,7 +22,7 @@
       {
         "provider": "github",
         "owner": "filipesabella",
-        "repo": "processingJS"
+        "repo": "ProcessingP5"
       }
     ],
     "files": [
