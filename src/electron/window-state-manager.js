@@ -3,7 +3,8 @@
 let fs, path, electron, platform;
 
 try { // running in renderer process
-  electron = window.require('electron');
+  const r = window.require;
+  electron = r('electron');
   const remote = electron.remote;
   fs = remote.require('fs');
   path = remote.require('path');
