@@ -2,8 +2,7 @@ const electron = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
-const windowStateKeeper = require('electron-window-state');
-
+const windowStateKeeper = require('./window-state-manager');
 
 module.exports = {
   initialise
@@ -17,7 +16,7 @@ function initialise() {
     defaultHeight: monitor.size.height,
   });
 
-  mainWindow = new BrowserWindow({
+  mainWindow = mainWindowState.manage(new BrowserWindow({
     show: false,
     x: mainWindowState.x === undefined ? 0 : mainWindowState.x,
     y: mainWindowState.y === undefined ? 0 : mainWindowState.y,
@@ -28,8 +27,7 @@ function initialise() {
       webSecurity: true,
       nodeIntegration: true,
     },
-  });
-  mainWindowState.manage(mainWindow);
+  }));
 
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '../../dist/index.html'),

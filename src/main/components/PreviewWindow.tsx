@@ -4,7 +4,8 @@ import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import * as sketch from '../lib/sketch';
 
-const windowStateKeeper = window.require('electron-window-state');
+const windowStateKeeper = require('../../electron/window-state-manager');
+
 const { remote, ipcRenderer } = window.require('electron');
 
 // import * as http from 'http';
@@ -65,13 +66,14 @@ function buildBrowserWindow(): BrowserWindow {
     defaultHeight: window.screen.availHeight,
   });
 
-  const win = new remote.BrowserWindow({
+  const win = windowState.manage(new remote.BrowserWindow({
     modal: false,
     show: false,
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
     closable: false, // does not work on linux
     excludedFromShownWindowsMenu: true,
+    useContentSize: false,
     x: windowState.x === undefined
       ? window.screen.availWidth / 2 : windowState.x,
     y: windowState.y === undefined ? 0 : windowState.y,
@@ -81,9 +83,7 @@ function buildBrowserWindow(): BrowserWindow {
       webSecurity: false,
       nodeIntegration: true,
     },
-  }) as BrowserWindow;
-
-  windowState.manage(win);
+  }) as BrowserWindow);
 
   return win;
 }
