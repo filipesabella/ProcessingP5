@@ -13,7 +13,7 @@
     border: 1px solid var(--border-color);
 
     h1 {
-      font-size: 1.1em;
+      font-size: 1.2em;
       padding-bottom: 5px;
       margin-bottom: 1em;
       display: inline-block;
@@ -110,6 +110,31 @@
 .preferencesModal {
   width: 32em;
   margin-right: -16em;
+
+  h2 {
+    position: relative;
+    z-index: 1;
+    padding-left: 1.5em;
+    margin: 1.5em -6px .5em -0.7em;
+
+    &:before {
+      border-top: 1px solid var(--text-color);
+      content: "";
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 95%;
+      z-index: -1;
+    }
+
+    span {
+      background: var(--bg-color);
+      padding: 0 5px;
+    }
+  }
 
   .field {
     label {

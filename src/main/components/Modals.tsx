@@ -44,6 +44,7 @@ export function editFileModal(
       <form className="rename" onSubmit={renameFile}>
         <label>Name</label>
         <input type="text"
+          autoFocus
           required={true}
           pattern={validationPattern}
           value={fileName}
@@ -85,6 +86,7 @@ export function createFileModal(
       <form className="name" onSubmit={createFile}>
         <label>Name</label>
         <input type="text"
+          autoFocus
           required={true}
           pattern={validationPattern}
           value={fileName}

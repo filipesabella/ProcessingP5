@@ -85,6 +85,8 @@ export const openPreferencesDialog = (hideModal: () => void) => {
           checked={hotCodeReload}
           onChange={_ => toggleHotCodeReload()}></input>
       </div>
+
+      <h2><span>Advanced</span></h2>
       <div className="field directory">
         <label>Sketches directory</label>
         <input
