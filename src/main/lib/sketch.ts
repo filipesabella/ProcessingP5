@@ -37,11 +37,11 @@ export function buildIndexHtml(): void {
 }
 
 /**
- * Given a sketch's file, parses the contends using the code-parser
+ * Given a sketch's file, parses the contents using the code-parser
  * and writes the parsed code to ('.' + originalFileName).
  *
- * By starting with a '.', it's going to be hidden for most users
- * and we can serve those files using our local file server.
+ * By starting the file name with a '.', it's going to be hidden for
+ * most users and we can serve those files using our local file server.
  */
 const scriptForHotReload = (currentPath: string) =>
   (fileName: string): string => {
