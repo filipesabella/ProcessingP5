@@ -23,8 +23,7 @@ function initialise() {
     y: mainWindowState.y === undefined ? 0 : mainWindowState.y,
     width: mainWindowState.width,
     height: mainWindowState.height,
-    // perhaps this should be a user option
-    // autoHideMenuBar: true,
+    icon: path.join(__dirname, '../../assets/icons/png/64x64.png'),
     webPreferences: {
       webSecurity: true,
       nodeIntegration: true,
