@@ -51,6 +51,7 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
+    "ast-types": "^0.13.3",
     "electron-settings": "^3.2.0",
     "electron-updater": "^4.3.1",
     "electron-window-state": "^5.0.3",
@@ -59,6 +60,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal-hook": "^3.0.0",
+    "recast": "^0.19.1",
     "reset-css": "^5.0.1",
     "typeface-barlow": "^0.0.71",
     "typeface-jetbrains-mono": "^1.0.5"
