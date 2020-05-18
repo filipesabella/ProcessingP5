@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "main": "src/electron/main.js",
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
+    "postinstall": "electron-builder install-app-deps && yarn build",
     "server": "parcel ./src/main/index.html --no-hmr",
     "start": "DEV_MODE=true ELECTRON_START_URL=http://localhost:1234 electron .",
     "build": "parcel build ./src/main/index.html --public-url ./ && yarn run build-ts && yarn run build-worker",

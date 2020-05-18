@@ -1,4 +1,3 @@
-// const recast = require('recast');
 import * as types from 'ast-types';
 import { builders as typeBuilders } from 'ast-types';
 import * as recast from 'recast';
