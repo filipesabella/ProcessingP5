@@ -739,7 +739,10 @@
        cy="-425.77631"
        r="199.57143"
        style="display:inline;opacity:1;vector-effect:none;fill:#dbdbdb;fill-opacity:0.94117647;stroke:none;stroke-width:7.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       clip-path="url(#clipPath6857-7-2-6-5)" />
+       clip-path="url(#clipPath6857-7-2-6-5)"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
     <circle
        transform="matrix(0.49290854,0,0,0.49279246,-283.96685,344.49332)"
        id="path3734-3-3-2-1"
@@ -747,7 +750,10 @@
        cy="-425.77631"
        r="199.57143"
        style="display:inline;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:7.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       clip-path="url(#clipPath6857-0-7-6-3-3)" />
+       clip-path="url(#clipPath6857-0-7-6-3-3)"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
     <circle
        transform="matrix(0.49290854,0,0,0.49279246,-302.24371,326.24033)"
        id="path3734-3-68-9-2-9"
@@ -755,7 +761,10 @@
        cy="-425.77631"
        r="199.57143"
        style="display:inline;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:7.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       clip-path="url(#clipPath7394-6-3-5)" />
+       clip-path="url(#clipPath7394-6-3-5)"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
     <circle
        transform="matrix(0.49290854,0,0,0.49279246,-283.82596,344.44787)"
        id="path3734-3-7-5"
@@ -763,7 +772,10 @@
        cy="-425.77631"
        r="199.57143"
        style="display:inline;opacity:1;vector-effect:none;fill:#dbdbdb;fill-opacity:0.94117647;stroke:none;stroke-width:7.9375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       clip-path="url(#clipPath6857-25-9-5-9)" />
+       clip-path="url(#clipPath6857-25-9-5-9)"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
     <circle
        transform="matrix(0.49290854,0,0,0.49279246,-294.4093,333.86453)"
        id="path3734-3-6-2-8"
@@ -771,7 +783,10 @@
        cy="-462.8179"
        r="199.57143"
        style="display:inline;opacity:0.95999995;fill:#eaf2f9;fill-opacity:1;stroke:none;stroke-width:7.9375;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       clip-path="url(#clipPath7327-4-4-8)" />
+       clip-path="url(#clipPath7327-4-4-8)"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
     <circle
        transform="matrix(0.49290854,0,0,0.49279246,-283.82596,344.44787)"
        id="path3734-6-4"
@@ -779,11 +794,17 @@
        cy="-425.77631"
        style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:#1c395d;stroke-width:35;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        r="199.57143"
-       clip-path="url(#clipPath6853-3-5-1-9)" />
+       clip-path="url(#clipPath6853-3-5-1-9)"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
     <path
        inkscape:connector-curvature="0"
        style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:9.85700989;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:40;stroke-dasharray:none;stroke-opacity:1"
        d="m -202.51818,85.022345 v 0.01188 h -0.0274 V 131.3358 h 0.0274 v 28.52074 h 0.11731 V 131.3358 h 24.23935 v 24.37836 h 0.0274 v 28.52073 h 0.11731 v -28.52073 h 46.16772 v -46.30157 h -24.38404 V 85.034232 h -46.16772 v -0.01188 z"
-       id="rect6108-7-0-8" />
+       id="rect6108-7-0-8"
+       inkscape:export-filename="/home/filipe/Downloads/rect6108-7-0-8.png"
+       inkscape:export-xdpi="66.099998"
+       inkscape:export-ydpi="66.099998" />
   </g>
 </svg>
