@@ -59,7 +59,8 @@ export const App = () => {
         current === '0em' ? width : '0em');
     });
 
-    windows.toAll(w => w.setTitle(settings.getCurrentSketchName()));
+    const sketchName = settings.getCurrentSketchName();
+    windows.toMain(w => w.setTitle('Code - ' + sketchName));
 
     changeDarkMode(settings.getDarkMode());
 
