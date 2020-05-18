@@ -51,6 +51,8 @@ export const App = () => {
 
     ipcRenderer.on('open-preferences', showPreferencesModal);
 
+    ipcRenderer.on('auto-arrange-windows', windows.autoArrange);
+
     ipcRenderer.on('toggle-sidebar', () => {
       const s = getComputedStyle(document.body);
       const width = s.getPropertyValue('--sidebar-width').trim();

@@ -79,6 +79,9 @@ function initialise(mainWindow) {
       accelerator: 'Esc',
       click: () => mainWindow.webContents.send('exit-full-screen'),
     }, {
+      label: 'Auto-arrange windows',
+      click: () => mainWindow.webContents.send('auto-arrange-windows'),
+    }, {
       type: 'separator'
     }, {
       label: 'Increase font size',

@@ -18,6 +18,23 @@ export function main(): BrowserWindow {
   return all().filter(isMainWindow)[0];
 }
 
+export function autoArrange(): void {
+  const { width, height } = remote.screen.getPrimaryDisplay().workArea;
+  const halfWidth = width / 2;
+  toMain(w => w.setBounds({
+    x: 0,
+    y: 0,
+    width: halfWidth,
+    height: height,
+  }));
+  toPreview(w => w.setBounds({
+    x: halfWidth,
+    y: 0,
+    width: halfWidth,
+    height: height,
+  }));
+}
+
 function all(): BrowserWindow[] {
   return remote.BrowserWindow
     .getAllWindows() as BrowserWindow[];
