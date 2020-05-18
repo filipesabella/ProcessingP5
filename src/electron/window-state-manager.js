@@ -139,7 +139,10 @@ module.exports = function(options) {
   }
 
   try {
-    state = JSON.parse(fs.readFileSync(fullStoreFileName));
+    // to remove a parcel bundler warning
+    const rfs = fs.readFileSync;
+
+    state = JSON.parse(rfs(fullStoreFileName));
   } catch (err) {
     console.error(err);
   }
