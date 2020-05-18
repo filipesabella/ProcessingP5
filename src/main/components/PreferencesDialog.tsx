@@ -3,6 +3,7 @@ import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 import * as windows from '../lib/browser-window';
 import * as settings from '../lib/settings';
+import * as sketch from '../lib/sketch';
 
 const { dialog } = window.require('electron').remote;
 
@@ -52,6 +53,8 @@ export const openPreferencesDialog = (hideModal: () => void) => {
   const toggleHotCodeReload = () => {
     setHotCodeReload(!hotCodeReload);
     settings.setHotCodeReload(!hotCodeReload);
+    sketch.buildIndexHtml();
+    windows.toPreview(w => w.reload());
   };
 
   return <div className="modal preferencesModal">
