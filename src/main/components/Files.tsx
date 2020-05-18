@@ -98,7 +98,9 @@ export const Files = () => {
     });
 
   const otherFilesContainers = files
-    .filter(f => f !== fs.indexFile && !sketch.isScriptFile(f))
+    .filter(f => f !== fs.indexFile
+      && !f.startsWith('.')
+      && !sketch.isScriptFile(f))
     .map(f => {
       return <li key={f}>
         <span>{f}</span>
