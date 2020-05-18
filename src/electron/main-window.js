@@ -38,7 +38,10 @@ function initialise() {
   });
 
   mainWindow.loadURL(startUrl);
-  // mainWindow.webContents.openDevTools();
+
+  if (process.env.DEV_MODE === 'true') {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.on('page-title-updated', e => {
     // alow the app to change the title
