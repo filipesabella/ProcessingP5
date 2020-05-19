@@ -47,8 +47,7 @@ function initialise() {
   });
 
   mainWindow.once('ready-to-show', () => mainWindow.show());
-  mainWindow.once('closed', () =>
-    BrowserWindow.getAllWindows().forEach(w => w.close()));
+  mainWindow.once('closed', () => electron.app.quit());
 
   return mainWindow;
 }
