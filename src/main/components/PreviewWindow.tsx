@@ -71,7 +71,6 @@ function buildBrowserWindow(): BrowserWindow {
     show: false,
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
-    closable: false, // does not work on linux
     excludedFromShownWindowsMenu: true,
     useContentSize: false,
     x: windowState.x === undefined
