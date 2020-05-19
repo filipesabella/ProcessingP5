@@ -1,5 +1,6 @@
 const {
   Menu,
+  app,
 } = require('electron');
 
 module.exports = {
@@ -25,6 +26,12 @@ function initialise(mainWindow) {
       label: 'Preferences',
       accelerator: 'CmdOrCtrl+,',
       click: () => mainWindow.webContents.send('open-preferences'),
+    }, {
+      type: 'separator'
+    }, {
+      label: 'Quit',
+      accelerator: 'CmdOrCtrl+Q',
+      click: () => app.quit(),
     }]
   }, {
     label: 'Sketch',
