@@ -13,17 +13,17 @@ function initialise(mainWindow) {
     label: 'ProcessingP5',
     submenu: [{
       label: 'New Sketch',
-      accelerator: isMac ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
+      accelerator: 'CmdOrCtrl+Shift+N',
       click: () => mainWindow.webContents.send('new-sketch'),
     }, {
       label: 'Open Sketch',
-      accelerator: isMac ? 'Cmd+O' : 'Ctrl+O',
+      accelerator: 'CmdOrCtrl+O',
       click: () => mainWindow.webContents.send('open-sketch'),
     }, {
       type: 'separator'
     }, {
       label: 'Preferences',
-      accelerator: isMac ? 'Cmd+,' : 'Ctrl+,',
+      accelerator: 'CmdOrCtrl+,',
       click: () => mainWindow.webContents.send('open-preferences'),
     }]
   }, {
@@ -34,7 +34,7 @@ function initialise(mainWindow) {
       click: () => mainWindow.webContents.send('reload'),
     }, {
       label: 'New File',
-      accelerator: isMac ? 'Cmd+N' : 'Ctrl+N',
+      accelerator: 'CmdOrCtrl+N',
       click: () => mainWindow.webContents.send('new-file'),
     }, {
       type: 'separator'
@@ -50,7 +50,7 @@ function initialise(mainWindow) {
       type: 'separator'
     }, {
       label: 'Rename Sketch',
-      accelerator: isMac ? 'Cmd+Shift+S' : 'Ctrl+Shift+S',
+      accelerator: 'CmdOrCtrl+Shift+S',
       click: () => mainWindow.webContents.send('rename-sketch'),
     }, {
       type: 'separator'
@@ -66,13 +66,13 @@ function initialise(mainWindow) {
       click: () => mainWindow.webContents.send('toggle-sidebar'),
     }, {
       label: 'Toggle developer tools',
-      accelerator: isMac ? 'Cmd+Shift+J' : 'Ctrl+Shift+J',
+      accelerator: 'CmdOrCtrl+Shift+J',
       click: () => mainWindow.webContents.send('toggle-dev-tools'),
     }, {
       type: 'separator'
     }, {
       label: 'Toggle Full Screen',
-      accelerator: isMac ? 'Cmd+Shift+F' : 'Ctrl+Shift+F',
+      accelerator: 'CmdOrCtrl+Shift+F',
       click: () => mainWindow.webContents.send('toggle-full-screen'),
     }, {
       label: 'Exit Full Screen',
@@ -85,15 +85,15 @@ function initialise(mainWindow) {
       type: 'separator'
     }, {
       label: 'Increase font size',
-      accelerator: isMac ? 'Cmd+Shift+=' : 'Ctrl+Shift+=',
+      accelerator: 'CmdOrCtrl+Shift+=',
       click: () => mainWindow.webContents.send('font-size-increase'),
     }, {
       label: 'Decrease font size',
-      accelerator: isMac ? 'Cmd+Shift+-' : 'Ctrl+Shift+-',
+      accelerator: 'CmdOrCtrl+Shift+-',
       click: () => mainWindow.webContents.send('font-size-decrease'),
     }, {
       label: 'Reset font size',
-      accelerator: isMac ? 'Cmd+Shift+0' : 'Ctrl+Shift+0',
+      accelerator: 'CmdOrCtrl+Shift+0',
       click: () => mainWindow.webContents.send('font-size-reset'),
     }],
   }, {
