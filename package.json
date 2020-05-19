@@ -16,7 +16,14 @@
   "build": {
     "appId": "filipesabella.ProcessingP5",
     "mac": {
-      "category": "Utility"
+      "category": "Utility",
+      "icon": "build/icons/icon.icns"
+    },
+    "win": {
+      "icon": "build/icons/icon.ico"
+    },
+    "linux": {
+      "icon": "build/icons/icon.png"
     },
     "publish": [
       {
@@ -26,9 +33,8 @@
       }
     ],
     "files": [
-      "src/electron/main.js",
-      "dist/*",
-      "assets/*"
+      "src/electron/*",
+      "build/*"
     ]
   },
   "license": "ISC",
