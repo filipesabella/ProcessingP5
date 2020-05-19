@@ -69,7 +69,7 @@ function initialise(mainWindow) {
     label: 'View',
     submenu: [{
       label: 'Toggle Sidebar',
-      accelerator: 'Ctrl+/',
+      accelerator: isMac ? 'Ctrl+/' : 'Alt+/',
       click: () => mainWindow.webContents.send('toggle-sidebar'),
     }, {
       label: 'Toggle developer tools',
