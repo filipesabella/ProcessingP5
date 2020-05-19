@@ -62,17 +62,17 @@ function initialise(mainWindow) {
     label: 'View',
     submenu: [{
       label: 'Toggle Sidebar',
-      accelerator: 'Alt+/',
+      accelerator: 'Ctrl+/',
       click: () => mainWindow.webContents.send('toggle-sidebar'),
     }, {
       label: 'Toggle developer tools',
-      accelerator: 'Ctrl+Shift+J',
+      accelerator: isMac ? 'Cmd+Shift+J' : 'Ctrl+Shift+J',
       click: () => mainWindow.webContents.send('toggle-dev-tools'),
     }, {
       type: 'separator'
     }, {
       label: 'Toggle Full Screen',
-      accelerator: 'Ctrl+Shift+F',
+      accelerator: isMac ? 'Cmd+Shift+F' : 'Ctrl+Shift+F',
       click: () => mainWindow.webContents.send('toggle-full-screen'),
     }, {
       label: 'Exit Full Screen',
@@ -85,15 +85,15 @@ function initialise(mainWindow) {
       type: 'separator'
     }, {
       label: 'Increase font size',
-      accelerator: 'Ctrl+Shift+=',
+      accelerator: isMac ? 'Cmd+Shift+=' : 'Ctrl+Shift+=',
       click: () => mainWindow.webContents.send('font-size-increase'),
     }, {
       label: 'Decrease font size',
-      accelerator: 'Ctrl+Shift+-',
+      accelerator: isMac ? 'Cmd+Shift+-' : 'Ctrl+Shift+-',
       click: () => mainWindow.webContents.send('font-size-decrease'),
     }, {
       label: 'Reset font size',
-      accelerator: 'Ctrl+Shift+0',
+      accelerator: isMac ? 'Cmd+Shift+0' : 'Ctrl+Shift+0',
       click: () => mainWindow.webContents.send('font-size-reset'),
     }],
   }, {
