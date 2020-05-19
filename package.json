@@ -8,11 +8,10 @@
   "scripts": {
     "server": "parcel ./src/main/index.html --no-hmr",
     "start": "DEV_MODE=true ELECTRON_START_URL=http://localhost:1234 electron .",
-    "build": "parcel build ./src/main/index.html --public-url ./ && yarn run build-ts && yarn run build-worker",
+    "build": "yarn run build-ts && yarn run build-worker",
     "build-ts": "parcel build node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js --no-source-maps",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
-    "pack": "electron-builder install-app-deps && electron-builder --dir",
-    "dist": "electron-builder install-app-deps && electron-builder"
+    "ship": "./ship"
   },
   "build": {
     "appId": "filipesabella.ProcessingP5",
