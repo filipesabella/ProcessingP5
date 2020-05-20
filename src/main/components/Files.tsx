@@ -127,7 +127,6 @@ export const Files = () => {
 
   const otherFilesContainers = files
     .filter((f) =>
-      f !== fs.indexFile &&
       !f.startsWith('.') &&
       !sketch.isScriptFile(f)
     )
