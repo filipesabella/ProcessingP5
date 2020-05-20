@@ -23,10 +23,12 @@ export function editFileModal(
     e.preventDefault();
   };
 
-  const [deleteButtonLabel, setDeleteButtonLabel] = useState('Delete');
+  const defaultDeleteButtonLabel = 'Move to trash'
+  const [deleteButtonLabel, setDeleteButtonLabel] =
+    useState(defaultDeleteButtonLabel);
   const doDelete = () => {
-    if (deleteButtonLabel === 'Delete') {
-      setDeleteButtonLabel('Click to confirm deletion');
+    if (deleteButtonLabel === defaultDeleteButtonLabel) {
+      setDeleteButtonLabel('Click to confirm');
     } else {
       if (fs.deleteSketchFile(currentFile)) {
         selectFile(settings.sketchMainFile);

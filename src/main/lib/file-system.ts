@@ -51,7 +51,7 @@ export function currentOpenFile(): string {
 
 export function deleteSketchFile(f: string): boolean {
   try {
-    fs.unlinkSync(path.join(currentSketchPath(), f));
+    remote.shell.moveItemToTrash(path.join(currentSketchPath(), f));
     return true;
   } catch (err) {
     alert(err);
