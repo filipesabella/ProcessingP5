@@ -81,19 +81,19 @@
     "mocha": "^7.1.2",
     "parcel-bundler": "^1.12.4",
     "ts-node": "^8.10.1",
-    "typescript": "^3.9.2"
-  },
-  "dependencies": {
+    "typescript": "^3.9.2",
     "ast-types": "^0.13.3",
-    "electron-settings": "^3.2.0",
     "electron-updater": "^4.3.1",
     "monaco-editor": "^0.20.0",
-    "node-static": "^0.7.11",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal-hook": "^3.0.0",
     "recast": "^0.19.1",
-    "reset-css": "^5.0.1",
+    "reset-css": "^5.0.1"
+  },
+  "dependencies": {
+    "electron-settings": "^3.2.0",
+    "node-static": "^0.7.11",
     "typeface-barlow": "^0.0.71",
     "typeface-jetbrains-mono": "^1.0.5"
   }
