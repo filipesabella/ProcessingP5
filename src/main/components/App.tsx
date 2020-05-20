@@ -47,6 +47,10 @@ export const App = () => {
       });
     });
 
+    if (process.env.DEV_MODE === 'true') {
+      windows.toPreview(w => w.webContents.toggleDevTools());
+    }
+
     ipcRenderer.on('auto-hide-menu-bar', () => {
       windows.toMain(w => w.autoHideMenuBar = true);
     });
