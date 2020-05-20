@@ -1,10 +1,13 @@
 {
   "name": "ProcessingP5",
-  "description": "A processing js playgound",
-  "author": "Filipe Sabella",
+  "description": "A p5.js IDE",
+  "author": "Filipe Sabella <me@filipesabella.com>",
   "repository": "https://github.com/filipesabella/ProcessingP5",
   "version": "1.0.0",
   "main": "src/electron/main.js",
+  "categories": [
+    "Other"
+  ],
   "scripts": {
     "test": "mocha --require ts-node/register src/test/**/*.test.ts",
     "test:watch": "mocha --require ts-node/register --watch --watch-files src, src/test/**/*.test.ts",
@@ -17,26 +20,41 @@
   },
   "build": {
     "appId": "filipesabella.ProcessingP5",
-    "mac": {
-      "category": "Utility",
-      "icon": "build/icons/icon.icns"
+    "dmg": {
+      "icon": "dist/icons/icon.icns",
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "dist/icons/icon.ico"
     },
     "linux": {
-      "icon": "build/icons/icon.png"
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "dist/icons/icon.png"
     },
     "publish": [
       {
         "provider": "github",
-        "owner": "filipesabella",
-        "repo": "ProcessingP5"
+        "owner": "filipesabella"
       }
     ],
     "files": [
       "src/electron/*",
-      "build/*"
+      "dist/*",
+      "assets/*"
     ]
   },
   "license": "ISC",
