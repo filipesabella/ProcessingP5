@@ -12,5 +12,10 @@ cp assets/icons/png/512x512.png dist/icons/icon.png
 cp assets/icons/win/* dist/icons/
 cp assets/icons/mac/* dist/icons/
 
-GH_TOKEN=`cat token` ./node_modules/.bin/electron-builder build -mwl -p always
+GH_TOKEN=`cat token` ./node_modules/.bin/electron-builder build \
+  --mac dmg \
+  --linux AppImage deb \
+  --win \
+  --publish always
+
 # ./node_modules/.bin/electron-builder build -m
