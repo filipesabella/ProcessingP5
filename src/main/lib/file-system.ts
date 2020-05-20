@@ -128,6 +128,13 @@ export function openSketch(name: string): boolean {
 
     settings.setCurrentSketchPath(newPath);
 
+    // clean up old files
+    (fs.readdirSync(newPath) as string[]).forEach(f => {
+      if (f.startsWith('.')) {
+        fs.unlinkSync(path.join(newPath, f));
+      }
+    });
+
     return true;
   } catch (err) {
     alert(err);

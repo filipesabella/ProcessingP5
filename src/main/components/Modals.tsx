@@ -23,7 +23,7 @@ export function editFileModal(
     e.preventDefault();
   };
 
-  const defaultDeleteButtonLabel = 'Move to trash'
+  const defaultDeleteButtonLabel = 'Move to trash';
   const [deleteButtonLabel, setDeleteButtonLabel] =
     useState(defaultDeleteButtonLabel);
   const doDelete = () => {
