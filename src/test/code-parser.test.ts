@@ -1,11 +1,26 @@
 import { expect } from 'chai';
 import 'mocha';
+import * as recast from 'recast';
 import { codeHasChanged, getVars, parseCode } from '../main/lib/code-parser';
 
+const format = (s: string) => recast.prettyPrint(recast.parse(s)).toString();
 const parse = (code: string) => parseCode('a', code);
 const hasChanged = (code: string) => codeHasChanged('a', code);
 
 describe('code-parser', () => {
+  describe('parseCode', () => {
+    it('parses the code', () => {
+      expect(format(parse(`
+        let myNumber = 1;
+        fn(myNumber);
+      `))).to.equal(format(`
+        __AllVars['a1'] = 1;
+        let myNumber = __AllVars.a1;
+        fn(myNumber);
+      `));
+    });
+  });
+
   describe('getVars', () => {
     it('hashes variables', () => {
       expect(getVars('let a = 1;')).to.deep.eq({ a1: 1 });
