@@ -41,7 +41,10 @@ export const App = () => {
     ipcRenderer.on('reload', previewWindow.reloadPreviewWindow);
 
     ipcRenderer.on('toggle-dev-tools', () => {
-      windows.toPreview(w => w.webContents.toggleDevTools());
+      windows.toPreview(w => {
+        w.webContents.toggleDevTools();
+        windows.toPreview(w => w.reload());
+      });
     });
 
     ipcRenderer.on('auto-hide-menu-bar', () => {

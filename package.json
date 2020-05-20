@@ -6,7 +6,7 @@
   "version": "1.0.0",
   "main": "src/electron/main.js",
   "scripts": {
-    "server": "parcel ./src/main/index.html --no-hmr",
+    "server": "DEV_MODE=true parcel ./src/main/index.html --no-hmr",
     "start": "DEV_MODE=true ELECTRON_START_URL=http://localhost:1234 electron .",
     "build": "yarn run build-ts && yarn run build-worker",
     "build-ts": "parcel build node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js --no-source-maps",
