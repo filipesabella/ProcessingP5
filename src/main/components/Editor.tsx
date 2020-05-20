@@ -42,6 +42,14 @@ export const initEditor = () => {
       automaticLayout: true,
     });
 
+  // there's a github issue explaining that these options must be set
+  // outside of the initialisation code
+  editor.getModel()!.updateOptions({
+    tabSize: 2,
+    insertSpaces: true,
+    indentSize: 2,
+  });
+
   editor.onDidChangeModelContent(handleEditorChange);
 
   settings.watchShowLineNumbers(showLineNumbers => {
