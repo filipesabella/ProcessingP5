@@ -20,6 +20,7 @@
   },
   "build": {
     "appId": "filipesabella.ProcessingP5",
+    "output": "packaged",
     "mac": {
       "category": "Utility",
       "icon": "dist/icons/icon.icns"
@@ -43,11 +44,13 @@
       "icon": "dist/icons/icon.ico"
     },
     "linux": {
+      "icon": "dist/icons/",
+      "executableName": "ProcessingP5",
+      "category": "Utility",
       "target": [
         "AppImage",
         "deb"
-      ],
-      "icon": "dist/icons/icon.png"
+      ]
     },
     "publish": [
       {
