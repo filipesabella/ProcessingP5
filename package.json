@@ -6,6 +6,8 @@
   "version": "1.0.0",
   "main": "src/electron/main.js",
   "scripts": {
+    "test": "mocha --require ts-node/register src/test/**/*.test.ts",
+    "test:watch": "mocha -w --require ts-node/register src/**/*.test.ts",
     "server": "DEV_MODE=true parcel ./src/main/index.html --no-hmr",
     "start": "DEV_MODE=true ELECTRON_START_URL=http://localhost:1234 electron .",
     "build": "yarn run build-ts && yarn run build-worker",
@@ -39,16 +41,21 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
     "@types/node": "^14.0.1",
     "@types/node-static": "^0.7.5",
     "@types/p5": "^0.9.0",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "chai": "^4.2.0",
     "electron": "^8.2.5",
     "electron-builder": "^22.6.0",
     "electron-reload": "^1.5.0",
     "less": "^3.11.1",
+    "mocha": "^7.1.2",
     "parcel-bundler": "^1.12.4",
+    "ts-node": "^8.10.1",
     "typescript": "^3.9.2"
   },
   "dependencies": {
