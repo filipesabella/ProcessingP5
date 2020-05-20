@@ -36,7 +36,7 @@ export function parseCode(file: string, userCode: string): string {
     types.visit(ast, {
       visitLiteral: (path) => {
         const key = nodeToKey(path, vars);
-        vars[key] = path.value.value;
+        vars[key] = JSON.stringify(path.value.value);
 
         path.replace(
           typeBuilders.memberExpression(

@@ -86,4 +86,3 @@ function buildBrowserWindow(): BrowserWindow {
 
   return win;
 }
-
