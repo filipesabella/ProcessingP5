@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useModal } from 'react-modal-hook';
 import * as windows from '../lib/browser-window';
+import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { initEditor } from './Editor';
 import { openExportSketchDialog } from './ExportDialog';
@@ -71,6 +72,10 @@ export const App = () => {
         modalOverlay && modalOverlay.click();
       }
     };
+
+    // make sure the cleanup happens here
+    fs.openSketch(settings.getCurrentSketchName());
+    previewWindow.reloadFiles();
   }, []);
 
   return <Files />;
