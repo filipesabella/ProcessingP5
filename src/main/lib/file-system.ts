@@ -7,9 +7,6 @@ const path = remote.require('path');
 export const indexFile = '.index.html';
 
 const currentSketchPath = () => settings.getCurrentSketchPath();
-
-let currentFile = settings.sketchMainFile;
-
 const defaultSketchContent = `function setup() {
   createCanvas(windowWidth, windowHeight);
 }
@@ -18,6 +15,8 @@ function draw() {
   rect(10, 10, 100, 100);
 }
 `;
+
+let currentFile = settings.sketchMainFile;
 
 export function currentSketchFileNames(): string[] {
   return fs.readdirSync(currentSketchPath()) as string[];
