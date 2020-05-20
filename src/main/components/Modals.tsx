@@ -5,8 +5,6 @@ import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
 import { reloadFiles } from './PreviewWindow';
 
-const remote = window.require('electron').remote;
-
 export function editFileModal(
   files: string[],
   currentFile: string,
@@ -14,7 +12,7 @@ export function editFileModal(
   selectFile: (s: string) => void,
 ): JSX.Element {
   const existingFiles = files.filter(f => f !== currentFile).join('|');
-  const validationPattern = `^(?!(${existingFiles})).*(\.js)$`;
+  const validationPattern = `^(?!(${existingFiles})).*$`;
   const [fileName, setFileName] = useState(currentFile);
   const renameFile = (e: FormEvent<HTMLFormElement>) => {
     if (fs.renameSketchFile(currentFile, fileName)) {
@@ -49,7 +47,7 @@ export function editFileModal(
           pattern={validationPattern}
           value={fileName}
           onChange={e => setFileName(e.target.value)}
-          title="Must not have the same name as another file, and must end with .js"></input>
+          title="Must not have the same name as another file"></input>
         <button>Save</button>
       </form>
       <label

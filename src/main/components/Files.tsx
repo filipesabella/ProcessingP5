@@ -17,6 +17,8 @@ const { ipcRenderer } = window.require('electron');
 export const Files = () => {
   const [files, setFiles] = useState([] as string[]);
   const [currentFile, setCurrentFile] = useState(settings.sketchMainFile);
+  const [currentFileToEdit, setCurrentFileToEdit] =
+    useState(settings.sketchMainFile);
 
   useEffect(() => {
     const files = fs.currentSketchFileNames()
@@ -28,7 +30,7 @@ export const Files = () => {
             : a.localeCompare(b));
 
     setFiles(files);
-  }, [currentFile]);
+  }, [currentFile, currentFileToEdit]);
 
   const showImportFile = () => {
     const result = dialog.showOpenDialogSync(windows.main(), {
@@ -88,12 +90,16 @@ export const Files = () => {
 
   const [showEditFileModal, hideEditFileModal] = useModal(
     () =>
-      modals.editFileModal(files, currentFile, hideEditFileModal, selectFile),
-    [files, currentFile],
+      modals.editFileModal(
+        files,
+        currentFileToEdit,
+        hideEditFileModal,
+        setCurrentFileToEdit),
+    [files, currentFileToEdit],
   );
 
   const showFileMenu = (f: string): void => {
-    selectFile(f);
+    setCurrentFileToEdit(f);
     showEditFileModal();
   };
 
@@ -110,12 +116,12 @@ export const Files = () => {
       return <li key={f} className="file">
         <span
           className={'fileName ' + className}
-          onClick={(_) => selectFile(f)}
-        >
+          onClick={(_) => selectFile(f)}>
           {f}
         </span>
         {!isMainFile &&
-          <span className="menu" onClick={(_) => showFileMenu(f)}>...</span>}
+          <span className="menu"
+            onClick={(_) => showFileMenu(f)}>...</span>}
       </li>;
     });
 
@@ -127,7 +133,9 @@ export const Files = () => {
     )
     .map((f) => {
       return <li key={f}>
-        <span>{f}</span>
+        <span className="fileName">{f}</span>
+        <span className="menu"
+          onClick={(_) => showFileMenu(f)}>...</span>
       </li>;
     });
 
