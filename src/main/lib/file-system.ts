@@ -122,11 +122,15 @@ export function renameSketch(name: string): boolean {
 
 export function openSketch(name: string): boolean {
   const cleanUpGeneratedFile = (dir: string) => {
-    (fs.readdirSync(dir) as string[]).forEach(f => {
-      if (f.startsWith('.')) {
-        fs.unlinkSync(path.join(dir, f));
-      }
-    });
+    try {
+      (fs.readdirSync(dir) as string[]).forEach(f => {
+        if (f.startsWith('.')) {
+          fs.unlinkSync(path.join(dir, f));
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   try {
