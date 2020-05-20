@@ -32,7 +32,7 @@ export function buildIndexHtml(): void {
     .replace('$title', sketchName());
 
   fs.writeFileSync(
-    path.join(currentPath, '.index.html'),
+    path.join(currentPath, fileSystem.indexFile),
     src);
 }
 
