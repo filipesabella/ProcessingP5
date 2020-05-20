@@ -7,7 +7,7 @@
   "main": "src/electron/main.js",
   "scripts": {
     "test": "mocha --require ts-node/register src/test/**/*.test.ts",
-    "test:watch": "mocha -w --require ts-node/register src/**/*.test.ts",
+    "test:watch": "mocha --require ts-node/register --watch --watch-files src, src/test/**/*.test.ts",
     "server": "DEV_MODE=true parcel ./src/main/index.html --no-hmr",
     "start": "DEV_MODE=true ELECTRON_START_URL=http://localhost:1234 electron .",
     "build": "yarn run build-ts && yarn run build-worker",
