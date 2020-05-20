@@ -19,6 +19,7 @@ const keys = {
   runMode: 'run-mode',
   fontSize: 'font-size',
   hotCodeReload: 'hot-code-reload',
+  sidebarOpen: 'sidebar-open',
 };
 
 // oh my this is a hot mess
@@ -130,4 +131,12 @@ export function getHotCodeReload(): boolean {
 
 export function setHotCodeReload(hotCodeReload: boolean): void {
   settings.set(keys.hotCodeReload, hotCodeReload);
+}
+
+export function getSidebarOpen(): boolean {
+  return settings.get(keys.sidebarOpen) ?? false;
+}
+
+export function setSidebarOpen(sidebarOpen: boolean): void {
+  settings.set(keys.sidebarOpen, sidebarOpen);
 }

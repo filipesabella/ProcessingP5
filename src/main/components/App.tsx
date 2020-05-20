@@ -53,13 +53,9 @@ export const App = () => {
 
     ipcRenderer.on('auto-arrange-windows', windows.autoArrange);
 
-    ipcRenderer.on('toggle-sidebar', () => {
-      const s = getComputedStyle(document.body);
-      const width = s.getPropertyValue('--sidebar-width').trim();
-      const current = s.getPropertyValue('--sidebar-width-current').trim();
-      document.body.style.setProperty('--sidebar-width-current',
-        current === '0em' ? width : '0em');
-    });
+    ipcRenderer.on('toggle-sidebar', () =>
+      toggleSidebar(!settings.getSidebarOpen()));
+    toggleSidebar(settings.getSidebarOpen());
 
     const sketchName = settings.getCurrentSketchName();
     windows.toMain(w => w.setTitle('Code - ' + sketchName));
@@ -79,3 +75,12 @@ export const App = () => {
 
   return <Files />;
 };
+
+function toggleSidebar(open: boolean): void {
+  const s = getComputedStyle(document.body);
+  const width = s.getPropertyValue('--sidebar-width').trim();
+  document.body.style.setProperty('--sidebar-width-current',
+    open ? width : '0em');
+
+  settings.setSidebarOpen(open);
+}
