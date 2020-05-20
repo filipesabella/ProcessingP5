@@ -8,9 +8,6 @@ const windowStateKeeper = require('../../electron/window-state-manager');
 
 const { remote, ipcRenderer } = window.require('electron');
 
-// import * as http from 'http';
-const http = window.require('http');
-
 export function openPreviewWindow() {
   sketch.buildIndexHtml();
 
