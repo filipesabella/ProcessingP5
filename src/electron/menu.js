@@ -40,6 +40,8 @@ function initialise(mainWindow) {
       accelerator: 'Ctrl+R',
       click: () => mainWindow.webContents.send('reload'),
     }, {
+      type: 'separator'
+    }, {
       label: 'New File',
       accelerator: 'CmdOrCtrl+N',
       click: () => mainWindow.webContents.send('new-file'),
@@ -55,6 +57,9 @@ function initialise(mainWindow) {
       click: () => mainWindow.webContents.send('previous-file'),
     }, {
       type: 'separator'
+    }, {
+      label: 'Import File',
+      click: () => mainWindow.webContents.send('import-file'),
     }, {
       label: 'Rename Sketch',
       accelerator: 'CmdOrCtrl+Shift+S',

@@ -138,3 +138,17 @@ export function openSketch(name: string): boolean {
 export function listSketches(): string[] {
   return (fs.readdirSync(settings.getBaseSketchesPath()) as string[]);
 }
+
+export function copyIntoSketch(file: string): [true, string] | [false, null] {
+  const fileName = path.basename(file);
+  const destination = path.join(
+    settings.getCurrentSketchPath(),
+    fileName);
+  try {
+    fs.copyFileSync(file, destination);
+    return [true, fileName];
+  } catch (error) {
+    alert(error);
+    return [false, null];
+  }
+}
