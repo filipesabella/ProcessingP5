@@ -66,7 +66,6 @@ function buildBrowserWindow(): BrowserWindow {
   const win = windowState.manage(new remote.BrowserWindow({
     modal: false,
     show: false,
-    titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
     excludedFromShownWindowsMenu: true,
     useContentSize: false,
