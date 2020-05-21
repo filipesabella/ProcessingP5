@@ -3,6 +3,8 @@ const {
   app,
 } = require('electron');
 
+// const autoUpdater = require('./auto-updater');
+
 module.exports = {
   initialise
 };
@@ -28,6 +30,9 @@ function initialise(mainWindow) {
       click: () => mainWindow.webContents.send('open-preferences'),
     }, {
       type: 'separator'
+      // }, {
+      //   label: 'Check for updates',
+      //   click: autoUpdater.checkForUpdatesAndNotify(),
     }, {
       label: 'Quit',
       accelerator: 'CmdOrCtrl+Q',

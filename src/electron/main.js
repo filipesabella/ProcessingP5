@@ -20,6 +20,10 @@ app.on('window-all-closed', app.quit);
 app.on('ready', () => {
   const mainWindow = require('./main-window').initialise();
 
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
+
   require('./file-server.js').initialise(mainWindow);
   require('./menu.js').initialise(mainWindow);
 });
