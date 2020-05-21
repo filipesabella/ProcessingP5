@@ -84,6 +84,7 @@ export const openPreferencesDialog = (hideModal: () => void) => {
         <input type="checkbox"
           checked={hotCodeReload}
           onChange={_ => toggleHotCodeReload()}></input>
+        <label className="warning">(works most of the time)</label>
       </div>
 
       <h2><span>Advanced</span></h2>
