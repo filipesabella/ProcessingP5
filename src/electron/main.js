@@ -27,6 +27,8 @@ app.on('ready', () => {
   require('./file-server.js').initialise(mainWindow);
   require('./menu.js').initialise(mainWindow);
 
-  autoUpdater
-    .checkForUpdatesAndNotify();
+  const log = require("electron-log");
+  log.transports.file.level = "debug";
+  autoUpdater.logger = log;
+  autoUpdater.checkForUpdatesAndNotify();
 });
