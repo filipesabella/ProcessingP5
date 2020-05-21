@@ -20,6 +20,7 @@
   },
   "build": {
     "appId": "filipesabella.ProcessingP5",
+    "productName": "ProcessingP5",
     "directories": {
       "output": "packaged"
     },
