@@ -5,6 +5,10 @@ const {
   app,
 } = electron;
 
+const {
+  autoUpdater
+} = require('electron-updater');
+
 if (process.env.ELECTRON_START_URL) {
   require('electron-reload')(
     path.join(__dirname, '../../dist'), {
