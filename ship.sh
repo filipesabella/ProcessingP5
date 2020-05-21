@@ -1,4 +1,4 @@
-rm -rf dist/ .cache/ node_modules
+rm -rf dist/ .cache/ packaged/ node_modules
 yarn
 
 ./node_modules/.bin/electron-builder install-app-deps
@@ -13,8 +13,10 @@ cp assets/icons/png/* dist/icons/
 cp assets/icons/win/* dist/icons/
 cp assets/icons/mac/* dist/icons/
 
-GH_TOKEN=`cat token` ./node_modules/.bin/electron-builder build \
+DEBUG=electron-builder GH_TOKEN=`cat token` ./node_modules/.bin/electron-builder build \
   --linux AppImage deb \
-  # --publish always
+  --win \
+  --mac \
+  --publish always
 
 # ./node_modules/.bin/electron-builder build -m

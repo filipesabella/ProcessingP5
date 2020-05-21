@@ -20,7 +20,18 @@
   },
   "build": {
     "appId": "filipesabella.ProcessingP5",
-    "output": "packaged",
+    "directories": {
+      "output": "packaged"
+    },
+    "files": [
+      "src/electron/*",
+      "dist/*",
+      "assets/*",
+      "assets/icons/png/*",
+      "assets/icons/win/*",
+      "assets/icons/mac/*",
+      "!**/node_modules/*"
+    ],
     "mac": {
       "category": "Utility",
       "icon": "dist/icons/icon.icns"
@@ -44,7 +55,7 @@
       "icon": "dist/icons/icon.ico"
     },
     "linux": {
-      "icon": "dist/icons/",
+      "icon": "dist/icons/icon.icns",
       "executableName": "ProcessingP5",
       "category": "Utility",
       "target": [
@@ -57,11 +68,6 @@
         "provider": "github",
         "owner": "filipesabella"
       }
-    ],
-    "files": [
-      "src/electron/*",
-      "dist/*",
-      "assets/*"
     ]
   },
   "license": "ISC",
