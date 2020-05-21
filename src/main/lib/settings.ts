@@ -126,7 +126,7 @@ export function watchShowLineNumbers(fn: (b: boolean) => void): void {
 }
 
 export function getHotCodeReload(): boolean {
-  return settings.get(keys.hotCodeReload) ?? true;
+  return settings.get(keys.hotCodeReload) ?? false;
 }
 
 export function setHotCodeReload(hotCodeReload: boolean): void {
