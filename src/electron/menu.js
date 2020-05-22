@@ -30,9 +30,6 @@ function initialise(mainWindow) {
       click: () => mainWindow.webContents.send('open-preferences'),
     }, {
       type: 'separator'
-      // }, {
-      //   label: 'Check for updates',
-      //   click: autoUpdater.checkForUpdatesAndNotify(),
     }, {
       label: 'Quit',
       accelerator: 'CmdOrCtrl+Q',
