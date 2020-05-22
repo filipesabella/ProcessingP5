@@ -16,6 +16,6 @@ cp assets/icons/mac/* dist/icons/
 DEBUG=electron-builder GH_TOKEN=`cat token` \
   ./node_modules/.bin/electron-builder build \
   --linux AppImage deb \
-  --mac \
+  --mac dmg \
   --win \
   --publish always

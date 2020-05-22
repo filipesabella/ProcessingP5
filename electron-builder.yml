@@ -9,13 +9,11 @@ files:
   - src/electron/*
   - dist/*
   - assets/*
-  - "!node_modules/${/*}"
 
 mac:
   category: Utility
   icon: dist/icons/icon.icns
   target:
-    - zip
     - dmg
 
 dmg:
