@@ -130,6 +130,31 @@ function initialise(mainWindow) {
       label: 'Auto-hide menu bar',
       click: () => mainWindow.webContents.send('auto-hide-menu-bar'),
     });
+  } else {
+
+    if (process.platform === 'darwin') {
+      // cmd+c/v does not work without having these on the menu
+      template.push({
+        label: 'Edit',
+        submenu: [{
+          role: 'undo'
+        }, {
+          role: 'redo'
+        }, {
+          type: 'separator'
+        }, {
+          role: 'cut'
+        }, {
+          role: 'copy'
+        }, {
+          role: 'paste'
+        }, {
+          role: 'delete'
+        }, {
+          role: 'selectall'
+        }]
+      })
+    }
   }
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
