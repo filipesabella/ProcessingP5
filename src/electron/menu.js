@@ -42,7 +42,7 @@ function initialise(mainWindow) {
     label: 'Sketch',
     submenu: [{
       label: 'Run',
-      accelerator: 'Ctrl+R',
+      accelerator: 'CmdOrCtrl+R',
       click: () => mainWindow.webContents.send('reload'),
     }, {
       type: 'separator'
