@@ -1,3 +1,39 @@
 appId: filipesabella.ProcessingP5
-publish:
-  provider: github
+productName: ProcessingP5
+artifactName: ProcessingP5.${ext}
+
+directories:
+  output: packaged
+
+files:
+  - src/electron/*
+  - dist/*
+  - assets/*
+  - assets/icons/png/*
+  - assets/icons/win/*
+  - assets/icons/mac/*
+
+mac:
+  category: Utility
+  icon: dist/icons/icon.icns
+
+dmg:
+  icon: dist/icons/icon.icns
+  contents:
+  - x: 150
+    y: 170
+  - x: 375
+    y: 170
+    type: link
+    path: "/Applications"
+
+win:
+  icon: dist/icons/icon.ico
+
+linux:
+  icon: dist/icons/icon.icns
+  executableName: ProcessingP5
+  category: Utility
+  target:
+  - AppImage
+  - deb

@@ -1,6 +1,6 @@
 {
   "name": "ProcessingP5",
-  "description": "A p5.js IDE",
+  "description": "A p5.js processing-like IDE",
   "author": "Filipe Sabella <me@filipesabella.com>",
   "repository": "https://github.com/filipesabella/ProcessingP5",
   "version": "1.0.0",
@@ -17,63 +17,6 @@
     "build-ts": "parcel build node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js --no-source-maps",
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "ship": "./ship"
-  },
-  "build": {
-    "appId": "filipesabella.ProcessingP5",
-    "productName": "ProcessingP5",
-    "artifactName": "ProcessingP5.${ext}",
-    "directories": {
-      "output": "packaged"
-    },
-    "files": [
-      "src/electron/*",
-      "dist/*",
-      "assets/*",
-      "assets/icons/png/*",
-      "assets/icons/win/*",
-      "assets/icons/mac/*",
-      "!**/node_modules/*"
-    ],
-    "mac": {
-      "category": "Utility",
-      "icon": "dist/icons/icon.icns"
-    },
-    "zip": {
-      "artifactName": "${name}-${os}.${ext}"
-    },
-    "dmg": {
-      "icon": "dist/icons/icon.icns",
-      "contents": [
-        {
-          "x": 150,
-          "y": 170
-        },
-        {
-          "x": 375,
-          "y": 170,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "icon": "dist/icons/icon.ico"
-    },
-    "linux": {
-      "icon": "dist/icons/icon.icns",
-      "executableName": "ProcessingP5",
-      "category": "Utility",
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "filipesabella"
-      }
-    ]
   },
   "license": "ISC",
   "devDependencies": {

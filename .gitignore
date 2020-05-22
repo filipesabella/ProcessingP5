@@ -2,6 +2,5 @@
 .cache
 node_modules
 dist
-build
-packaged
+release
 token
