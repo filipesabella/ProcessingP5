@@ -21,6 +21,7 @@
   "build": {
     "appId": "filipesabella.ProcessingP5",
     "productName": "ProcessingP5",
+    "artifactName": "ProcessingP5.${ext}",
     "directories": {
       "output": "packaged"
     },
