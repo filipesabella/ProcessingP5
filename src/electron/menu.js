@@ -110,18 +110,15 @@ function initialise(mainWindow) {
       accelerator: 'CmdOrCtrl+Shift+0',
       click: () => mainWindow.webContents.send('font-size-reset'),
     }],
-  }, ];
+  }, {
+    label: '',
+    submenu: [{
+      label: 'Developer Tools',
+      accelerator: 'F12',
+      click: () => mainWindow.webContents.toggleDevTools(),
+    }, ]
 
-  if (process.env.DEV_MODE === 'true') {
-    template.push({
-      label: 'Dev',
-      submenu: [{
-        label: 'Developer Tools',
-        accelerator: 'F12',
-        click: () => mainWindow.webContents.toggleDevTools(),
-      }],
-    });
-  }
+  }, ];
 
   if (!isMac) {
     // view menu. this option only makes sense on linux and windows
