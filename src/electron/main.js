@@ -3,6 +3,7 @@ const path = require('path');
 
 const {
   app,
+  Notification,
 } = electron;
 
 const {
@@ -34,6 +35,18 @@ function checkForUpdates() {
   const log = require('electron-log');
   log.transports.file.level = 'debug';
   autoUpdater.logger = log;
+
+  autoUpdater.on('update-available', () => {
+    log.log(info);
+
+    new Notification(
+      'A new version of ProcessingP5 is available!', {
+        body: 'If you want new features, bug fixes, and get rid of this ' +
+          'annoying message, head on to the website to download the new version.'
+      }).onclick = () => {
+      console.log('Eventually add a link to the website here.');
+    };
+  });
 
   autoUpdater.checkForUpdates();
 }
