@@ -3,19 +3,20 @@ productName: ProcessingP5
 artifactName: ProcessingP5.${ext}
 
 directories:
-  output: packaged
+  output: release
 
 files:
   - src/electron/*
   - dist/*
   - assets/*
-  - assets/icons/png/*
-  - assets/icons/win/*
-  - assets/icons/mac/*
+  - "!node_modules/${/*}"
 
 mac:
   category: Utility
   icon: dist/icons/icon.icns
+  target:
+    - zip
+    - dmg
 
 dmg:
   icon: dist/icons/icon.icns
@@ -35,5 +36,5 @@ linux:
   executableName: ProcessingP5
   category: Utility
   target:
-  - AppImage
-  - deb
+    - AppImage
+    - deb
