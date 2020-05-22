@@ -124,7 +124,7 @@ function initialise(mainWindow) {
   }
 
   if (!isMac) {
-    // view menu
+    // view menu. this option only makes sense on linux and windows
     template[2].submenu.push({
       type: 'separator'
     }, {
@@ -132,30 +132,27 @@ function initialise(mainWindow) {
       click: () => mainWindow.webContents.send('auto-hide-menu-bar'),
     });
   } else {
-
-    if (process.platform === 'darwin') {
-      // cmd+c/v does not work without having these on the menu
-      template.push({
-        label: 'Edit',
-        submenu: [{
-          role: 'undo'
-        }, {
-          role: 'redo'
-        }, {
-          type: 'separator'
-        }, {
-          role: 'cut'
-        }, {
-          role: 'copy'
-        }, {
-          role: 'paste'
-        }, {
-          role: 'delete'
-        }, {
-          role: 'selectall'
-        }]
-      })
-    }
+    // cmd+c/v does not work without having these on the menu
+    template.push({
+      label: 'Edit',
+      submenu: [{
+        role: 'undo'
+      }, {
+        role: 'redo'
+      }, {
+        type: 'separator'
+      }, {
+        role: 'cut'
+      }, {
+        role: 'copy'
+      }, {
+        role: 'paste'
+      }, {
+        role: 'delete'
+      }, {
+        role: 'selectall'
+      }]
+    })
   }
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
