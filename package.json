@@ -38,6 +38,9 @@
       "category": "Utility",
       "icon": "dist/icons/icon.icns"
     },
+    "zip": {
+      "artifactName": "${name}-${os}.${ext}"
+    },
     "dmg": {
       "icon": "dist/icons/icon.icns",
       "contents": [
