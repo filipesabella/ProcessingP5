@@ -117,7 +117,6 @@ function initialise(mainWindow) {
       accelerator: 'F12',
       click: () => mainWindow.webContents.toggleDevTools(),
     }, ]
-
   }, ];
 
   if (!isMac) {

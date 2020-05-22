@@ -48,6 +48,10 @@ export function openPreviewWindow() {
 }
 
 export function reloadPreviewWindow(): void {
+  if (settings.getHotCodeReload()) {
+    sketch.buildIndexHtml();
+  }
+
   windows.toPreview(w => w.reload());
 }
 
