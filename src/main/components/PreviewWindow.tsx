@@ -57,7 +57,7 @@ export function reloadPreviewWindow(): void {
 
 export function reloadFiles(): void {
   sketch.buildIndexHtml();
-  reloadPreviewWindow();
+  windows.toPreview(w => w.reload());
 }
 
 function buildBrowserWindow(): BrowserWindow {

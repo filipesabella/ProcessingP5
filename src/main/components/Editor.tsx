@@ -3,7 +3,6 @@ import * as windows from '../lib/browser-window';
 import * as parser from '../lib/code-parser';
 import * as fs from '../lib/file-system';
 import * as settings from '../lib/settings';
-import * as sketch from '../lib/sketch';
 import * as previewWindow from './PreviewWindow';
 const { ipcRenderer } = window.require('electron');
 
@@ -91,14 +90,22 @@ function handleEditorChange(_: any): void {
 
   if (settings.getHotCodeReload()) {
     const currentFile = fs.currentOpenFile();
-    if (parser.codeHasChanged(currentFile, text)) {
-      sketch.buildIndexHtml();
-      previewWindow.reloadPreviewWindow();
-    } else {
-      windows.toPreview(w => w.webContents.send('vars-updated',
-        JSON.stringify({
-          vars: parser.getVars(text),
-        })));
+
+    try {
+      if (parser.codeHasChanged(currentFile, text)) {
+        previewWindow.reloadPreviewWindow();
+      } else {
+        windows.toPreview(w => w.webContents.send('vars-updated',
+          JSON.stringify({
+            vars: parser.getVars(text),
+          })));
+      }
+    } catch (error) {
+      // if the code is currently invalid, we get an exception here from
+      // the parser.codeHasChanged call.
+      // these errors are benign, as the user is currently editing the text,
+      // and we shold just ignore it.
+      console.log(error);
     }
   } else if (settings.getRunMode() === 'keystroke') {
     previewWindow.reloadPreviewWindow();
