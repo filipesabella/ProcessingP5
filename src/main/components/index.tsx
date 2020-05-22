@@ -25,3 +25,6 @@ ReactDOM.render(
     return './editor.worker.js';
   },
 };
+
+console.log(
+  `ProcessingP5 version ${window.require('electron').remote.app.getVersion()}`);
