@@ -36,7 +36,7 @@ function checkForUpdates() {
   log.transports.file.level = 'debug';
   autoUpdater.logger = log;
 
-  autoUpdater.on('update-available', () => {
+  autoUpdater.on('update-available', (info) => {
     log.log(info);
 
     new Notification(
