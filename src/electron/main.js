@@ -32,21 +32,23 @@ app.on('ready', () => {
 });
 
 function checkForUpdates() {
-  const log = require('electron-log');
-  log.transports.file.level = 'debug';
-  autoUpdater.logger = log;
+  if (process.env.DEV_MODE !== 'true') {
+    const log = require('electron-log');
+    log.transports.file.level = 'debug';
+    autoUpdater.logger = log;
 
-  autoUpdater.on('update-available', (info) => {
-    log.log(info);
+    autoUpdater.on('update-available', (info) => {
+      log.log(info);
 
-    new Notification(
-      'A new version of ProcessingP5 is available!', {
-        body: 'If you want new features, bug fixes, and get rid of this ' +
-          'annoying message, head on to the website to download the new version.'
-      }).onclick = () => {
-      console.log('Eventually add a link to the website here.');
-    };
-  });
+      new Notification(
+        'A new version of ProcessingP5 is available!', {
+          body: 'If you want new features, bug fixes, and get rid of this ' +
+            'annoying message, head on to the website to download the new version.'
+        }).onclick = () => {
+        console.log('Eventually add a link to the website here.');
+      };
+    });
 
-  autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdates();
+  }
 }
