@@ -1,6 +1,6 @@
 {
   "name": "ProcessingP5",
-  "description": "A p5.js processing-like IDE",
+  "description": "A p5.js, Processing-like IDE",
   "author": "Filipe Sabella <me@filipesabella.com>",
   "repository": "https://github.com/filipesabella/ProcessingP5",
   "version": "1.0.0",
