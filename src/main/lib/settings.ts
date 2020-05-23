@@ -154,3 +154,21 @@ export function updateSketchLibraries(
   all[sketch] = fn(loadSketchLibraries());
   settings.set(keys.librariesPerSketch, all);
 }
+
+export function renameSketch(oldName: string, newName: string): void {
+  const all = settings.get(keys.librariesPerSketch) ?? {};
+
+  const renameProp = (
+    oldProp: string,
+    newProp: string,
+    { [oldProp]: old, ...others }
+  ) => {
+    return {
+      [newProp]: old,
+      ...others
+    };
+  };
+  if (all[oldName]) {
+    settings.set(keys.librariesPerSketch, renameProp(oldName, newName, all));
+  }
+}

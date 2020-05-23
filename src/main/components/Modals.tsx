@@ -138,7 +138,10 @@ export function renameSketchModal(
   hideModal: () => void,
 ): JSX.Element {
   const renameSketch = (e: FormEvent<HTMLFormElement>) => {
+    // all this state handling is going to lead to bugs, guaranteed
+    const currentKetch = settings.getCurrentSketchName();
     if (fs.renameSketch(sketchName)) {
+      settings.renameSketch(currentKetch, sketchName);
       reloadAll();
     }
 
