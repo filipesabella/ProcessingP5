@@ -17,7 +17,13 @@ const indexTemplate = fs
 
 export function buildIndexHtml(): void {
   const currentPath = settings.getCurrentSketchPath();
-  const dependencies = p5scripts
+
+  const libraryPath =
+    path.join(settings.getBaseSketchesPath(), fileSystem.libraryDirectory);
+  const libraryFiles = settings.loadSketchLibraries().map(f =>
+    path.join(libraryPath, f));
+
+  const dependencies = p5scripts.concat(libraryFiles)
     .map(s => `<script src="file://${s}"></script>`);
 
   const scriptFiles = fileSystem.currentSketchFileNames()

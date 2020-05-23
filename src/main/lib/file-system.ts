@@ -5,6 +5,7 @@ const fs = remote.require('fs');
 const path = remote.require('path');
 
 export const indexFile = '.index.html';
+export const libraryDirectory = 'library';
 
 const currentSketchPath = () => settings.getCurrentSketchPath();
 const defaultSketchContent = `function setup() {
@@ -15,8 +16,6 @@ function draw() {
   rect(10, 10, 100, 100);
 }
 `;
-
-const libraryDirectory = 'library';
 
 let currentFile = settings.sketchMainFile;
 
