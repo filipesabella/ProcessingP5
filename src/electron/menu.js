@@ -63,6 +63,11 @@ function initialise(mainWindow) {
       label: 'Import File',
       click: () => mainWindow.webContents.send('import-file'),
     }, {
+      label: 'Import Library',
+      click: () => mainWindow.webContents.send('import-library'),
+    }, {
+      type: 'separator'
+    }, {
       label: 'Rename Sketch',
       accelerator: 'CmdOrCtrl+Shift+S',
       click: () => mainWindow.webContents.send('rename-sketch'),

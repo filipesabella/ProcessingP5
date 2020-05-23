@@ -20,6 +20,8 @@ export const Files = () => {
   const [currentFileToEdit, setCurrentFileToEdit] =
     useState(settings.sketchMainFile);
 
+  const [libraryFiles, setLibraryFiles] = useState([] as string[]);
+
   useEffect(() => {
     const files = fs.currentSketchFileNames()
       .sort((a, b) =>
@@ -46,8 +48,26 @@ export const Files = () => {
     }
   };
 
+  const showImportLibrary = () => {
+    const result = dialog.showOpenDialogSync(windows.main(), {
+      title: 'Choose a JavaScript library file to import into the sketch',
+      properties: ['openFile', 'multiSelections'],
+      filters: [{ name: 'JavaScript files', extensions: ['js'] }]
+    }) as string[];
+
+    if (result) {
+      const fileNames = result
+        .map(fs.copyIntoLibrary)
+        .filter(([success, _]) => success === true)
+        .map(([_, fileName]) => fileName!);
+
+      setLibraryFiles(f => f.concat(fileNames));
+    }
+  };
+
   useEffect(() => {
     ipcRenderer.on('import-file', showImportFile);
+    ipcRenderer.on('import-library', showImportLibrary);
     ipcRenderer.on('new-file', showCreateFileModal);
 
     const scripts = files.filter(sketch.isScriptFile);
@@ -76,6 +96,7 @@ export const Files = () => {
 
     return () => {
       ipcRenderer.removeListener('import-file', showImportFile);
+      ipcRenderer.removeListener('import-library', showImportLibrary);
       ipcRenderer.removeListener('new-file', showCreateFileModal);
       ipcRenderer.removeListener('next-file', nextFile);
       ipcRenderer.removeListener('previous-file', previousFile);
@@ -110,7 +131,7 @@ export const Files = () => {
 
   const scriptsContainers = files
     .filter(sketch.isScriptFile)
-    .map((f) => {
+    .map(f => {
       const isMainFile = f === settings.sketchMainFile;
       const className = fs.currentOpenFile() === f ? 'active' : '';
       return <li key={f} className="file">
@@ -126,15 +147,23 @@ export const Files = () => {
     });
 
   const otherFilesContainers = files
-    .filter((f) =>
+    .filter(f =>
       !f.startsWith('.') &&
       !sketch.isScriptFile(f)
     )
-    .map((f) => {
+    .map(f => {
       return <li key={f}>
         <span className="fileName">{f}</span>
         <span className="menu"
           onClick={(_) => showFileMenu(f)}>...</span>
+      </li>;
+    });
+
+  const libraryContainers = libraryFiles
+    .map(f => {
+      return <li key={f}>
+        <span className="fileName library">{f}</span>
+        <span className="menu">x</span>
       </li>;
     });
 
@@ -147,6 +176,10 @@ export const Files = () => {
       {otherFilesContainers.length > 0 && <h2>Other files</h2>}
       <ul>
         {otherFilesContainers}
+      </ul>
+      {libraryContainers.length > 0 && <h2>Libraries</h2>}
+      <ul>
+        {libraryContainers}
       </ul>
     </div>
   </div>;

@@ -16,6 +16,8 @@ function draw() {
 }
 `;
 
+const libraryDirectory = 'library';
+
 let currentFile = settings.sketchMainFile;
 
 export function currentSketchFileNames(): string[] {
@@ -161,6 +163,25 @@ export function copyIntoSketch(file: string): [true, string] | [false, null] {
   const destination = path.join(
     settings.getCurrentSketchPath(),
     fileName);
+  try {
+    fs.copyFileSync(file, destination);
+    return [true, fileName];
+  } catch (error) {
+    alert(error);
+    return [false, null];
+  }
+}
+
+export function copyIntoLibrary(file: string): [true, string] | [false, null] {
+  const fileName = path.basename(file);
+
+  const librariesPath = path.join(
+    settings.getBaseSketchesPath(),
+    libraryDirectory);
+  fs.mkdirSync(librariesPath, { recursive: true });
+
+  const destination = path.join(librariesPath, fileName);
+
   try {
     fs.copyFileSync(file, destination);
     return [true, fileName];
