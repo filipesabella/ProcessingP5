@@ -70,7 +70,7 @@ export const App = () => {
 
     changeDarkMode(settings.getDarkMode());
 
-    // behold, the uglies hack in the app. didn't want to bind
+    // behold, the ugliest hack in the app. didn't want to bind
     // the escape key to all 6 modals to close them, so we force
     // a click on the 'overlay' div to trigger the hiding
     document.onkeyup = e => {
