@@ -7,6 +7,7 @@ import * as settings from '../lib/settings';
 import * as sketch from '../lib/sketch';
 import { updateEditorContent } from './Editor';
 import * as modals from './Modals';
+import { reloadFiles } from './PreviewWindow';
 
 const { dialog } = window.require('electron').remote;
 
@@ -67,7 +68,15 @@ export const Files = () => {
       settings.updateSketchLibraries(libraries => libraries.concat(fileNames));
 
       setLibraryFiles(f => f.concat(fileNames));
+      reloadFiles();
     }
+  };
+
+  const removeLibrary = (lib: string) => {
+    const newLibraries = settings
+      .updateSketchLibraries(libraries => libraries.filter(f => f !== lib));
+    setLibraryFiles(newLibraries);
+    reloadFiles();
   };
 
   useEffect(() => {
@@ -168,7 +177,8 @@ export const Files = () => {
     .map(f => {
       return <li key={f}>
         <span className="fileName library">{f}</span>
-        <span className="menu">x</span>
+        <span className="menu"
+          onClick={_ => removeLibrary(f)}>x</span>
       </li>;
     });
 

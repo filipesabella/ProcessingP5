@@ -148,11 +148,12 @@ export function loadSketchLibraries(): string[] {
 }
 
 export function updateSketchLibraries(
-  fn: (libraries: string[]) => string[]): void {
+  fn: (libraries: string[]) => string[]): string[] {
   const sketch = getCurrentSketchName();
   const all = settings.get(keys.librariesPerSketch) ?? {};
   all[sketch] = fn(loadSketchLibraries());
   settings.set(keys.librariesPerSketch, all);
+  return all[sketch];
 }
 
 export function renameSketch(oldName: string, newName: string): void {
