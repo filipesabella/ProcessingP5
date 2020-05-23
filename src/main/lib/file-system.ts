@@ -154,7 +154,8 @@ export function openSketch(name: string): boolean {
 }
 
 export function listSketches(): string[] {
-  return (fs.readdirSync(settings.getBaseSketchesPath()) as string[]);
+  return (fs.readdirSync(settings.getBaseSketchesPath()) as string[])
+    .filter(f => f !== libraryDirectory);
 }
 
 export function copyIntoSketch(file: string): [true, string] | [false, null] {
