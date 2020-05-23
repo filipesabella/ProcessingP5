@@ -20,6 +20,7 @@ const keys = {
   fontSize: 'font-size',
   hotCodeReload: 'hot-code-reload',
   sidebarOpen: 'sidebar-open',
+  librariesPerSketch: 'libraries-per-sketck',
 };
 
 // oh my this is a hot mess
@@ -139,4 +140,17 @@ export function getSidebarOpen(): boolean {
 
 export function setSidebarOpen(sidebarOpen: boolean): void {
   settings.set(keys.sidebarOpen, sidebarOpen);
+}
+
+export function loadSketchLibraries(): string[] {
+  const all = settings.get(keys.librariesPerSketch);
+  return all ? all[getCurrentSketchName()] ?? [] : [];
+}
+
+export function updateSketchLibraries(
+  fn: (libraries: string[]) => string[]): void {
+  const sketch = getCurrentSketchName();
+  const all = settings.get(keys.librariesPerSketch) ?? {};
+  all[sketch] = fn(loadSketchLibraries());
+  settings.set(keys.librariesPerSketch, all);
 }

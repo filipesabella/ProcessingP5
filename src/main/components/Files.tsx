@@ -32,6 +32,9 @@ export const Files = () => {
             : a.localeCompare(b));
 
     setFiles(files);
+
+    const libraries = settings.loadSketchLibraries();
+    setLibraryFiles(libraries);
   }, [currentFile, currentFileToEdit]);
 
   const showImportFile = () => {
@@ -60,6 +63,8 @@ export const Files = () => {
         .map(fs.copyIntoLibrary)
         .filter(([success, _]) => success === true)
         .map(([_, fileName]) => fileName!);
+
+      settings.updateSketchLibraries(libraries => libraries.concat(fileNames));
 
       setLibraryFiles(f => f.concat(fileNames));
     }
