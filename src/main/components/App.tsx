@@ -18,8 +18,15 @@ require('../styles/modals.less');
 
 export const App = () => {
   useEffect(() => {
-    initEditor();
-    previewWindow.openPreviewWindow();
+    try {
+      fs.openSketch(settings.getCurrentSketchName());
+      previewWindow.reloadFiles();
+
+      initEditor();
+      previewWindow.openPreviewWindow();
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   const [showNewSketchModal, hideNewSketchModal] = useModal(() =>
@@ -79,10 +86,6 @@ export const App = () => {
         modalOverlay && modalOverlay.click();
       }
     };
-
-    // make sure the cleanup happens here
-    fs.openSketch(settings.getCurrentSketchName());
-    previewWindow.reloadFiles();
   }, []);
 
   return <Files />;
