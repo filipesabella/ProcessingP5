@@ -65,8 +65,8 @@ export function reloadFiles(): void {
 function buildBrowserWindow(): BrowserWindow {
   const windowState = windowStateKeeper({
     file: 'window-state-preview.json',
-    defaultWidth: window.screen.availWidth / 2,
-    defaultHeight: window.screen.availHeight,
+    defaultWidth: Math.floor(window.screen.availWidth / 2),
+    defaultHeight: Math.floor(window.screen.availHeight),
   });
 
   const win = windowState.manage(new remote.BrowserWindow({
@@ -75,11 +75,11 @@ function buildBrowserWindow(): BrowserWindow {
     autoHideMenuBar: true,
     excludedFromShownWindowsMenu: true,
     useContentSize: false,
-    x: windowState.x === undefined
-      ? window.screen.availWidth / 2 : windowState.x,
-    y: windowState.y === undefined ? 0 : windowState.y,
-    width: windowState.width,
-    height: windowState.height,
+    x: Math.floor(windowState.x === undefined
+      ? window.screen.availWidth / 2 : windowState.x),
+    y: Math.floor(windowState.y === undefined ? 0 : windowState.y),
+    width: Math.floor(windowState.width),
+    height: Math.floor(windowState.height),
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
