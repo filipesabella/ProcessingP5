@@ -9,14 +9,17 @@ const hasChanged = (code: string) => codeHasChanged('a', code);
 
 describe('code-parser', () => {
   describe('parseCode', () => {
-    it('parses the code', () => {
+    it('parses the code and inline variables', () => {
       expect(format(parse(`
         let myNumber = 1;
         fn(myNumber);
+        let a = myNumber + 2;
       `))).to.equal(format(`
         __AllVars['a1'] = 1;
+        __AllVars['a3'] = 2;
         let myNumber = __AllVars.a1;
-        fn(myNumber);
+        fn(__AllVars.a1);
+        let a = __AllVars.a1 + __AllVars.a3;
       `));
     });
   });
