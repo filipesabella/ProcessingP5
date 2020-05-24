@@ -52,6 +52,24 @@ export const initEditor = () => {
 
   editor.onDidChangeModelContent(handleEditorChange);
 
+  // this comes all the way from the PreviewWindow index.html
+  ipcRenderer.on('js-error', (_: any, error: any) => {
+    const { filename, message, lineno, colno } = error;
+
+    const sketchFileName = filename.split('/').pop();
+    const isCurrentFile = fs.currentOpenFile() === sketchFileName;
+    if (isCurrentFile && !settings.getHotCodeReload()) {
+      monaco.editor.setModelMarkers(editor.getModel()!, 'owner', [{
+        startLineNumber: lineno,
+        startColumn: colno,
+        endLineNumber: lineno,
+        endColumn: 99,
+        message,
+        severity: monaco.MarkerSeverity.Error
+      }]);
+    }
+  });
+
   settings.watchShowLineNumbers(showLineNumbers => {
     editor.updateOptions({ 'lineNumbers': showLineNumbers ? 'on' : 'off' });
   });
@@ -78,7 +96,6 @@ export const initEditor = () => {
   ipcRenderer.on('font-size-decrease', () => {
     changeFontSize(settings.getFontSize() - 1);
   });
-
 };
 
 export function updateEditorContent(content: string): void {
@@ -86,6 +103,8 @@ export function updateEditorContent(content: string): void {
 }
 
 function handleEditorChange(_: any): void {
+  monaco.editor.setModelMarkers(editor.getModel()!, 'owner', []);
+
   const text = editor.getValue();
   fs.writeCurrentFile(text);
 

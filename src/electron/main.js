@@ -4,6 +4,7 @@ const path = require('path');
 const {
   app,
   Notification,
+  ipcMain,
 } = electron;
 
 const {
@@ -24,6 +25,10 @@ app.allowRendererProcessReuse = true;
 app.on('window-all-closed', app.quit);
 app.on('ready', () => {
   const mainWindow = require('./main-window').initialise();
+
+  ipcMain.on('js-error', (_, error) => {
+    mainWindow.webContents.send('js-error', error);
+  });
 
   require('./file-server.js').initialise(mainWindow);
   require('./menu.js').initialise(mainWindow);

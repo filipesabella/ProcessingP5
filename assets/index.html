@@ -20,12 +20,22 @@
 <script>
   const __AllVars = {};
 
-  require('electron').ipcRenderer.on('vars-updated', (event, data) => {
+  const _electron = require('electron');
+  _electron.ipcRenderer.on('vars-updated', (event, data) => {
     const vars = JSON.parse(data).vars;
     for (k in vars) {
       __AllVars[k] = vars[k];
     }
-  })
+  });
+
+  window.addEventListener('error', error => {
+    _electron.ipcRenderer.send('js-error', {
+      message: error.message,
+      lineno: error.lineno,
+      colno: error.colno,
+      filename: error.filename,
+    });
+  });
 </script>
 
 $scripts
