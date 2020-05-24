@@ -79,6 +79,8 @@ export const openPreferencesDialog = (hideModal: () => void) => {
           <option value="keystroke">On every keystroke</option>
         </select>
       </div>
+
+      <h2><span>Advanced</span></h2>
       <div className="field">
         <label>Hot Code Reload</label>
         <input type="checkbox"
@@ -87,7 +89,6 @@ export const openPreferencesDialog = (hideModal: () => void) => {
         <label className="warning">(works most of the time)</label>
       </div>
 
-      <h2><span>Advanced</span></h2>
       <div className="field directory">
         <label>Sketches directory</label>
         <input
