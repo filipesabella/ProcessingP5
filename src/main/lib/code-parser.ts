@@ -33,12 +33,8 @@ export function parseCode(file: string, userCode: string): string {
     const vars: { [key: string]: string } = {};
     const ast = astFromUserCode(userCode);
 
-    // stores all variable declarations whose value was modified to access
-    // the __AllVars
-    const varNames = {} as any;
-
     types.visit(ast, {
-      visitLiteral: path => {
+      visitLiteral: (path) => {
         const key = nodeToKey(path, vars);
         vars[key] = JSON.stringify(path.value.value);
 
@@ -47,29 +43,6 @@ export function parseCode(file: string, userCode: string): string {
             typeBuilders.identifier(AllVarsVariableName),
             typeBuilders.identifier(key)));
 
-        if (path.parentPath.value.type === 'VariableDeclarator') {
-          const varName = path.parentPath.value.id.name;
-          varNames[varName] = key;
-        }
-
-        return false;
-      }
-    });
-
-    // replace all variable references with a reference to their key in
-    // the __AllVars
-    types.visit(ast, {
-      visitIdentifier: path => {
-        const parentType = path?.parentPath?.value?.type;
-        const nodeName = path?.node?.name;
-        if (varNames[nodeName] !== undefined
-          && parentType !== 'VariableDeclarator') {
-
-          path.replace(
-            typeBuilders.memberExpression(
-              typeBuilders.identifier(AllVarsVariableName),
-              typeBuilders.identifier(varNames[nodeName])));
-        }
         return false;
       }
     });
