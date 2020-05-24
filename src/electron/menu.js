@@ -76,6 +76,11 @@ function initialise(mainWindow) {
     }, {
       label: 'Export',
       click: () => mainWindow.webContents.send('export-sketch'),
+    }, {
+      type: 'separator'
+    }, {
+      label: 'Open sketch folder',
+      click: () => mainWindow.webContents.send('open-sketch-directory'),
     }]
   }, {
     label: 'View',

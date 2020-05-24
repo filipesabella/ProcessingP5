@@ -3,7 +3,6 @@ const {
 } = require('electron');
 const static = require('node-static');
 
-
 module.exports = {
   initialise
 };

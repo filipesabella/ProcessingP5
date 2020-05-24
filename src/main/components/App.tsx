@@ -11,7 +11,7 @@ import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
 import { changeDarkMode, openPreferencesDialog } from './PreferencesDialog';
 import * as previewWindow from './PreviewWindow';
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer, shell } = window.require('electron');
 
 require('../styles/app.less');
 require('../styles/modals.less');
@@ -67,6 +67,9 @@ export const App = () => {
     ipcRenderer.on('open-preferences', showPreferencesModal);
 
     ipcRenderer.on('auto-arrange-windows', windows.autoArrange);
+
+    ipcRenderer.on('open-sketch-directory',
+      () => shell.openItem(settings.getCurrentSketchPath()));
 
     ipcRenderer.on('toggle-sidebar', () =>
       toggleSidebar(!settings.getSidebarOpen()));
