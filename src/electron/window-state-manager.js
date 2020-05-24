@@ -141,9 +141,13 @@ module.exports = function(options) {
 
   try {
     // to remove a parcel bundler warning
-    const rfs = fs.readFileSync;
+    const rfs = fs;
 
-    state = JSON.parse(rfs(fullStoreFileName));
+    if (rfs.existsSync(fullStoreFileName)) {
+      state = JSON.parse(rfs.readFileSync(fullStoreFileName));
+    } else {
+      state = null;
+    }
   } catch (err) {
     console.error(err);
   }
