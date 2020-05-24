@@ -55,6 +55,7 @@ export const App = () => {
     });
 
     if (process.env.DEV_MODE === 'true') {
+      windows.toMain(w => w.webContents.openDevTools());
       windows.toPreview(w => w.webContents.toggleDevTools());
     }
 
