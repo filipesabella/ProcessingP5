@@ -34,6 +34,7 @@ export const initEditor = () => {
       highlightActiveIndentGuide: false,
       renderLineHighlight: 'gutter',
       lineNumbers: settings.getShowLineNumbers() ? 'on' : 'off',
+      scrollBeyondLastLine: false,
       minimap: {
         enabled: false,
       },
