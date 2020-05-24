@@ -120,13 +120,6 @@ function initialise(mainWindow) {
       accelerator: 'CmdOrCtrl+Shift+0',
       click: () => mainWindow.webContents.send('font-size-reset'),
     }],
-  }, {
-    label: '',
-    submenu: [{
-      label: 'Developer Tools',
-      accelerator: 'F12',
-      click: () => mainWindow.webContents.toggleDevTools(),
-    }, ]
   }, ];
 
   if (!isMac) {
@@ -160,6 +153,19 @@ function initialise(mainWindow) {
       }]
     })
   }
+
+  // "secret" menu with no label so that we can open
+  // the developer tools in the main window. without
+  // a menu item is much harder to add an app-wide
+  // hotkey. plus it's an easter egg or something.
+  template.push({
+    label: '',
+    submenu: [{
+      label: 'Developer Tools',
+      accelerator: 'F12',
+      click: () => mainWindow.webContents.toggleDevTools(),
+    }, ]
+  });
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
