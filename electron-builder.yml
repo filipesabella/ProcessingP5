@@ -28,6 +28,12 @@ dmg:
 
 win:
   icon: dist/icons/icon.ico
+  target:
+    - portable
+    - nsis
+
+nsis:
+  artifactName: ProcessingP5-installer.exe
 
 linux:
   icon: dist/icons/icon.icns
