@@ -16,6 +16,8 @@ const indexTemplate = fs
   .toString();
 
 export function buildIndexHtml(): void {
+  fileSystem.cleanUpGeneratedFiles();
+
   const currentPath = settings.getCurrentSketchPath();
 
   const libraryPath =

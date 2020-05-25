@@ -121,21 +121,9 @@ export function renameSketch(name: string): boolean {
 }
 
 export function openSketch(name: string): boolean {
-  const cleanUpGeneratedFile = (dir: string) => {
-    try {
-      (fs.readdirSync(dir) as string[]).forEach(f => {
-        if (f.startsWith('.')) {
-          fs.unlinkSync(path.join(dir, f));
-        }
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   try {
     // clean up generated files on current sketch
-    cleanUpGeneratedFile(settings.getCurrentSketchPath());
+    cleanUpGeneratedFiles(settings.getCurrentSketchPath());
 
     const newPath = path.join(
       settings.getBaseSketchesPath(),
@@ -144,12 +132,25 @@ export function openSketch(name: string): boolean {
     settings.setCurrentSketchPath(newPath);
 
     // clean up generated files on opened sketch
-    cleanUpGeneratedFile(newPath);
+    cleanUpGeneratedFiles(newPath);
 
     return true;
   } catch (err) {
     alert(err);
     return false;
+  }
+}
+
+export function cleanUpGeneratedFiles(dir?: string): void {
+  dir = dir ?? settings.getCurrentSketchPath();
+  try {
+    (fs.readdirSync(dir) as string[]).forEach(f => {
+      if (f.startsWith('.')) {
+        fs.unlinkSync(path.join(dir, f));
+      }
+    });
+  } catch (error) {
+    console.error(error);
   }
 }
 
