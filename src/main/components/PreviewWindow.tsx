@@ -84,7 +84,10 @@ function buildBrowserWindow(): BrowserWindow {
       webSecurity: false,
       nodeIntegration: true,
     },
-  }) as BrowserWindow);
+  }) as BrowserWindow) as BrowserWindow;
+
+  // doing this has a different behaviour than adding it to the constructor
+  win.setParentWindow(windows.main());
 
   return win;
 }

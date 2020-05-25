@@ -11,7 +11,7 @@ import { newSketchModal, openSketchModal, renameSketchModal } from './Modals';
 import { changeDarkMode, openPreferencesDialog } from './PreferencesDialog';
 import * as previewWindow from './PreviewWindow';
 
-const { ipcRenderer, shell } = window.require('electron');
+const { ipcRenderer, shell, } = window.require('electron');
 
 require('../styles/app.less');
 require('../styles/modals.less');
