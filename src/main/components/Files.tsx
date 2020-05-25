@@ -23,7 +23,7 @@ export const Files = () => {
 
   const [libraryFiles, setLibraryFiles] = useState([] as string[]);
 
-  useEffect(() => {
+  const reload = () => {
     const files = fs.currentSketchFileNames()
       .sort((a, b) =>
         a === settings.sketchMainFile
@@ -36,7 +36,9 @@ export const Files = () => {
 
     const libraries = settings.loadSketchLibraries();
     setLibraryFiles(libraries);
-  }, [currentFile, currentFileToEdit]);
+  };
+
+  useEffect(reload, [currentFile]);
 
   const showImportFile = () => {
     const result = dialog.showOpenDialogSync(windows.main(), {
@@ -129,7 +131,8 @@ export const Files = () => {
         files,
         currentFileToEdit,
         hideEditFileModal,
-        selectFile),
+        selectFile,
+        reload),
     [files, currentFileToEdit],
   );
 
@@ -139,7 +142,11 @@ export const Files = () => {
   };
 
   const [showCreateFileModal, hideCreateFileModal] = useModal(
-    () => modals.createFileModal(files, hideCreateFileModal, selectFile),
+    () => modals.createFileModal(
+      files,
+      hideCreateFileModal,
+      selectFile,
+      reload),
     [files, currentFile],
   );
 

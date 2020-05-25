@@ -10,6 +10,7 @@ export function editFileModal(
   currentFile: string,
   hideModal: () => void,
   selectFile: (s: string) => void,
+  reload: () => void
 ): JSX.Element {
   const existingFiles = files.filter(f => f !== currentFile).join('|');
   const validationPattern = `^(?!(${existingFiles})).*$`;
@@ -32,6 +33,7 @@ export function editFileModal(
     } else {
       if (fs.deleteSketchFile(currentFile)) {
         selectFile(settings.sketchMainFile);
+        reload();
         reloadFiles();
         hideModal();
       }
@@ -67,6 +69,7 @@ export function createFileModal(
   files: string[],
   hideModal: () => void,
   selectFile: (s: string) => void,
+  reload: () => void,
 ): JSX.Element {
   const existingFiles = files.join('|');
   const validationPattern = `^(?!(${existingFiles})).*(\.js)$`;
@@ -76,6 +79,7 @@ export function createFileModal(
       selectFile(fileName);
       reloadFiles();
       hideModal();
+      reload();
     }
     e.preventDefault();
   };
