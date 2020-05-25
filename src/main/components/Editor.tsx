@@ -117,7 +117,7 @@ function handleEditorChange(_: any): void {
       } else {
         windows.toPreview(w => w.webContents.send('vars-updated',
           JSON.stringify({
-            vars: parser.getVars(text),
+            vars: parser.getVars(text, editor.getPosition()?.lineNumber),
           })));
       }
     } catch (error) {
