@@ -80,20 +80,23 @@ export function parseCode(file: string, userCode: string): string {
 
   // replace all *global* variable references with a reference to their key
   // in the __AllVars
-  types.visit(ast, {
-    visitIdentifier: path => {
-      const nodeName = path?.node?.name;
-      if (globalVarNamesAndKeys[nodeName] !== undefined
-        && !isVarDeclaration(path)) {
+  if (Object.keys(globalVarNamesAndKeys).length > 0) {
+    types.visit(ast, {
+      visitIdentifier: path => {
+        const nodeName = path?.node?.name;
 
-        path.replace(
-          typeBuilders.memberExpression(
-            typeBuilders.identifier(AllVarsVariableName),
-            typeBuilders.identifier(globalVarNamesAndKeys[nodeName])));
+        if (globalVarNamesAndKeys[nodeName] !== undefined
+          && !isVarDeclaration(path)) {
+
+          path.replace(
+            typeBuilders.memberExpression(
+              typeBuilders.identifier(AllVarsVariableName),
+              typeBuilders.identifier(globalVarNamesAndKeys[nodeName])));
+        }
+        return false;
       }
-      return false;
-    }
-  });
+    });
+  }
 
   const modifiedUserCode = recast.prettyPrint(ast).code;
 
