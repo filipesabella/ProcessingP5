@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useModal } from 'react-modal-hook';
 import * as windows from '../lib/browser-window';
 import * as fs from '../lib/file-system';
@@ -38,8 +38,32 @@ export const App = () => {
   const [showOpenSketchModal, hideOpenSketchModal] = useModal(() =>
     openSketchModal(hideOpenSketchModal), []);
 
+  const [useExternalEditor, setUseExternalEditor] = useState(false);
+  const toggleUseExternalEditor = () => {
+    hidePreferencesModal();
+    setUseExternalEditor(!useExternalEditor);
+  };
+
   const [showPreferencesModal, hidePreferencesModal] = useModal(() =>
-    openPreferencesDialog(hidePreferencesModal), []);
+    openPreferencesDialog(
+      hidePreferencesModal, toggleUseExternalEditor, useExternalEditor), []);
+
+  useEffect(() => {
+    const editor = document.getElementById('editor-container')!;
+    if (useExternalEditor) {
+      editor.style.display = 'none';
+    } else {
+      editor.style.display = 'block';
+      previewWindow.reloadFiles();
+    }
+  }, [useExternalEditor]);
+
+  const usingExternalEditor = <div
+    className="usingExternalEditor">
+    <p>Currently using an external editor to edit the files.</p>
+    <p
+      onClick={_ => toggleUseExternalEditor()}>Click here to exit.</p>
+  </div>;
 
   useEffect(() => {
     ipcRenderer.on('new-sketch', showNewSketchModal);
@@ -92,7 +116,9 @@ export const App = () => {
     };
   }, []);
 
-  return <Files />;
+  return useExternalEditor
+    ? usingExternalEditor
+    : <Files />;
 };
 
 function toggleSidebar(open: boolean): void {

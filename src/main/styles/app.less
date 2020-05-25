@@ -21,10 +21,12 @@ body {
 }
 
 html,
-body {
+body,
+#app {
   margin: 0;
   font-family: 'Barlow';
   background-color: var(--bg-color);
+  height: 100%;
 }
 
 #editor-container {
@@ -33,4 +35,19 @@ body {
   right: var(--sidebar-width-current);
   left: 0;
   bottom: 0;
+}
+
+.usingExternalEditor {
+  color: var(--text-color);
+  height: 100%;
+  text-align: center;
+  font-size: 5em;
+  padding: 1em;
+  line-height: 1.3em;
+
+  p:last-child {
+    font-size: .6em;
+    margin-top: 1em;
+    cursor: pointer;
+  }
 }

@@ -9,7 +9,10 @@ require('../styles/preferences-dialog.less');
 
 const { dialog } = window.require('electron').remote;
 
-export const openPreferencesDialog = (hideModal: () => void) => {
+export const openPreferencesDialog = (
+  hideModal: () => void,
+  toggleUseExternalEditor: () => void,
+  useExternalEditor: boolean, ) => {
   const [sketchesDirectory, setSketchesDirectory] =
     useState(settings.getBaseSketchesPath());
 
@@ -95,6 +98,13 @@ export const openPreferencesDialog = (hideModal: () => void) => {
           checked={hotCodeReload}
           onChange={_ => toggleHotCodeReload()}></input>
         <label className="warning">(works most of the time)</label>
+      </div>}
+
+      {showAdvancedSection && <div className="field">
+        <label>Use external editor</label>
+        <input type="checkbox"
+          checked={useExternalEditor}
+          onChange={_ => toggleUseExternalEditor()}></input>
       </div>}
 
       {showAdvancedSection && <div className="field directory">
