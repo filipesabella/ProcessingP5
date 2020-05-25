@@ -32,6 +32,7 @@ app.on('ready', () => {
 
   require('./file-server.js').initialise(mainWindow);
   require('./menu.js').initialise(mainWindow);
+  require('./file-watcher.js').initialise(mainWindow);
 
   checkForUpdates();
 });

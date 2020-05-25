@@ -44,19 +44,13 @@ export const App = () => {
     setUseExternalEditor(!useExternalEditor);
   };
 
+  useEffect(() => {
+    changeUseExternalEditor(useExternalEditor);
+  }, [useExternalEditor]);
+
   const [showPreferencesModal, hidePreferencesModal] = useModal(() =>
     openPreferencesDialog(
       hidePreferencesModal, toggleUseExternalEditor, useExternalEditor), []);
-
-  useEffect(() => {
-    const editor = document.getElementById('editor-container')!;
-    if (useExternalEditor) {
-      editor.style.display = 'none';
-    } else {
-      editor.style.display = 'block';
-      previewWindow.reloadFiles();
-    }
-  }, [useExternalEditor]);
 
   const usingExternalEditor = <div
     className="usingExternalEditor">
@@ -128,4 +122,31 @@ function toggleSidebar(open: boolean): void {
     open ? width : '0em');
 
   settings.setSidebarOpen(open);
+}
+
+function changeUseExternalEditor(useExternalEditor: boolean): void {
+  const editor = document.getElementById('editor-container')!;
+
+  const reloadPreview = () => windows.toPreview(w => w.reload());
+  const reloadAll = () => previewWindow.reloadFiles();
+
+  if (useExternalEditor) {
+    settings.setHotCodeReload(false);
+    reloadAll();
+
+    editor.style.display = 'none';
+
+    ipcRenderer.on('file-changed', reloadPreview);
+    ipcRenderer.on('reload-files', reloadAll);
+
+    ipcRenderer.send('watch-files', settings.getCurrentSketchPath());
+  } else {
+    editor.style.display = 'block';
+    previewWindow.reloadFiles();
+
+    ipcRenderer.removeListener('file-changed', reloadPreview);
+    ipcRenderer.removeListener('reload-files', reloadAll);
+
+    ipcRenderer.send('unwatch-files');
+  }
 }

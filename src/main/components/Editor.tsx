@@ -131,3 +131,4 @@ function handleEditorChange(_: any): void {
     previewWindow.reloadPreviewWindow();
   }
 }
+
