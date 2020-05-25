@@ -5,6 +5,8 @@ import * as windows from '../lib/browser-window';
 import * as settings from '../lib/settings';
 import * as sketch from '../lib/sketch';
 
+require('../styles/preferences-dialog.less');
+
 const { dialog } = window.require('electron').remote;
 
 export const openPreferencesDialog = (hideModal: () => void) => {
@@ -57,6 +59,9 @@ export const openPreferencesDialog = (hideModal: () => void) => {
     windows.toPreview(w => w.reload());
   };
 
+  const [showAdvancedSection, setShowAdvancedSection]
+    = useState(false);
+
   return <div className="modal preferencesModal">
     <div className="container">
       <h1>Preferences</h1>
@@ -80,23 +85,27 @@ export const openPreferencesDialog = (hideModal: () => void) => {
         </select>
       </div>
 
-      <h2><span>Advanced</span></h2>
-      <div className="field">
+      <h2
+        onClick={_ => setShowAdvancedSection(!showAdvancedSection)}>
+        <span>{'Advanced ' + (showAdvancedSection ? '▲' : '▼')}</span>
+      </h2>
+      {showAdvancedSection && <div className="field">
         <label>Hot Code Reload</label>
         <input type="checkbox"
           checked={hotCodeReload}
           onChange={_ => toggleHotCodeReload()}></input>
         <label className="warning">(works most of the time)</label>
-      </div>
+      </div>}
 
-      <div className="field directory">
+      {showAdvancedSection && <div className="field directory">
         <label>Sketches directory</label>
         <input
           readOnly={true}
           value={sketchesDirectory}
           onClick={_ => changeSketchesDirectory()}></input>
-      </div>
-      {sketchesDirectory !== settings.getBaseSketchesPath() &&
+      </div>}
+      {showAdvancedSection &&
+        sketchesDirectory !== settings.getBaseSketchesPath() &&
         <div className="buttonContainer">
           <button onClick={_ => save()}>Save</button>
         </div>}
