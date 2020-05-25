@@ -129,7 +129,7 @@ export const Files = () => {
         files,
         currentFileToEdit,
         hideEditFileModal,
-        setCurrentFileToEdit),
+        selectFile),
     [files, currentFileToEdit],
   );
 
