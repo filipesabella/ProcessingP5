@@ -52,60 +52,65 @@ export function codeHasChanged(file: string, userCode: string): boolean {
  *
  */
 export function parseCode(file: string, userCode: string): string {
-  const vars: { [key: string]: string } = {};
-  const ast = recast.parse(userCode);
+  try {
+    const vars: { [key: string]: string } = {};
+    const ast = recast.parse(userCode);
 
-  // stores all variable declarations whose value was modified to access
-  // the __AllVars
-  const globalVarNamesAndKeys = {} as any;
+    // stores all variable declarations whose value was modified to access
+    // the __AllVars
+    const globalVarNamesAndKeys = {} as any;
 
-  types.visit(ast, {
-    visitLiteral: path => {
-      const key = nodeToKey(path, vars);
-      vars[key] = JSON.stringify(path.value.value);
-
-      path.replace(
-        typeBuilders.memberExpression(
-          typeBuilders.identifier(AllVarsVariableName),
-          typeBuilders.identifier(key)));
-
-      if (isGlobalVarDeclaration(path)) {
-        const varName = path.parentPath.value.id.name;
-        globalVarNamesAndKeys[varName] = key;
-      }
-
-      return false;
-    }
-  });
-
-  // replace all *global* variable references with a reference to their key
-  // in the __AllVars
-  if (Object.keys(globalVarNamesAndKeys).length > 0) {
     types.visit(ast, {
-      visitIdentifier: path => {
-        const nodeName = path?.node?.name;
+      visitLiteral: path => {
+        const key = nodeToKey(path, vars);
+        vars[key] = JSON.stringify(path.value.value);
 
-        if (globalVarNamesAndKeys[nodeName] !== undefined
-          && !isVarDeclaration(path)) {
+        path.replace(
+          typeBuilders.memberExpression(
+            typeBuilders.identifier(AllVarsVariableName),
+            typeBuilders.identifier(key)));
 
-          path.replace(
-            typeBuilders.memberExpression(
-              typeBuilders.identifier(AllVarsVariableName),
-              typeBuilders.identifier(globalVarNamesAndKeys[nodeName])));
+        if (isGlobalVarDeclaration(path)) {
+          const varName = path.parentPath.value.id.name;
+          globalVarNamesAndKeys[varName] = key;
         }
+
         return false;
       }
     });
+
+    // replace all *global* variable references with a reference to their key
+    // in the __AllVars
+    if (Object.keys(globalVarNamesAndKeys).length > 0) {
+      types.visit(ast, {
+        visitIdentifier: path => {
+          const nodeName = path?.node?.name;
+
+          if (globalVarNamesAndKeys[nodeName] !== undefined
+            && !isVarDeclaration(path)) {
+
+            path.replace(
+              typeBuilders.memberExpression(
+                typeBuilders.identifier(AllVarsVariableName),
+                typeBuilders.identifier(globalVarNamesAndKeys[nodeName])));
+          }
+          return false;
+        }
+      });
+    }
+
+    const modifiedUserCode = recast.prettyPrint(ast).code;
+
+    previousCodes[file] = recast.parse(userCode);
+
+    const varAssignments = Object.keys(vars).map(key => {
+      return `${AllVarsVariableName}['${key}'] = ${vars[key]};`;
+    }).join('');
+    return `${varAssignments} ${modifiedUserCode}`;
+  } catch (error) {
+    console.error('Hot code failed for ' + file, error);
+    return userCode;
   }
-
-  const modifiedUserCode = recast.prettyPrint(ast).code;
-
-  previousCodes[file] = recast.parse(userCode);
-
-  const varAssignments = Object.keys(vars).map(key => {
-    return `${AllVarsVariableName}['${key}'] = ${vars[key]};`;
-  }).join('');
-  return `${varAssignments} ${modifiedUserCode}`;
 }
 
 /**
