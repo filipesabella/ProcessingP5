@@ -1,5 +1,5 @@
 rm -rf dist/ .cache/ release/ node_modules
-yarn
+yarn --ignore-engines
 
 ./node_modules/.bin/electron-builder install-app-deps
 
