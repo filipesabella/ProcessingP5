@@ -3,7 +3,7 @@ THIS REPO IS WIP
 To run
 
 ```
-yarn
+yarn --ignore-engines
 yarn build
 yarn server
 yarn start
