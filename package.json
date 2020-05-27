@@ -18,7 +18,7 @@
     "build-worker": "parcel build node_modules/monaco-editor/esm/vs/editor/editor.worker.js --no-source-maps",
     "ship": "./ship"
   },
-  "license": "ISC",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
