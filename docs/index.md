@@ -1,37 +1,26 @@
-## Welcome to GitHub Pages
+---
+layout: default
+---
 
-You can use the [editor on GitHub](https://github.com/filipesabella/ProcessingP5/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+# ProcessingP5
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+A ready-to-use editor to create p5.js sketches, without any other dependencies to download and install.  
+You open it for the first time and start playing.
 
-### Markdown
+It is primarily meant for artists, designers, and people learning programming for the first time.  
+Having said that, I don't fall into any of those categories, but I use it for my day-to-day sketching.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+It looks like this: 
 
-```markdown
-Syntax highlighted code block
+![Screenshot](https://raw.githubusercontent.com/filipesabella/ProcessingP5/master/screenshot.png)
 
-# Header 1
-## Header 2
-### Header 3
+## Features
 
-- Bulleted
-- List
+The editor is powered by the wonderful [Monaco Editor](https://microsoft.github.io/monaco-editor/), and the sketches run [p5.js](https://p5js.org/) by the legendary Daniel Shiffman.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/filipesabella/ProcessingP5/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Together with all the features from the Monaco Editor itself, it supports:
+* Auto-complete for the p5 API
+* Live reloading without refresh (as an option)
+* Dark & Light mode
+* Importing of other libraries and files
+* Exporting the sketch to a stand-alone html file (other formats to come)
