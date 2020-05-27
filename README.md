@@ -12,6 +12,8 @@ It looks like this:
 
 ![Screenshot](https://raw.githubusercontent.com/filipesabella/ProcessingP5/master/screenshot.png)
 
+_(showing Light and Dark modes)_
+
 ## Features
 
 The editor is powered by the wonderful [Monaco Editor](https://microsoft.github.io/monaco-editor/), and the sketches run [p5.js](https://p5js.org/) by the legendary Daniel Shiffman.
