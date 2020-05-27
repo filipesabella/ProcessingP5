@@ -10,7 +10,7 @@ Having said that, I don't fall into any of those categories, but I use it for my
 
 It looks like this: 
 
-![Screenshot](https://raw.githubusercontent.com/filipesabella/ProcessingP5/master/pages/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/filipesabella/ProcessingP5/master/docs/screenshot.png)
 
 ## Features
 
