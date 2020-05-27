@@ -1,1 +1,12 @@
+title: ProcessingP5
+baseurl: "/ProcessingP5"
+url: "https://www.filipesabella.com"
+
+markdown: kramdown
 theme: jekyll-theme-minimal
+
+logo: assets/img/logo.png
+
+mac_url: https://github.com/filipesabella/ProcessingP5/releases/latest/download/ProcessingP5.dmg
+win_url: https://github.com/filipesabella/ProcessingP5/releases/latest/download/ProcessingP5.exe
+lin_url: https://github.com/filipesabella/ProcessingP5/releases/latest/download/ProcessingP5.deb
