@@ -22,7 +22,7 @@ Together with all the features from the Monaco Editor itself, it supports:
 * Auto-complete for the p5 API
 * Live reloading without refresh (as an option)
 * Dark & Light mode
-* Importing of other libraries and files
+* Importing other libraries and files
 * Exporting the sketch to a stand-alone html file (other formats to come)
 
 # Development
