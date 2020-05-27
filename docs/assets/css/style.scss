@@ -1,0 +1,31 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body {
+  font-size: 18px;
+}
+
+.wrapper {
+  max-width: 1024px;
+}
+
+header .logo {
+  max-width: 256px;
+}
+
+section {
+  width: 38em;
+}
+
+.downloads strong {
+  margin-top: 5px;
+  display: block;
+}
+
+
+footer {
+  bottom: 0px;
+  font-size: .8em;
+}
